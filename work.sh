@@ -18,9 +18,7 @@ cd ~/workspace/udaan || exit 1
 # Prompt
 read -r -d '' PROMPT << 'EOM' || true
 TODO: 
-- create github actions to deploy to cloud run 
-- work on pending items listed in plan.md.
-- commit changes once finished
+- create github actions to deploy services to cloud run 
 EOM
 
 # invoking agent
