@@ -33,8 +33,3 @@ ccr "commit changes"
 git push origin development
 
 
-# pushing logs
-cd ~/workspace/work || exit 1
-git add .
-gi commit -m "logs +%F %T "
-git push origin development
