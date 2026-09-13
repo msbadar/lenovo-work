@@ -1032,3 +1032,7 @@ To github.com:msbadar/udaan.git
    ↳  Test Files  53 passed (53)       Tests  782 passed (782)
 💬 All 782 admin tests pass. Now the four gates across the repo.
 🔧 Bash {"command":"cd /work && npm run typecheck 2>&1 | tail -20","description":"Typecheck all workspaces"}
+   ↳ > @udaan/admin@0.1.0 typecheck > tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit   > @udaan/api@0.1.0 typecheck > tsc -p tsconfig.json --noE…
+🔧 Bash {"command":"npm run lint 2>&1 | tail -25 && npm run format:check 2>&1 | tail -10","description":"Lint and format check"}
+   ↳ > udaan@0.1.0 lint > eslint .   > udaan@0.1.0 format:check > prettier --check .  Checking formatting... All matched files use Prettier code style!
+🔧 Bash {"command":"npm test 2>&1 | grep -E \"Tests:|Test Files|Suites|FAIL|failed\" | head -30","description":"Run full test su…
