@@ -1910,3 +1910,6 @@ Tell me which you'd like:
 - **Nothing** — if you expected uncommitted changes to be sitting here, they aren't; say what you were working on and I'll look for where it went (e.g. a different branch, a stash, or another worktree).
 To github.com:msbadar/udaan.git
    2a8cda1..1873cc8  development -> development
+[2026-09-14 02:50:04] Checking if container is running...
+[2026-09-14 02:50:04] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
