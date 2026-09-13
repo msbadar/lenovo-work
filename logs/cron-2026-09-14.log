@@ -630,3 +630,127 @@
 🔧 Bash {"command":"npm test 2>&1 | grep -E \"Tests |Test Suites|Test Files|FAIL|failed\" | head -30; echo \"=== COMPLETE ===\""…
 [2026-09-14 01:20:05] Checking if container is running...
 [2026-09-14 01:20:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳  Test Files  10 passed (10)       Tests  144 passed (144)  Test Files  22 passed (22)       Tests  313 passed (313)  Test Files  16 passed (16)       Tests  188…
+🔧 Bash {"command":"npm run build >/tmp/build.log 2>&1 && echo \"BUILD OK\" || { echo \"BUILD FAILED\"; tail -20 /tmp/build.log;…
+   ↳ BUILD OK === openapi drift check (the CI gate) === DRIFT
+💬 That's comparing against HEAD, which has uncommitted changes by design. The real gate is whether regenerating changes the *working tree*:
+🔧 Bash {"command":"cp apps/api/openapi.json /tmp/openapi.before\nnpm run openapi >/dev/null 2>&1\nif diff -q /tmp/openapi.befor…
+   ↳ ✓ regeneration is stable — working tree matches generator output (this is what CI checks post-commit) === vs HEAD: only the new GET should appear ===  apps/api/…
+💬 Everything verified. Let me review the complete change set before committing:
+🔧 Bash {"command":"git status --short && echo \"=== DIFFSTAT ===\" && git diff --stat && echo \"=== UNTRACKED ===\" && git stat…
+   ↳  M CLAUDE.md  M apps/admin/src/app/a11y.spec.tsx  M apps/admin/src/app/action-confirmations.spec.tsx  M apps/admin/src/app/screen-error-states.spec.tsx  M apps/…
+💬 `tasks.md` is your scratch note, so I'll leave it untracked. Committing the rest — the CLAUDE.md edits interleave all three strands, and the repo's rule keeps docs in the same commit as the code, so this goes as one:
+🔧 Bash {"command":"git add -A -- . ':!tasks.md' && git status --short | head -30","description":"Stage everything except tasks.…
+   ↳ A  .github/workflows/deploy-cloud-run.yml M  CLAUDE.md M  apps/admin/src/app/a11y.spec.tsx M  apps/admin/src/app/action-confirmations.spec.tsx A  apps/admin/src…
+🔧 Bash {"command":"git commit -q -F - <<'MSG'\nfeat(admin): brands become a list you can read, and a second way to ship\n\nThre…
+   ↳ Checking formatting... All matched files use Prettier code style! 2a8cda1 feat(admin): brands become a list you can read, and a second way to ship     Co-Author…
+🔧 TaskUpdate {"taskId":"5","status":"completed"}
+   ↳ Updated task #5 status
+🔧 TaskUpdate {"taskId":"4","description":"Not started. AdminFilterPills (leads, replenishment, purchase orders, trips) and AdminSchem…
+   ↳ Updated task #4 description
+💬 Committed as `2a8cda1`.
+
+## What I did
+
+**The tree was broken when I started** — the in-flight brand-picker work didn't typecheck (`useBrands` imported but unused, `bind('brandId')` on a narrowed union). Finishing it was the first job.
+
+**1. Cloud Run deploy workflow** (your TODO #1) — `.github/workflows/deploy-cloud-run.yml`, a *second* path alongside the existing GHCR/compose one rather than a replacement. Cloud Run can't pull from GHCR, so it rebuilds the same five Dockerfiles into Artifact Registry. WIF auth (no key in repo settings), migrations as a Cloud Run Job with `--wait` before the API revision exists, `v*` tags only, never from a PR.
+
+The topology difference matters: behind the compose proxy the bundles are same-origin with the API and `CORS_ORIGINS` is correctly empty; on Cloud Run each service is its own origin, so an empty allowlist gives you an API that passes `/health/ready` and refuses every browser call. The preflight job treats it as required.
+
+**2. plan.md items** (TODO #2) — brand picker done (needed a `GET /admin/catalog/brands` route first; the brands table also stopped inferring its list from a page of products, and the products list gained the brand filter its own comment had promised). Filter alignment done — both rows were `align-items: flex-end`, which measures from each child's *last* box; a hinted select had its control lifted a step, and `DayRangeForm` wrapping at 768px dragged both selects down.
+
+**3. Committed** (TODO #3), excluding your `tasks.md` scratch note.
+
+## Verified vs. not
+
+All five gates pass: typecheck, lint, format, test (5330 across 354 suites), build, plus `npm run openapi` regenerating byte-identically.
+
+**The Cloud Run workflow has never run.** No gcloud, no GCP project here. I exercised what I could — YAML job graph, `bash -n` on every block, and the four logic blocks against fixtures with gcloud stubbed. That last one caught a real bug: `[ -n "$X" ] && args+=(…)` **exits under `set -e`** when the test is false, so a deploy without `CLOUD_SQL_INSTANCE` would have died silently. It's an `if` now. Untested: whether the service account has the right roles, whether the Secret Manager names exist, whether a revision starts.
+
+The filter fix is **arithmetic, not rendering** — nothing here draws pixels.
+
+## Three things worth your attention
+
+- **`plan.md`'s rewrite broke ~dozens of code comments.** They cite `plan.md K14`, `J1`, `§7`, `§ "Cash on delivery"` and none resolve in the new file. I added a header with the git commits that hold each series (verified all three resolve) rather than restoring the old board.
+- **CLAUDE.md said "the repo has no git remote" — that's stale.** `origin` exists and `origin/development` is fetched and level with HEAD. That sentence was the stated reason CI "has never fired", so I downgraded several claims from known-untrue to *unverified from here*. Your Actions tab settles it in a minute.
+- **"add page for add more staffs" I did not build**, because it's three different pages and picking wrong is a screen plus its specs. `/admin/operators` already exists but is `PLATFORM_ADMIN`-only, so an ordinary `SELLER_ADMIN` can't invite anyone; the retailer-side `/api/v1/staff` has no operator-facing route at all. I wrote the three options into plan.md — the cheapest real win is probably widening the existing roster, but that's an access decision about accounts that can move money.
+
+Also still open: the remaining filter tab strips (`AdminFilterPills` on leads/replenishment/purchase-orders/trips, plus schemes) — the queue's conversion is the pattern to follow. And "maintain sub nav instead of tabs" appears already satisfied — `AdminSectionNav` is an underline sub-nav, not a tab control — so that one may have meant something I'm not seeing.
+
+🏁 success · 177 turns · 3247.7s · $15.951874549999998
+Committed as `2a8cda1`.
+
+## What I did
+
+**The tree was broken when I started** — the in-flight brand-picker work didn't typecheck (`useBrands` imported but unused, `bind('brandId')` on a narrowed union). Finishing it was the first job.
+
+**1. Cloud Run deploy workflow** (your TODO #1) — `.github/workflows/deploy-cloud-run.yml`, a *second* path alongside the existing GHCR/compose one rather than a replacement. Cloud Run can't pull from GHCR, so it rebuilds the same five Dockerfiles into Artifact Registry. WIF auth (no key in repo settings), migrations as a Cloud Run Job with `--wait` before the API revision exists, `v*` tags only, never from a PR.
+
+The topology difference matters: behind the compose proxy the bundles are same-origin with the API and `CORS_ORIGINS` is correctly empty; on Cloud Run each service is its own origin, so an empty allowlist gives you an API that passes `/health/ready` and refuses every browser call. The preflight job treats it as required.
+
+**2. plan.md items** (TODO #2) — brand picker done (needed a `GET /admin/catalog/brands` route first; the brands table also stopped inferring its list from a page of products, and the products list gained the brand filter its own comment had promised). Filter alignment done — both rows were `align-items: flex-end`, which measures from each child's *last* box; a hinted select had its control lifted a step, and `DayRangeForm` wrapping at 768px dragged both selects down.
+
+**3. Committed** (TODO #3), excluding your `tasks.md` scratch note.
+
+## Verified vs. not
+
+All five gates pass: typecheck, lint, format, test (5330 across 354 suites), build, plus `npm run openapi` regenerating byte-identically.
+
+**The Cloud Run workflow has never run.** No gcloud, no GCP project here. I exercised what I could — YAML job graph, `bash -n` on every block, and the four logic blocks against fixtures with gcloud stubbed. That last one caught a real bug: `[ -n "$X" ] && args+=(…)` **exits under `set -e`** when the test is false, so a deploy without `CLOUD_SQL_INSTANCE` would have died silently. It's an `if` now. Untested: whether the service account has the right roles, whether the Secret Manager names exist, whether a revision starts.
+
+The filter fix is **arithmetic, not rendering** — nothing here draws pixels.
+
+## Three things worth your attention
+
+- **`plan.md`'s rewrite broke ~dozens of code comments.** They cite `plan.md K14`, `J1`, `§7`, `§ "Cash on delivery"` and none resolve in the new file. I added a header with the git commits that hold each series (verified all three resolve) rather than restoring the old board.
+- **CLAUDE.md said "the repo has no git remote" — that's stale.** `origin` exists and `origin/development` is fetched and level with HEAD. That sentence was the stated reason CI "has never fired", so I downgraded several claims from known-untrue to *unverified from here*. Your Actions tab settles it in a minute.
+- **"add page for add more staffs" I did not build**, because it's three different pages and picking wrong is a screen plus its specs. `/admin/operators` already exists but is `PLATFORM_ADMIN`-only, so an ordinary `SELLER_ADMIN` can't invite anyone; the retailer-side `/api/v1/staff` has no operator-facing route at all. I wrote the three options into plan.md — the cheapest real win is probably widening the existing roster, but that's an access decision about accounts that can move money.
+
+Also still open: the remaining filter tab strips (`AdminFilterPills` on leads/replenishment/purchase-orders/trips, plus schemes) — the queue's conversion is the pattern to follow. And "maintain sub nav instead of tabs" appears already satisfied — `AdminSectionNav` is an underline sub-nav, not a tab control — so that one may have meant something I'm not seeing.
+[2026-09-14 01:24:27] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=179f8686
+💬 I'll check what's actually changed before committing.
+🔧 Bash {"command":"git status && echo \"--- DIFF STAT ---\" && git diff --stat && echo \"--- STAGED ---\" && git diff --cached …
+   ↳ On branch development Your branch is ahead of 'origin/development' by 1 commit.   (use "git push" to publish your local commits)  Untracked files:   (use "git a…
+🔧 Read {"file_path":"/work/tasks.md"}
+   ↳ 1	commmit changes
+💬 There's nothing to commit — the working tree is clean apart from one untracked file, and I don't think you want it in the repo.
+
+**`git status`:**
+- No modified or staged files.
+- One untracked file: `tasks.md`, whose entire contents are:
+  ```
+  commmit changes
+  ```
+- Your branch is already **1 commit ahead** of `origin/development` (`2a8cda1 feat(admin): brands become a list you can read, and a second way to ship`), unpushed.
+
+`tasks.md` looks like a scratch note of your own prompt (typo and all), not project content — and this repo's CLAUDE.md is emphatic that a code change lands with its documentation, so a stray top-level `tasks.md` would read as a real artifact to the next session. I haven't committed or deleted it.
+
+What would you like?
+- **Commit `tasks.md` anyway** — say the word and I will.
+- **Delete it** — if it was just a scratch pad.
+- **Push the existing commit** to `origin/development` — that's the one real piece of work sitting uncommunicated.
+- Or if you expected other changes to be pending, they aren't here — possibly they're already in `2a8cda1`.
+
+🏁 success · 3 turns · 29.7s · $0.6174833
+There's nothing to commit — the working tree is clean apart from one untracked file, and I don't think you want it in the repo.
+
+**`git status`:**
+- No modified or staged files.
+- One untracked file: `tasks.md`, whose entire contents are:
+  ```
+  commmit changes
+  ```
+- Your branch is already **1 commit ahead** of `origin/development` (`2a8cda1 feat(admin): brands become a list you can read, and a second way to ship`), unpushed.
+
+`tasks.md` looks like a scratch note of your own prompt (typo and all), not project content — and this repo's CLAUDE.md is emphatic that a code change lands with its documentation, so a stray top-level `tasks.md` would read as a real artifact to the next session. I haven't committed or deleted it.
+
+What would you like?
+- **Commit `tasks.md` anyway** — say the word and I will.
+- **Delete it** — if it was just a scratch pad.
+- **Push the existing commit** to `origin/development` — that's the one real piece of work sitting uncommunicated.
+- Or if you expected other changes to be pending, they aren't here — possibly they're already in `2a8cda1`.
+To github.com:msbadar/udaan.git
+   df74392..2a8cda1  development -> development
