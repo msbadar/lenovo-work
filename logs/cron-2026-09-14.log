@@ -2313,3 +2313,6 @@ You've hit your session limit · resets 12am (UTC)
 🏁 success · 1 turns · 21.3s · $0
 You've hit your session limit · resets 12am (UTC)
 Everything up-to-date
+[2026-09-14 05:00:04] Checking if container is running...
+[2026-09-14 05:00:04] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
