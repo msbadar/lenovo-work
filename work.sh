@@ -18,7 +18,7 @@ cd ~/workspace/udaan || exit 1
 # Prompt
 read -r -d '' PROMPT << 'EOM' || true
 TODO: 
-- create github actions to deploy services to cloud run 
+- github actions , cloud run service account should have suffix dev or prod based on branch. if main, it should be prod. otherwise it should be dev.
 - work on pending items by priority as per priority
 - update plan.md for pending items 
 EOM
