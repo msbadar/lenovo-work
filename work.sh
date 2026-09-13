@@ -19,6 +19,8 @@ cd ~/workspace/udaan || exit 1
 read -r -d '' PROMPT << 'EOM' || true
 TODO: 
 - create github actions to deploy services to cloud run 
+- work on pending items by priority as per priority
+- update plan.md for pending items 
 EOM
 
 # invoking agent
