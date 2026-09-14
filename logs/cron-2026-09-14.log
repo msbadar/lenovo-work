@@ -10197,3 +10197,6 @@ Two things worth flagging in what I did *not* verify, since the repo's rule is t
 2. **The CLAUDE.md and plan.md edits were already in the working tree**, so the "same commit as the code" rule is satisfied — but by your prior work, not by a documentation pass I did. I read both diffs and they are consistent with the code changes (§ "The render harness", § "State of the world", the `stylesheets.spec.ts` row, and plan.md items 22/23/24).
 To github.com:msbadar/udaan.git
    a3c7e20..1c6f96d  development -> development
+[2026-09-14 20:20:05] Checking if container is running...
+[2026-09-14 20:20:05] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
