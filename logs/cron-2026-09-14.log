@@ -11710,3 +11710,6 @@ Committed as `59d3c8e` on `development`, 8 files.
 One nit I noticed and left alone: the doc comment in `AdminLeadsScreen.css` ends on a paragraph that begins mid-thought — "`anywhere`, because the longest of the three fields is a phone number with no space in it…" — with no lead-in sentence above it, unlike the parallel paragraph in `AdminPurchaseOrdersScreen.css`. It reads as a fragment left from an edit. Harmless, but worth a one-line fix if you want the two sheets to read alike.
 To github.com:msbadar/udaan.git
    a81bd2f..59d3c8e  development -> development
+[2026-09-14 23:10:05] Checking if container is running...
+[2026-09-14 23:10:05] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
