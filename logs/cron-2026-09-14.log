@@ -8266,3 +8266,99 @@ Now the documentation, which this repo's working agreement requires in the same 
 🔧 Bash {"command":"npm run format:check >/tmp/f.log 2>&1; echo \"format=$?\"; tail -3 /tmp/f.log\nnpm run typecheck >/dev/null …
    ↳ format=0  Checking formatting... All matched files use Prettier code style! typecheck=0 lint=0
 🔧 Bash {"command":"npm test >/tmp/test2.log 2>&1; echo \"test=$?\"; grep -E \"Tests:|Tests  \" /tmp/test2.log | tail -10; npm r…
+[2026-09-14 16:10:04] Checking if container is running...
+[2026-09-14 16:10:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳ test=0       Tests  144 passed (144)       Tests  313 passed (313)       Tests  196 passed (196)       Tests  816 passed (816) Tests:       1815 passed, 1815 to…
+🔧 Bash {"command":"git status --short && echo \"---\" && git diff --stat","description":"Final change summary"}
+   ↳  M CLAUDE.md  M apps/admin/src/screens/AdminOrderDetailScreen.css  M apps/admin/src/screens/AdminOrderDetailScreen.tsx  M apps/admin/src/styles/stylesheets.spec…
+💬 All four gates pass: typecheck, lint, format, test (5401 across 358 suites), build. Plus a browser render, which is the gate that isn't a gate.
+
+## What I did
+
+**1. Cloud Run service-account suffix — already implemented; I verified it rather than rebuilding it.**
+
+The `resolve` job plus `.github/actions/gcp-auth` already do exactly what you asked. I confirmed by execution against a throwaway git fixture, not by reading:
+
+| Case | Result |
+|---|---|
+| tag cut from `main` | `prod` |
+| tag cut from a feature branch | `dev` |
+| `PRODUCTION_BRANCH` names no branch | `dev` + `::warning::` |
+| main tag, `origin` unreachable | `prod` (not demoted by a blip) |
+
+The suffix goes on the address's *local part* (`udaan-deployer-prod@…`), and it's on the Cloud Run services and Secret Manager entries too, not just the account.
+
+**One thing to action on your side:** this repo has no `main` — branches are `development` and `master`. So on the default, every release resolves to `dev`. Set `vars.PRODUCTION_BRANCH` to `development`. There's no `gh` credential in this sandbox, so I can't set it from here.
+
+**2. Pending items by priority.** The top four board items are all blocked on decisions or hardware, so I used the method plan.md records as having found real work 4/4 times — grepping for gaps the repo's own comments admit to. It hit again, in `AdminOrderDetailScreen.css`: *"this screen is not in the harness's list."* The desk's most-used drill-down had never been drawn by anything.
+
+Adding it to the harness found a genuine defect on the first run: `order-return__credit-note` at **99 × 18**, the same control `apps/web` floored earlier — it survived because these sheets were *copied* into `apps/admin`, so improving the original never reached the twin. Neither workspace's sweep could see it: each finds its own rule exactly as written.
+
+That composed with item (6), which turned out to be mis-filed. It's listed as "design judgement", but `design.html:239–322` draws the order drill-down *in full* — so it was transcription, not judgement. It's now the design's two-column grid; the other four drill-downs genuinely aren't drawn and stay judgement.
+
+**3. plan.md and CLAUDE.md updated** in the same change, per the working agreement.
+
+## Two judgement calls worth flagging
+
+- **I kept the order number as the `<h1>`** where the design puts the retailer's name. The design carries the id in its own breadcrumb; this desk already draws one from the shell, and CLAUDE.md records the mono order number as one of three things making a drill-down read as a different screen. Taking the design's h1 meant a second breadcrumb or a lost one.
+- **The rail is first in the DOM, second on screen.** Below 1024px this screen is a sales agent's, and lines-first would bury `Mark Packed` under a dozen of them.
+
+## On verification
+
+A clean sweep is also what a screen that never rendered produces, so I didn't rely on it. A probe confirms the grid computes to `695.109px 408.891px` at 1440 (the design's 1.7 : 1), rail at x=987, `sticky`; one column at 390. The two states draw different controls, proving the per-screen fixture answers. The four new spec rows were each checked against a deliberately broken copy — ten mutations, ten failures.
+
+Worth knowing: my first round of break-tests was **unreliable** — `perl -i` was silently not writing on this filesystem, so one "pass" was really an unmade edit. I caught it and redid them with a method I verified. Had I not, I'd have reported a spec row as pinning something it didn't.
+
+🏁 success · 114 turns · 3133.3s · $12.1885157
+All four gates pass: typecheck, lint, format, test (5401 across 358 suites), build. Plus a browser render, which is the gate that isn't a gate.
+
+## What I did
+
+**1. Cloud Run service-account suffix — already implemented; I verified it rather than rebuilding it.**
+
+The `resolve` job plus `.github/actions/gcp-auth` already do exactly what you asked. I confirmed by execution against a throwaway git fixture, not by reading:
+
+| Case | Result |
+|---|---|
+| tag cut from `main` | `prod` |
+| tag cut from a feature branch | `dev` |
+| `PRODUCTION_BRANCH` names no branch | `dev` + `::warning::` |
+| main tag, `origin` unreachable | `prod` (not demoted by a blip) |
+
+The suffix goes on the address's *local part* (`udaan-deployer-prod@…`), and it's on the Cloud Run services and Secret Manager entries too, not just the account.
+
+**One thing to action on your side:** this repo has no `main` — branches are `development` and `master`. So on the default, every release resolves to `dev`. Set `vars.PRODUCTION_BRANCH` to `development`. There's no `gh` credential in this sandbox, so I can't set it from here.
+
+**2. Pending items by priority.** The top four board items are all blocked on decisions or hardware, so I used the method plan.md records as having found real work 4/4 times — grepping for gaps the repo's own comments admit to. It hit again, in `AdminOrderDetailScreen.css`: *"this screen is not in the harness's list."* The desk's most-used drill-down had never been drawn by anything.
+
+Adding it to the harness found a genuine defect on the first run: `order-return__credit-note` at **99 × 18**, the same control `apps/web` floored earlier — it survived because these sheets were *copied* into `apps/admin`, so improving the original never reached the twin. Neither workspace's sweep could see it: each finds its own rule exactly as written.
+
+That composed with item (6), which turned out to be mis-filed. It's listed as "design judgement", but `design.html:239–322` draws the order drill-down *in full* — so it was transcription, not judgement. It's now the design's two-column grid; the other four drill-downs genuinely aren't drawn and stay judgement.
+
+**3. plan.md and CLAUDE.md updated** in the same change, per the working agreement.
+
+## Two judgement calls worth flagging
+
+- **I kept the order number as the `<h1>`** where the design puts the retailer's name. The design carries the id in its own breadcrumb; this desk already draws one from the shell, and CLAUDE.md records the mono order number as one of three things making a drill-down read as a different screen. Taking the design's h1 meant a second breadcrumb or a lost one.
+- **The rail is first in the DOM, second on screen.** Below 1024px this screen is a sales agent's, and lines-first would bury `Mark Packed` under a dozen of them.
+
+## On verification
+
+A clean sweep is also what a screen that never rendered produces, so I didn't rely on it. A probe confirms the grid computes to `695.109px 408.891px` at 1440 (the design's 1.7 : 1), rail at x=987, `sticky`; one column at 390. The two states draw different controls, proving the per-screen fixture answers. The four new spec rows were each checked against a deliberately broken copy — ten mutations, ten failures.
+
+Worth knowing: my first round of break-tests was **unreliable** — `perl -i` was silently not writing on this filesystem, so one "pass" was really an unmade edit. I caught it and redid them with a method I verified. Had I not, I'd have reported a spec row as pinning something it didn't.
+[2026-09-14 16:12:35] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=24d43fd0
+💬 I'll look at what's changed before committing.
+🔧 Bash {"command":"git status && echo \"---DIFFSTAT---\" && git diff --stat","description":"Show status and diffstat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git diff -- apps/admin/src/screens/AdminOrderDetailScreen.css apps/admin/src/screens/AdminOrderDetailScreen.…
+   ↳ diff --git a/apps/admin/src/screens/AdminOrderDetailScreen.css b/apps/admin/src/screens/AdminOrderDetailScreen.css index ddec314..7bc6ef5 100644 --- a/apps/admi…
+🔧 Bash {"command":"git diff -- tools/render/run.mjs tools/render/fixtures.ts apps/admin/src/styles/stylesheets.spec.ts | head -…
+   ↳ diff --git a/apps/admin/src/styles/stylesheets.spec.ts b/apps/admin/src/styles/stylesheets.spec.ts index 575ff8f..17dd6b2 100644 --- a/apps/admin/src/styles/sty…
+🔧 Bash {"command":"npm run typecheck 2>&1 | tail -20","description":"Run typecheck","timeout":600000}
+   ↳ > @udaan/api@0.1.0 typecheck > tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit && tsc -p prisma/tsconfig.json --noEmit   > @udaan/landing@0.…
+🔧 Bash {"command":"npm run lint 2>&1 | tail -15 && echo \"=== FORMAT ===\" && npm run format:check 2>&1 | tail -8","description…
+   ↳ > udaan@0.1.0 lint > eslint .  === FORMAT ===  > udaan@0.1.0 format:check > prettier --check .  Checking formatting... All matched files use Prettier code style…
+🔧 Bash {"command":"npm test 2>&1 | tail -60","description":"Run the full test suite","timeout":600000}
