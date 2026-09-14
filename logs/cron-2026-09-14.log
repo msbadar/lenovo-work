@@ -2788,3 +2788,123 @@ Everything up-to-date
    ↳  M CLAUDE.md  M apps/admin/src/screens/DayRangeForm.tsx  M apps/admin/src/screens/ReportRangeForm.css  M apps/admin/src/styles/stylesheets.spec.ts  M packages/w…
 💬 `dist/` is ignored — the harness build can't leak into the commit. Final gates:
 🔧 Bash {"command":"npm run typecheck 2>&1 | grep -cE \"error TS\"; npm run lint 2>&1 | tail -2; npm test 2>&1 | grep -E \"Test …
+   ↳ 0 > eslint .   Test Files  10 passed (10)       Tests  144 passed (144)  Test Files  22 passed (22)       Tests  313 passed (313)  Test Files  17 passed (17)   …
+🔧 Bash {"command":"npm run build 2>&1 | tail -2 && echo \"=== ALL FOUR GATES PASS ===\"","description":"Final build gate","time…
+   ↳ dist/assets/react-DAMD_DlO.js               192.89 kB │ gzip: 60.51 kB │ map: 909.44 kB ✓ built in 3.91s === ALL FOUR GATES PASS ===
+🔧 Bash {"command":"git add -A && git commit -q -F - <<'EOF' && git log --oneline -2\nfix(admin): a sentence about both dates, a…
+   ↳ Checking formatting... All matched files use Prettier code style! eb2a020 fix(admin): a sentence about both dates, attached to one of them 0590a09 feat(deploy):…
+💬 Done. Two commits, all four gates passing at each.
+
+## 1. Cloud Run dev/prod suffix — verified and committed
+
+This was already implemented in the working tree. I verified it end-to-end rather than assuming: a `resolve` job answers `prod`/`dev` and every GCP name carries it — service account, Cloud Run services, migration job, and the six Secret Manager entries (now twelve).
+
+Two decisions in it are worth knowing, and both are right:
+- **Containment, not equality.** A commit is prod when it's an ancestor of `vars.PRODUCTION_BRANCH`. Equality reads fine in a diff but the trigger is a `v*` tag — `refs/tags/v1.4.2` is never `refs/heads/main`, so a ref-name rule would have sent *every release* to dev.
+- **The derivation lives in one composite action** (`.github/actions/gcp-auth`), not four inline copies, because a drifted copy there doesn't fail — it authenticates as the other environment.
+
+## 2. Pending items by priority — the browser render
+
+The top actionable item was rendering. Everything else in plan.md is blocked on a decision (the staff page needs "may an ops admin invite another ops admin?") or on hardware (Cloud Run needs a real GCP project). Meanwhile three changes had landed unrendered, **two of them fixed by arithmetic over two sheets** — which this repo records as the weaker method.
+
+So I stood up Chromium (playwright + a private Debian sysroot, ~20 min outside the tree) and ran eight measurement groups over fourteen screens at six widths, plus an agent's phone round.
+
+**The arithmetic held** — filter rows top-align everywhere, buttons are the design's 14px/9px with the 44px floor, the tab strip's 1px lap survives its clip, `DeskSelect`'s provisional option works, no overflow anywhere, contrast passes AA.
+
+**It found one defect**, the same shape as all eleven found by the five earlier runs — a rule present, correct, attached to the wrong box:
+
+`DayRangeForm` passed the window's hint as `TextField`'s `hint` on the **From** field. Hints render *inside* their field's box, so From stood a line taller than To, and `.report-range`'s `align-items: flex-end` drew **the two dates of one pair 22.8px apart at every width** — on the queue, the audit trail, and all six reports.
+
+Two things I'd flag:
+- **CLAUDE.md had the wrong half written down.** Its filter-row note names `.report-range` as the case where `flex-end` is "exactly right". It was the case where it was wrong. I corrected that line rather than only fixing the code.
+- The same cause was an **accessibility** defect — all three callers word the hint as a sentence about leaving *both* bounds blank, so on the To field a screen reader said nothing.
+
+The fix isn't the alignment (bottom-aligning is genuinely right once children are equal); it's that the hint belongs to the form. That needed `TextField` to *merge* a caller's `aria-describedby` rather than overwrite it — `{...rest}` is spread above the attribute, so a passed id was silently replaced, and on a field with neither error nor hint, replaced with `undefined`. Nobody passed one, which is why it never broke anything and why nothing caught it.
+
+## 3. plan.md updated
+
+Closed the tab-strip item (rendered, both halves correct) and the responsive item's open half. Recorded the new defect and, honestly, two things I chose *not* to do: `DayRangeForm` wraps to two lines between ~700–1200px (pre-existing, documented behaviour, a flex-distribution decision rather than a bug), and I added the harness-commit question as a real decision — six runs, eleven defects, **every one invisible to a green suite**, against CLAUDE.md's standing "out of scope for v1", with the fixtures rather than the browser being the part that would rot.
+
+**Not verified here:** nothing in the Cloud Run path has touched GCP — no `gcloud`, no project. Service-account roles, Secret Manager entries, and whether a revision starts are still unknown. And `any-pointer: coarse` was Chromium's emulation agreeing with itself; a real touch device remains owed.
+
+🏁 success · 131 turns · 4108.4s · $11.121798499999997
+Done. Two commits, all four gates passing at each.
+
+## 1. Cloud Run dev/prod suffix — verified and committed
+
+This was already implemented in the working tree. I verified it end-to-end rather than assuming: a `resolve` job answers `prod`/`dev` and every GCP name carries it — service account, Cloud Run services, migration job, and the six Secret Manager entries (now twelve).
+
+Two decisions in it are worth knowing, and both are right:
+- **Containment, not equality.** A commit is prod when it's an ancestor of `vars.PRODUCTION_BRANCH`. Equality reads fine in a diff but the trigger is a `v*` tag — `refs/tags/v1.4.2` is never `refs/heads/main`, so a ref-name rule would have sent *every release* to dev.
+- **The derivation lives in one composite action** (`.github/actions/gcp-auth`), not four inline copies, because a drifted copy there doesn't fail — it authenticates as the other environment.
+
+## 2. Pending items by priority — the browser render
+
+The top actionable item was rendering. Everything else in plan.md is blocked on a decision (the staff page needs "may an ops admin invite another ops admin?") or on hardware (Cloud Run needs a real GCP project). Meanwhile three changes had landed unrendered, **two of them fixed by arithmetic over two sheets** — which this repo records as the weaker method.
+
+So I stood up Chromium (playwright + a private Debian sysroot, ~20 min outside the tree) and ran eight measurement groups over fourteen screens at six widths, plus an agent's phone round.
+
+**The arithmetic held** — filter rows top-align everywhere, buttons are the design's 14px/9px with the 44px floor, the tab strip's 1px lap survives its clip, `DeskSelect`'s provisional option works, no overflow anywhere, contrast passes AA.
+
+**It found one defect**, the same shape as all eleven found by the five earlier runs — a rule present, correct, attached to the wrong box:
+
+`DayRangeForm` passed the window's hint as `TextField`'s `hint` on the **From** field. Hints render *inside* their field's box, so From stood a line taller than To, and `.report-range`'s `align-items: flex-end` drew **the two dates of one pair 22.8px apart at every width** — on the queue, the audit trail, and all six reports.
+
+Two things I'd flag:
+- **CLAUDE.md had the wrong half written down.** Its filter-row note names `.report-range` as the case where `flex-end` is "exactly right". It was the case where it was wrong. I corrected that line rather than only fixing the code.
+- The same cause was an **accessibility** defect — all three callers word the hint as a sentence about leaving *both* bounds blank, so on the To field a screen reader said nothing.
+
+The fix isn't the alignment (bottom-aligning is genuinely right once children are equal); it's that the hint belongs to the form. That needed `TextField` to *merge* a caller's `aria-describedby` rather than overwrite it — `{...rest}` is spread above the attribute, so a passed id was silently replaced, and on a field with neither error nor hint, replaced with `undefined`. Nobody passed one, which is why it never broke anything and why nothing caught it.
+
+## 3. plan.md updated
+
+Closed the tab-strip item (rendered, both halves correct) and the responsive item's open half. Recorded the new defect and, honestly, two things I chose *not* to do: `DayRangeForm` wraps to two lines between ~700–1200px (pre-existing, documented behaviour, a flex-distribution decision rather than a bug), and I added the harness-commit question as a real decision — six runs, eleven defects, **every one invisible to a green suite**, against CLAUDE.md's standing "out of scope for v1", with the fixtures rather than the browser being the part that would rot.
+
+**Not verified here:** nothing in the Cloud Run path has touched GCP — no `gcloud`, no project. Service-account roles, Secret Manager entries, and whether a revision starts are still unknown. And `any-pointer: coarse` was Chromium's emulation agreeing with itself; a real touch device remains owed.
+[2026-09-14 06:38:56] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=4fcc6bbf
+💬 I'll check what's actually changed before committing.
+🔧 Bash {"command":"git status --porcelain && echo \"---STAGED---\" && git diff --cached --stat && echo \"---UNSTAGED---\" && gi…
+   ↳ ---STAGED--- ---UNSTAGED---
+🔧 Bash {"command":"git status && echo \"---BRANCH---\" && git log --oneline -3 && git status -sb","description":"Confirm clean …
+   ↳ On branch development Your branch is ahead of 'origin/development' by 2 commits.   (use "git push" to publish your local commits)  nothing to commit, working tr…
+🔧 Bash {"command":"git show --stat --format='%H%n%an  %ad%n%n%s%n%n%b' eb2a020","description":"Inspect the most recent commit"}
+   ↳ eb2a020d2dcbcf7d59505841b8cc089277baa63e Udaan Dev  Mon Sep 14 01:08:23 2026 +0000  fix(admin): a sentence about both dates, attached to one of them  Rendered t…
+💬 **There is nothing to commit — the working tree is clean.**
+
+```
+On branch development
+nothing to commit, working tree clean
+```
+
+No staged changes, no unstaged changes, no untracked files.
+
+The work you're probably thinking of is already committed as `eb2a020 fix(admin): a sentence about both dates, attached to one of them` — the `DayRangeForm` hint fix, `TextField`'s merged `aria-describedby`, both spec files, the `stylesheets.spec.ts` rows, and the `CLAUDE.md`/`plan.md` updates, all in one commit.
+
+Two things worth knowing:
+
+- **The branch is ahead of `origin/development` by 2 commits** (`eb2a020` and `0590a09`). If what you wanted was for that work to leave this machine, the command is a push — say the word and I'll run it.
+- I did not run the four gates, since nothing changed since the commit that presumably passed them.
+
+🏁 success · 4 turns · 18.2s · $0.7277801
+**There is nothing to commit — the working tree is clean.**
+
+```
+On branch development
+nothing to commit, working tree clean
+```
+
+No staged changes, no unstaged changes, no untracked files.
+
+The work you're probably thinking of is already committed as `eb2a020 fix(admin): a sentence about both dates, attached to one of them` — the `DayRangeForm` hint fix, `TextField`'s merged `aria-describedby`, both spec files, the `stylesheets.spec.ts` rows, and the `CLAUDE.md`/`plan.md` updates, all in one commit.
+
+Two things worth knowing:
+
+- **The branch is ahead of `origin/development` by 2 commits** (`eb2a020` and `0590a09`). If what you wanted was for that work to leave this machine, the command is a push — say the word and I'll run it.
+- I did not run the four gates, since nothing changed since the commit that presumably passed them.
+To github.com:msbadar/udaan.git
+   1873cc8..eb2a020  development -> development
+[2026-09-14 06:40:04] Checking if container is running...
+[2026-09-14 06:40:04] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
