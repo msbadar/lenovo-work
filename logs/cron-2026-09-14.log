@@ -11075,3 +11075,96 @@ To github.com:msbadar/udaan.git
    ↳ The file /work/plan.md has been updated successfully. (file state is current in your context — no need to Read it back)
 🔧 Bash {"command":"npm run format:check 2>&1 | tail -2; grep -n \"27 of the desk's\\|17 of \\`apps/web\\`'s 24\\|remaining \\*\…
    ↳ Checking formatting... All matched files use Prettier code style! --- (stale refs above, if any) ---
+[2026-09-14 21:10:04] Checking if container is running...
+[2026-09-14 21:10:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+💬 Let me re-verify the two style specs after my final comment edits:
+🔧 Bash {"command":"npx vitest run src/styles/stylesheets.spec.ts --root apps/admin 2>&1 | grep \"Tests \"; npx vitest run src/s…
+   ↳       Tests  76 passed (76)       Tests  29 passed (29)       Tests  26 passed (26)
+💬 All green. Here's where things landed.
+
+## 1. Cloud Run service-account suffix — already implemented
+
+This was done before this session. `resolve` answers `prod`/`dev` by **containment** in `vars.PRODUCTION_BRANCH` (not ref-name equality — the trigger is a `v*` tag, so equality would send every release to dev), and `.github/actions/gcp-auth` puts the suffix on the address's *local part*. `cloud-run-deploy.spec.ts` passes 17/17.
+
+**One thing needs your decision, not code:** this repo has no `main` — branches are `development` and `master` — so on the default every release resolves to `dev`. The workflow now warns loudly about it, but `vars.PRODUCTION_BRANCH` has to be set in repository settings, which I can't reach from here.
+
+## 2. Pending items by priority
+
+Only two of the ten board items weren't blocked on a decision or hardware. Both are now closed.
+
+**(18) — the render harness's screen list.** Added the last 15 screens with typed fixtures; the harness now draws **every leaf route on both clients** (36/36 desk, 23/23 shop). The `*` splats are excluded deliberately and that's written down, since an omission-by-decision is indistinguishable from an oversight from the sweep's side.
+
+It found **7 real defects** — the base rate held, five batches for five:
+
+- **`Call driver` at 88 × 32** — a `tel:` link, drawn only while a van is out, on the screen a shopkeeper opens *because* they want the driver, on the client that is a phone. Least defensible target in the repo.
+- The saved list's `Remove` at **36 × 14** and `RENAME` at 46 × 14 — smallest targets on either client.
+- `Delete this list` 87 × 31; the replenishment queue's Add 79 × 32 (the button that commits a purchase).
+- The schemes list's `Retired` chip at **2.87:1** — this is `OrderStatusBadge`'s cancelled defect on its structural twin, including why the obvious repair is unavailable. `#fdf1ef` stopped being a literal and became `--color-accent-tint` on the way.
+
+Re-rendered after: **target size 0 on both clients, 0 desk contrast, 0 unfixtured reads**, all four fonts confirmed loaded. Remaining findings are all pre-existing items (1), (17), (22).
+
+**(21) — `format.ts`.** 11 untested formatters now covered, file at 100%, package 77.35 → 84.81. Writing it turned up that three formatters render in the *runner's* timezone — correct in the product, a trap in a spec, since this sandbox is UTC and every developer of this product isn't. Also two wrong examples in `format.ts`'s own comments: `3 Sep` renders `3 Sept` (CLDR data — recorded, and all date assertions moved to March so a September row can't go red on one leg of CI's Node matrix), and `3 Sep, 7–11am` isn't a shape `DeliverySlot` can produce at all — that one fixed. Caught by `tsc`, not vitest.
+
+## 3. plan.md updated
+
+Both items struck through with what they returned; new § "The formatters"; the harness screen list closed; counts corrected (`apps/web` had **six** screens left, not five — third time a count about that list was wrong).
+
+I also ran the admissions grep the board recommends. **It came back empty — first miss in eight attempts**, and I recorded that rather than omitting it: the sweep finds gaps somebody *wrote down*, so it goes quiet exactly when that backlog is worked off. All seven of (18)'s defects were in screens no comment anywhere had flagged.
+
+**Verification discipline:** every new spec row was checked against a deliberately broken copy — 6 style rows fail one-for-one, the timezone rows fail exactly 2 when the local-midnight parse is reverted. Four gates pass: typecheck, lint, format, **5435 tests across 358 suites**, build.
+
+**Not verified here:** anything needing a database, Docker, or GCP — unchanged from the standing list.
+
+🏁 success · 262 turns · 3015.5s · $28.586117800000004
+All green. Here's where things landed.
+
+## 1. Cloud Run service-account suffix — already implemented
+
+This was done before this session. `resolve` answers `prod`/`dev` by **containment** in `vars.PRODUCTION_BRANCH` (not ref-name equality — the trigger is a `v*` tag, so equality would send every release to dev), and `.github/actions/gcp-auth` puts the suffix on the address's *local part*. `cloud-run-deploy.spec.ts` passes 17/17.
+
+**One thing needs your decision, not code:** this repo has no `main` — branches are `development` and `master` — so on the default every release resolves to `dev`. The workflow now warns loudly about it, but `vars.PRODUCTION_BRANCH` has to be set in repository settings, which I can't reach from here.
+
+## 2. Pending items by priority
+
+Only two of the ten board items weren't blocked on a decision or hardware. Both are now closed.
+
+**(18) — the render harness's screen list.** Added the last 15 screens with typed fixtures; the harness now draws **every leaf route on both clients** (36/36 desk, 23/23 shop). The `*` splats are excluded deliberately and that's written down, since an omission-by-decision is indistinguishable from an oversight from the sweep's side.
+
+It found **7 real defects** — the base rate held, five batches for five:
+
+- **`Call driver` at 88 × 32** — a `tel:` link, drawn only while a van is out, on the screen a shopkeeper opens *because* they want the driver, on the client that is a phone. Least defensible target in the repo.
+- The saved list's `Remove` at **36 × 14** and `RENAME` at 46 × 14 — smallest targets on either client.
+- `Delete this list` 87 × 31; the replenishment queue's Add 79 × 32 (the button that commits a purchase).
+- The schemes list's `Retired` chip at **2.87:1** — this is `OrderStatusBadge`'s cancelled defect on its structural twin, including why the obvious repair is unavailable. `#fdf1ef` stopped being a literal and became `--color-accent-tint` on the way.
+
+Re-rendered after: **target size 0 on both clients, 0 desk contrast, 0 unfixtured reads**, all four fonts confirmed loaded. Remaining findings are all pre-existing items (1), (17), (22).
+
+**(21) — `format.ts`.** 11 untested formatters now covered, file at 100%, package 77.35 → 84.81. Writing it turned up that three formatters render in the *runner's* timezone — correct in the product, a trap in a spec, since this sandbox is UTC and every developer of this product isn't. Also two wrong examples in `format.ts`'s own comments: `3 Sep` renders `3 Sept` (CLDR data — recorded, and all date assertions moved to March so a September row can't go red on one leg of CI's Node matrix), and `3 Sep, 7–11am` isn't a shape `DeliverySlot` can produce at all — that one fixed. Caught by `tsc`, not vitest.
+
+## 3. plan.md updated
+
+Both items struck through with what they returned; new § "The formatters"; the harness screen list closed; counts corrected (`apps/web` had **six** screens left, not five — third time a count about that list was wrong).
+
+I also ran the admissions grep the board recommends. **It came back empty — first miss in eight attempts**, and I recorded that rather than omitting it: the sweep finds gaps somebody *wrote down*, so it goes quiet exactly when that backlog is worked off. All seven of (18)'s defects were in screens no comment anywhere had flagged.
+
+**Verification discipline:** every new spec row was checked against a deliberately broken copy — 6 style rows fail one-for-one, the timezone rows fail exactly 2 when the local-midnight parse is reverted. Four gates pass: typecheck, lint, format, **5435 tests across 358 suites**, build.
+
+**Not verified here:** anything needing a database, Docker, or GCP — unchanged from the standing list.
+[2026-09-14 21:10:43] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=500959e9
+💬 I'll look at what's changed before committing.
+🔧 Bash {"command":"git status && echo \"---DIFFSTAT---\" && git diff --stat","description":"Check git status and diffstat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git diff -- apps/admin/src/screens/AdminReplenishmentScreen.css apps/admin/src/screens/AdminSchemesScreen.cs…
+   ↳ diff --git a/apps/admin/src/screens/AdminReplenishmentScreen.css b/apps/admin/src/screens/AdminReplenishmentScreen.css index 8d02074..cf23ca6 100644 --- a/apps/…
+🔧 Bash {"command":"git diff -- packages/client-core/src/format.ts packages/client-core/vitest.config.ts tools/render/run.mjs","…
+   ↳ diff --git a/packages/client-core/src/format.ts b/packages/client-core/src/format.ts index 7a24fd9..402be9f 100644 --- a/packages/client-core/src/format.ts +++ …
+🔧 Bash {"command":"git diff -- apps/web/src/styles/stylesheets.spec.ts apps/admin/src/styles/stylesheets.spec.ts | head -150","…
+   ↳ diff --git a/apps/admin/src/styles/stylesheets.spec.ts b/apps/admin/src/styles/stylesheets.spec.ts index 83c149b..84ea212 100644 --- a/apps/admin/src/styles/sty…
+💬 This is the nineteenth render run's fixes. Let me run the four gates before committing.
+🔧 Bash {"command":"npm run typecheck 2>&1 | tail -20","description":"Run typecheck","timeout":600000}
+   ↳ > @udaan/api@0.1.0 typecheck > tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit && tsc -p prisma/tsconfig.json --noEmit   > @udaan/landing@0.…
+🔧 Bash {"command":"npm run lint 2>&1 | tail -15","description":"Run lint","timeout":600000}
+   ↳ > udaan@0.1.0 lint > eslint .
+🔧 Bash {"command":"npm test 2>&1 | tail -40","description":"Run full test suite","timeout":600000}
