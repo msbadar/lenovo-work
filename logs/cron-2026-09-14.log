@@ -10056,3 +10056,90 @@ To github.com:msbadar/udaan.git
 🔧 Bash {"command":"VITE_API_BASE_URL=http://127.0.0.1:4317/api/v1 tools/render/run.sh 2>&1 | grep -v 'MODULE_TYPELESS\\|Reparsi…
 [2026-09-14 19:50:05] Checking if container is running...
 [2026-09-14 19:50:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳ === findings: 450 === --- clipped text (15) --- --- contrast (435) ---
+🔧 TaskUpdate {"taskId":"3","status":"completed"}
+   ↳ Updated task #3 status
+💬 Done. Here's what happened.
+
+## 1. Cloud Run service-account suffix — already implemented
+
+This was built on 2026-09-13 and hardened on 2026-09-14. Verified rather than assumed: `cloud-run-deploy.spec.ts` passes 17/17, and the mechanism is exactly what you described — `.github/workflows/deploy-cloud-run.yml:173-178` resolves `prod` when the commit is contained in `vars.PRODUCTION_BRANCH` (default `main`) and `dev` otherwise, and `.github/actions/gcp-auth` puts `-dev`/`-prod` on the service account's local part.
+
+**One thing you should know:** this repo has no `main` — the branches are `development` and `master`. So on the default, every release resolves to `dev` and `prod` is unreachable. The workflow now raises a `::warning::` about it rather than failing, but **the fix is a repository setting I can't make from here**: set `vars.PRODUCTION_BRANCH` to the branch you actually release from.
+
+## 2. Pending work by priority
+
+The top-ranked items in plan.md are all blocked on decisions or access. The highest **unblocked** item was (18) — screens the render harness doesn't draw. I took the top three desk rows plus the two `apps/web` screens.
+
+**First, a defect in the harness's own installer.** `setup.sh` reported "Chromium already downloaded… Done" with no browser on the machine. Two linked causes, both silent: the guard tested a directory `playwright install` creates *before* downloading, and the `ldd` safety net searched for `chrome-headless-shell`, which `playwright install chromium` never produces — so **that net had never once executed**. Widening it made it fire for the first time and it immediately found `libxcb-render0` missing from `PACKAGES`.
+
+**Then seven screens, four defects.** Three are target size on `apps/web`, which had been at 0 since the ninth run:
+
+- catalog filter row: two pills at 65×27 and 85×27, sort label at 112×28
+- product page's pack-size `<select>` at **332×41** — byte-identical to `.checkout__select select`, which was floored on the ninth run while this copy wasn't. That's the twin problem for the third time.
+
+The fourth is a judgement, left open as (22): the buying board's `__meta` cell drops the *expected date* entirely rather than truncating it, because that cell holds two facts joined by `·` while the documented rule assumes one.
+
+Both remaining cash forms — the trip manifest's and the credit line's — measured clean, which is what the batch was assembled for.
+
+**A correction worth flagging:** while counting screens programmatically I found CLAUDE.md's "17 of `apps/web`'s 24" had been counting screen *entries*, not routes. It was 15. Both files now say 17 and explain why.
+
+**One thing I got wrong and caught:** my first fix for a false-positive alignment finding compared margin boxes — elegant, and it silently disabled the check, since flex containers align margin boxes by definition. A synthetic test caught it; the narrower exemption is verified to still fire.
+
+## Verification
+
+Four gates green: typecheck, lint, format, **5406 tests / 358 suites**, build. Final render: `target size` **0** and `row alignment` **0** on both clients; the remaining 450 findings are the known palette item (1) and the name-ellipsis judgements. Every new spec row was checked against a reverted sheet, and the new `reach` against a deliberately broken selector.
+
+`plan.md` and `CLAUDE.md` are updated in the same working tree. I haven't committed — let me know if you'd like me to.
+
+🏁 success · 202 turns · 5167.6s · $18.26001340000001
+Done. Here's what happened.
+
+## 1. Cloud Run service-account suffix — already implemented
+
+This was built on 2026-09-13 and hardened on 2026-09-14. Verified rather than assumed: `cloud-run-deploy.spec.ts` passes 17/17, and the mechanism is exactly what you described — `.github/workflows/deploy-cloud-run.yml:173-178` resolves `prod` when the commit is contained in `vars.PRODUCTION_BRANCH` (default `main`) and `dev` otherwise, and `.github/actions/gcp-auth` puts `-dev`/`-prod` on the service account's local part.
+
+**One thing you should know:** this repo has no `main` — the branches are `development` and `master`. So on the default, every release resolves to `dev` and `prod` is unreachable. The workflow now raises a `::warning::` about it rather than failing, but **the fix is a repository setting I can't make from here**: set `vars.PRODUCTION_BRANCH` to the branch you actually release from.
+
+## 2. Pending work by priority
+
+The top-ranked items in plan.md are all blocked on decisions or access. The highest **unblocked** item was (18) — screens the render harness doesn't draw. I took the top three desk rows plus the two `apps/web` screens.
+
+**First, a defect in the harness's own installer.** `setup.sh` reported "Chromium already downloaded… Done" with no browser on the machine. Two linked causes, both silent: the guard tested a directory `playwright install` creates *before* downloading, and the `ldd` safety net searched for `chrome-headless-shell`, which `playwright install chromium` never produces — so **that net had never once executed**. Widening it made it fire for the first time and it immediately found `libxcb-render0` missing from `PACKAGES`.
+
+**Then seven screens, four defects.** Three are target size on `apps/web`, which had been at 0 since the ninth run:
+
+- catalog filter row: two pills at 65×27 and 85×27, sort label at 112×28
+- product page's pack-size `<select>` at **332×41** — byte-identical to `.checkout__select select`, which was floored on the ninth run while this copy wasn't. That's the twin problem for the third time.
+
+The fourth is a judgement, left open as (22): the buying board's `__meta` cell drops the *expected date* entirely rather than truncating it, because that cell holds two facts joined by `·` while the documented rule assumes one.
+
+Both remaining cash forms — the trip manifest's and the credit line's — measured clean, which is what the batch was assembled for.
+
+**A correction worth flagging:** while counting screens programmatically I found CLAUDE.md's "17 of `apps/web`'s 24" had been counting screen *entries*, not routes. It was 15. Both files now say 17 and explain why.
+
+**One thing I got wrong and caught:** my first fix for a false-positive alignment finding compared margin boxes — elegant, and it silently disabled the check, since flex containers align margin boxes by definition. A synthetic test caught it; the narrower exemption is verified to still fire.
+
+## Verification
+
+Four gates green: typecheck, lint, format, **5406 tests / 358 suites**, build. Final render: `target size` **0** and `row alignment` **0** on both clients; the remaining 450 findings are the known palette item (1) and the name-ellipsis judgements. Every new spec row was checked against a reverted sheet, and the new `reach` against a deliberately broken selector.
+
+`plan.md` and `CLAUDE.md` are updated in the same working tree. I haven't committed — let me know if you'd like me to.
+[2026-09-14 19:56:31] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=d4d8fe5d
+💬 I'll look at what's changed before committing.
+🔧 Bash {"command":"git status && echo \"=== DIFFSTAT ===\" && git diff --stat","description":"Check status and diffstat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git diff -- apps/web/src/catalog/FilterBar.css apps/web/src/catalog/ProductScreen.css apps/web/src/styles/st…
+   ↳ diff --git a/apps/web/src/catalog/FilterBar.css b/apps/web/src/catalog/FilterBar.css index eccb3ec..88f5f08 100644 --- a/apps/web/src/catalog/FilterBar.css +++ …
+🔧 Bash {"command":"git diff -- tools/render/run.mjs tools/render/checks.mjs tools/render/setup.sh","description":"Diff the harn…
+   ↳ diff --git a/tools/render/checks.mjs b/tools/render/checks.mjs index 972c3cd..5889995 100644 --- a/tools/render/checks.mjs +++ b/tools/render/checks.mjs @@ -296…
+🔧 Bash {"command":"git diff -- tools/render/fixtures.ts | head -120; echo \"=== PLAN ===\"; git diff -- plan.md | head -150","d…
+   ↳ diff --git a/tools/render/fixtures.ts b/tools/render/fixtures.ts index c2f644c..195c3fe 100644 --- a/tools/render/fixtures.ts +++ b/tools/render/fixtures.ts @@ …
+💬 Changes look complete and coherent. Running the gates before committing, as the repo requires.
+🔧 Bash {"command":"npm run typecheck 2>&1 | tail -20","description":"Run typecheck across workspaces","timeout":600000}
+   ↳ > @udaan/api@0.1.0 typecheck > tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit && tsc -p prisma/tsconfig.json --noEmit   > @udaan/landing@0.…
+🔧 Bash {"command":"npm run lint 2>&1 | tail -15","description":"Run lint","timeout":600000}
+   ↳ > udaan@0.1.0 lint > eslint .
+🔧 Bash {"command":"npm test 2>&1 | tail -45","description":"Run the full test suite","timeout":600000}
