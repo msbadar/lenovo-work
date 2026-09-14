@@ -9348,3 +9348,94 @@ To github.com:msbadar/udaan.git
 🔧 Bash {"command":"VITE_API_BASE_URL=http://127.0.0.1:4317/api/v1 tools/render/run.sh > /tmp/render-final.txt 2>&1; echo \"EXIT…
    ↳ Command running in background with ID: b8e5nnk60. Output is being written to: /tmp/claude-10001/-work/d14bf79b-91e2-4ee7-9842-648bdf6440f0/tasks/b8e5nnk60.outpu…
 🔧 Bash {"command":"until grep -q \"EXIT:\" /tmp/claude-10001/-work/d14bf79b-91e2-4ee7-9842-648bdf6440f0/tasks/b8e5nnk60.output …
+   ↳ === run finished === 39:=== findings: 367 === 41:--- clipped text (12) --- 52:--- contrast (355) --- admin: 7  web: 73 target-size: 0 signed-out lines: 20 no fi…
+💬 The committed state reproduces exactly: 367 findings, admin 7, web 73, **target size 0**, all four fonts loaded, no unfixtured reads. Let me do a final check.
+🔧 TaskUpdate {"taskId":"4","status":"completed"}
+   ↳ Updated task #4 status
+🔧 Bash {"command":"git status --short; echo \"=== stat ===\"; git diff --stat","description":"Final git status"}
+   ↳  M CLAUDE.md  M apps/admin/src/auth/screens/auth-screens.css  M apps/admin/src/styles/stylesheets.spec.ts  M apps/web/src/auth/screens/auth-screens.css  M apps/…
+💬 Done. Here's what happened across the three TODO items.
+
+## 1. Cloud Run dev/prod service-account suffix — already implemented
+
+This one needed verifying, not building. It landed on 2026-09-13/14 and is complete:
+
+- `resolve` job answers `prod`/`dev` by **containment** in `vars.PRODUCTION_BRANCH` (default `main`), not ref-name equality — equality would send every `v*` tag to dev, since `refs/tags/v1.4.2` is never `refs/heads/main`.
+- `.github/actions/gcp-auth` puts the suffix on the **local part** (`udaan-deployer-prod@…`), refuses a non-service-account address and one already carrying a suffix.
+- The suffix also covers the Cloud Run services, the migration job and the twelve Secret Manager entries.
+- `cloud-run-deploy.spec.ts` passes 17/17 and pins all of it.
+
+**One thing to decide, and it's why this still costs you something:** this repo has no `main`. The branches are `development` and `master`, so the default resolves `no-branch` → dev on *every* release. The workflow now raises a `::warning::` naming the variable rather than failing silently, but until `vars.PRODUCTION_BRANCH` is set in repository settings, nothing can reach prod. I can't read or write repo variables from here — that's a one-setting change on your side.
+
+## 2. Pending work by priority → plan.md item (18)
+
+Of the open items, one was blocked on nothing. I took the cheapest, most-overlooked row: the signed-out screens.
+
+They turned out not to be merely *unlisted* but **unreachable** — the harness seeds a session before every screen, and these nine are exactly the ones `RedirectIfSignedIn` sends away. Adding them as paths would have drawn the home screen nine more times and reported `/login` covered, which is the silent-green failure the harness exists to prevent. So a screen can now say `signedOut`, which buys a second browser context (`addInitScript` is per-context; there's no way to un-seed one page), with one shared route handler so the fixture matcher isn't duplicated.
+
+**It found a real defect at the first drawing, matching the base rate plan.md predicts.** The Password / Phone OTP switch on `/login` measures **156 × 38** on the desk and **158 × 37** on the shop at 390px — under the 44px floor, on the first screen every operator and every shopkeeper sees, on the two buttons somebody who can't remember a password uses to reach the OTP. Both clients carry a byte-identical copy and *neither* had ever been floored — the twin problem in its first stage rather than its second. Fixed under `any-pointer: coarse` in both, with identically-worded spec rows so the next divergence shows in a diff. Both rows were checked against reverted sheets first (each fails), then re-rendered: **`target size` is now 0 on both clients**.
+
+Two things plan.md and CLAUDE.md said about this row were wrong, and only opening the route tables showed it: there are **nine** screens across **two** clients, not eleven across three; and they don't all "read nothing" — both invitation screens preview their token, so without a fixture they'd draw a refusal branch and sweep clean. Both corrected.
+
+## 3. plan.md updated
+
+New item (20) with its narrative; (18) recounted (22/36 desk, 17/24 web); the harness-screen-list row struck through with its two errors recorded; item (1) sharpened (3.80:1 white-on-rust is now *every* primary action, including `Sign in`); item (2) annotated with the verification. I also ran the repo's own "grep for admitted gaps" check — it surfaced one genuinely untracked item, `client-core`'s eleven untested `format.ts` formatters, admitted in two config files and on no board. Filed as (21).
+
+**Gates:** typecheck, lint, format, test (5403 across 358 suites) and build all pass. Final harness run on the committed state: 367 findings, admin 7, web 73, target size 0, all four fonts loaded, no unfixtured reads.
+
+The 7 remaining desk findings are all item (17) — store/product names ellipsing in list tables — which is a recorded judgement, not a defect, and depends on how long real store names are. Nothing here has met a database, so I left it open rather than guessing.
+
+🏁 success · 154 turns · 2859.3s · $12.036062000000005
+Done. Here's what happened across the three TODO items.
+
+## 1. Cloud Run dev/prod service-account suffix — already implemented
+
+This one needed verifying, not building. It landed on 2026-09-13/14 and is complete:
+
+- `resolve` job answers `prod`/`dev` by **containment** in `vars.PRODUCTION_BRANCH` (default `main`), not ref-name equality — equality would send every `v*` tag to dev, since `refs/tags/v1.4.2` is never `refs/heads/main`.
+- `.github/actions/gcp-auth` puts the suffix on the **local part** (`udaan-deployer-prod@…`), refuses a non-service-account address and one already carrying a suffix.
+- The suffix also covers the Cloud Run services, the migration job and the twelve Secret Manager entries.
+- `cloud-run-deploy.spec.ts` passes 17/17 and pins all of it.
+
+**One thing to decide, and it's why this still costs you something:** this repo has no `main`. The branches are `development` and `master`, so the default resolves `no-branch` → dev on *every* release. The workflow now raises a `::warning::` naming the variable rather than failing silently, but until `vars.PRODUCTION_BRANCH` is set in repository settings, nothing can reach prod. I can't read or write repo variables from here — that's a one-setting change on your side.
+
+## 2. Pending work by priority → plan.md item (18)
+
+Of the open items, one was blocked on nothing. I took the cheapest, most-overlooked row: the signed-out screens.
+
+They turned out not to be merely *unlisted* but **unreachable** — the harness seeds a session before every screen, and these nine are exactly the ones `RedirectIfSignedIn` sends away. Adding them as paths would have drawn the home screen nine more times and reported `/login` covered, which is the silent-green failure the harness exists to prevent. So a screen can now say `signedOut`, which buys a second browser context (`addInitScript` is per-context; there's no way to un-seed one page), with one shared route handler so the fixture matcher isn't duplicated.
+
+**It found a real defect at the first drawing, matching the base rate plan.md predicts.** The Password / Phone OTP switch on `/login` measures **156 × 38** on the desk and **158 × 37** on the shop at 390px — under the 44px floor, on the first screen every operator and every shopkeeper sees, on the two buttons somebody who can't remember a password uses to reach the OTP. Both clients carry a byte-identical copy and *neither* had ever been floored — the twin problem in its first stage rather than its second. Fixed under `any-pointer: coarse` in both, with identically-worded spec rows so the next divergence shows in a diff. Both rows were checked against reverted sheets first (each fails), then re-rendered: **`target size` is now 0 on both clients**.
+
+Two things plan.md and CLAUDE.md said about this row were wrong, and only opening the route tables showed it: there are **nine** screens across **two** clients, not eleven across three; and they don't all "read nothing" — both invitation screens preview their token, so without a fixture they'd draw a refusal branch and sweep clean. Both corrected.
+
+## 3. plan.md updated
+
+New item (20) with its narrative; (18) recounted (22/36 desk, 17/24 web); the harness-screen-list row struck through with its two errors recorded; item (1) sharpened (3.80:1 white-on-rust is now *every* primary action, including `Sign in`); item (2) annotated with the verification. I also ran the repo's own "grep for admitted gaps" check — it surfaced one genuinely untracked item, `client-core`'s eleven untested `format.ts` formatters, admitted in two config files and on no board. Filed as (21).
+
+**Gates:** typecheck, lint, format, test (5403 across 358 suites) and build all pass. Final harness run on the committed state: 367 findings, admin 7, web 73, target size 0, all four fonts loaded, no unfixtured reads.
+
+The 7 remaining desk findings are all item (17) — store/product names ellipsing in list tables — which is a recorded judgement, not a defect, and depends on how long real store names are. Nothing here has met a database, so I left it open rather than guessing.
+[2026-09-14 18:17:48] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=ead3ba19
+💬 I'll look at what's changed before committing.
+🔧 Bash {"command":"git status && echo \"---DIFFSTAT---\" && git diff --stat","description":"Show status and diffstat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git diff -- apps/admin/src/auth/screens/auth-screens.css apps/web/src/auth/screens/auth-screens.css apps/adm…
+   ↳ diff --git a/apps/admin/src/auth/screens/auth-screens.css b/apps/admin/src/auth/screens/auth-screens.css index 70e6b6e..5be08a3 100644 --- a/apps/admin/src/auth…
+🔧 Bash {"command":"git diff -- tools/render/run.mjs tools/render/fixtures.ts tools/render/README.md","description":"Diff the re…
+   ↳ diff --git a/tools/render/README.md b/tools/render/README.md index 1b8dbd5..b8265b4 100644 --- a/tools/render/README.md +++ b/tools/render/README.md @@ -176,6 +…
+🔧 Bash {"command":"git diff -- CLAUDE.md plan.md | head -260","description":"Diff the documentation changes"}
+   ↳ <persisted-output> Output too large (64KB). Full output saved to: /home/sandbox/.claude/projects/-work/ead3ba19-996e-4e6f-ade3-ff1011137ade/tool-results/bforkdt…
+💬 The change is coherent: a target-size fix on `/login` in both clients, the harness change that found it, and the docs. Let me verify the gates before committing.
+🔧 Bash {"command":"npx tsc -p tools/render/tsconfig.json 2>&1 | tail -20; echo \"TSC_EXIT=$?\"","description":"Typecheck the re…
+   ↳ npm notice npm notice New major version of npm available! 10.8.2 -> 12.0.2 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2 npm notice To u…
+🔧 Bash {"command":"npm test --workspace @udaan/web -- --run src/styles/stylesheets.spec.ts 2>&1 | tail -20","description":"Run …
+   ↳ > @udaan/web@0.1.0 test > vitest run --run src/styles/stylesheets.spec.ts    RUN  v3.2.7 /work/apps/web   ✓ src/styles/stylesheets.spec.ts (22 tests) 18ms   Tes…
+🔧 Bash {"command":"npm test --workspace @udaan/admin -- --run src/styles/stylesheets.spec.ts 2>&1 | tail -20","description":"Ru…
+   ↳ > @udaan/admin@0.1.0 test > vitest run --run src/styles/stylesheets.spec.ts    RUN  v3.2.7 /work/apps/admin   ✓ src/styles/stylesheets.spec.ts (74 tests) 118ms …
+🔧 Bash {"command":"npm run format:check 2>&1 | tail -15","description":"Check formatting","timeout":300000}
+   ↳ > udaan@0.1.0 format:check > prettier --check .  Checking formatting... All matched files use Prettier code style!
+🔧 Bash {"command":"npm run lint 2>&1 | tail -25","description":"Lint all workspaces","timeout":600000}
+   ↳ > udaan@0.1.0 lint > eslint .
