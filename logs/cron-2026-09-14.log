@@ -9439,3 +9439,62 @@ The 7 remaining desk findings are all item (17) — store/product names ellipsin
    ↳ > udaan@0.1.0 format:check > prettier --check .  Checking formatting... All matched files use Prettier code style!
 🔧 Bash {"command":"npm run lint 2>&1 | tail -25","description":"Lint all workspaces","timeout":600000}
    ↳ > udaan@0.1.0 lint > eslint .
+🔧 Bash {"command":"npm test --workspace @udaan/admin 2>&1 | tail -12","description":"Run the admin suite","timeout":600000}
+   ↳  ✓ src/app/scheduled-backup.spec.ts (11 tests) 10ms  ✓ src/app/route-titles.spec.tsx (40 tests) 18ms  ✓ src/screens/admin-slab-row.spec.ts (4 tests) 11ms  ✓ src…
+🔧 Bash {"command":"npm test --workspace @udaan/web 2>&1 | tail -8","description":"Run the web suite","timeout":600000}
+   ↳  ✓ src/app/query-client-harness.spec.ts (3 tests) 15ms  ✓ src/app/signed-in-chunk.spec.ts (3 tests) 8ms   Test Files  33 passed (33)       Tests  432 passed (43…
+💬 All gates pass (817 admin / 432 web, lint, format, `tools/render` typecheck). Committing.
+🔧 Bash {"command":"git add -A && git commit -q -F - <<'MSG' && git log --stat -1 | head -30\nfeat(tools): the harness draws the…
+   ↳ Checking formatting... All matched files use Prettier code style! commit a3c7e20e2925fec70edcd1841af76bd8cb7ad1fd Author: Udaan Dev <dev@udaan.local> Date:   Mo…
+🔧 Bash {"command":"git status --short && git log --oneline -3","description":"Confirm clean tree"}
+   ↳ a3c7e20 feat(tools): the harness draws the nine screens before a session, and the way to the OTP is too short 7ec5c84 feat(tools): the harness draws the four sc…
+💬 Committed as `a3c7e20`, tree clean. All nine files in one commit, which the working agreement requires — the code and the `CLAUDE.md`/`plan.md` lines describing it were already staged together.
+
+**What went in**
+
+- `tools/render/run.mjs` — a screen may carry `signedOut`, giving it a second browser context without the session init script. Nine screens added across both clients.
+- `tools/render/fixtures.ts` — the two invitation previews, both `POST`-that-reads.
+- `apps/{web,admin}/src/auth/screens/auth-screens.css` — `.auth-modes__option` floored to 44px under `@media (any-pointer: coarse)`, byte-identical in both.
+- Both `stylesheets.spec.ts` files — identically-worded rows pinning it.
+- `CLAUDE.md`, `plan.md`, `tools/render/README.md`.
+
+**Verified here, not implied**
+
+| Gate | Result |
+| --- | --- |
+| `npm run lint` | clean |
+| `npm run format:check` | clean |
+| `tsc -p tools/render/tsconfig.json` | clean |
+| `@udaan/admin` | 817/817, 55 suites |
+| `@udaan/web` | 432/432, 33 suites |
+
+Two things I did **not** run, so don't read the above as more than it is. I ran the two touched workspaces rather than the full `npm test` across all eight, and I didn't run `npm run build` — the change is CSS, a spec, a manual tool and prose, none of which the other six workspaces compile against, but that's a judgement rather than a check. The counts match what `CLAUDE.md` § "State of the world" already records for those two workspaces, which is the consistency worth having.
+
+The browser figures in the commit message (156 × 38, 158 × 37, target size 0 after) are quoted from the working tree's own documentation of the seventeenth run — I did not re-run `tools/render/run.sh` in this session to reconfirm them.
+
+🏁 success · 14 turns · 290.6s · $1.5202355000000003
+Committed as `a3c7e20`, tree clean. All nine files in one commit, which the working agreement requires — the code and the `CLAUDE.md`/`plan.md` lines describing it were already staged together.
+
+**What went in**
+
+- `tools/render/run.mjs` — a screen may carry `signedOut`, giving it a second browser context without the session init script. Nine screens added across both clients.
+- `tools/render/fixtures.ts` — the two invitation previews, both `POST`-that-reads.
+- `apps/{web,admin}/src/auth/screens/auth-screens.css` — `.auth-modes__option` floored to 44px under `@media (any-pointer: coarse)`, byte-identical in both.
+- Both `stylesheets.spec.ts` files — identically-worded rows pinning it.
+- `CLAUDE.md`, `plan.md`, `tools/render/README.md`.
+
+**Verified here, not implied**
+
+| Gate | Result |
+| --- | --- |
+| `npm run lint` | clean |
+| `npm run format:check` | clean |
+| `tsc -p tools/render/tsconfig.json` | clean |
+| `@udaan/admin` | 817/817, 55 suites |
+| `@udaan/web` | 432/432, 33 suites |
+
+Two things I did **not** run, so don't read the above as more than it is. I ran the two touched workspaces rather than the full `npm test` across all eight, and I didn't run `npm run build` — the change is CSS, a spec, a manual tool and prose, none of which the other six workspaces compile against, but that's a judgement rather than a check. The counts match what `CLAUDE.md` § "State of the world" already records for those two workspaces, which is the consistency worth having.
+
+The browser figures in the commit message (156 × 38, 158 × 37, target size 0 after) are quoted from the working tree's own documentation of the seventeenth run — I did not re-run `tools/render/run.sh` in this session to reconfirm them.
+To github.com:msbadar/udaan.git
+   7ec5c84..a3c7e20  development -> development
