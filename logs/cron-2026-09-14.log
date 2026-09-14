@@ -11573,3 +11573,92 @@ The leads fix is latent, so a clean sweep doesn't prove it. Let me convert it in
 🔧 Bash {"command":"npx prettier --check . > /tmp/f2.log 2>&1; echo \"FORMAT=$?\"; tail -4 /tmp/f2.log","description":"Check for…
    ↳ FORMAT=0 Checking formatting... All matched files use Prettier code style!
 🔧 Bash {"command":"npm run typecheck > /tmp/tc2.log 2>&1; echo \"TYPECHECK=$?\"; npm run lint > /tmp/l2.log 2>&1; echo \"LINT=$…
+[2026-09-14 22:40:11] Checking if container is running...
+[2026-09-14 22:40:11] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳ TYPECHECK=0 LINT=0 TEST=0 BUILD=0
+🔧 Bash {"command":"grep -E \"Tests \" /tmp/t2.log | tail -8; echo \"=== api/mobile ===\"; grep -E \"^Tests:\" /tmp/t2.log; echo…
+   ↳       Tests  167 passed (167)       Tests  313 passed (313)       Tests  196 passed (196)       Tests  821 passed (821)       Tests  193 passed (193)       Test…
+💬 All four gates pass (5437 tests, 358 suites). Here's where things landed.
+
+## 1. Cloud Run service-account suffix — already implemented
+
+This was done on 2026-09-13/14, not outstanding. I verified rather than assumed:
+
+- `.github/actions/gcp-auth` derives `udaan-deployer-**prod**@…` / `-dev@…`, putting the suffix on the address's *local part*, and refuses an address that already carries one.
+- The `resolve` job picks `prod`/`dev` by **containment** in `vars.PRODUCTION_BRANCH` (default `main`), not ref equality — which matters because the trigger is a `v*` tag, and `refs/tags/v1.4.2` is never `refs/heads/main`.
+- `cloud-run-deploy.spec.ts` passes 17/17.
+
+**One thing you should act on:** this repo has no `main` (branches are `development` and `master`), so every release currently resolves to `dev`. The workflow now warns about it rather than doing it silently, but the fix is one repository variable — `vars.PRODUCTION_BRANCH`. There's no `gh` credential in this sandbox, so I can't set or read it.
+
+## 2. Pending items by priority
+
+The board's top seven are all blocked on decisions or access I can't supply (palette sign-off, the branch variable, GCP access, touch hardware). The highest-priority genuinely implementable item was **(22)**, and I closed it.
+
+**I did not implement the fix plan.md ranked first, because rendering disproved it.** plan.md said to give `expectedAt` its own column since "the board has the width at 768 and above". The render says the elastic Order cell is **240px at 1024 and 241px at 768** — *narrower at the wider viewport*, because the nav rail docks at 1024 and takes 236px first. A fourth track would have left the PO code ~120px against the ~144px it needs in mono, trading a deleted date for a clipped identifier. So it wraps instead (the established suppliers treatment).
+
+**Result: 13 → 10 findings on the desk**, the three that went being exactly the purchase-order rows, nothing new, both desk fonts confirmed loaded so the fit numbers are exact.
+
+Reading the cell's other four callers then turned up something the sweeps structurally can't find: `__meta` is documented as holding *one* expendable fact, but **four of its five callers hold two or three**. The lead queue's is `ownerName · phone · city`, and `lead.phone` appears there and **nowhere else in the application** — the row's disclosure holds only the GSTIN and timestamp, and a lead has no detail screen. Three files (the suppliers sheet, its spec row, and CLAUDE.md) all claimed the supplier cell was "the only phone number anywhere on this desk"; that was false from the day it was written. All three corrected.
+
+Two honest caveats on that second fix:
+- It is a **guard, not a repair** — I measured it. With a 35-character owner name *and* the rule reverted, it still doesn't clip; that table has far more room than suppliers' 120px. Both the sheet and the spec row say so explicitly, so nobody later reads it as a defect found in the wild.
+- Trips and orders have the same multi-fact shape but both open records naming every fact, so I deliberately left them and recorded that they were considered.
+
+Both new spec rows were checked against reverted copies: each fails one-for-one, nothing spuriously.
+
+## 3. plan.md and CLAUDE.md updated
+
+Item (22) closed with why the ranked fix was wrong; a new § on the leads cell; the twentieth-run entry; counts moved to 5437/821. One correction worth flagging: the contrast total measures **505**, not the 502 plan.md recorded — `apps/web` was untouched this session, so the discrepancy is in the board, not the client.
+
+One process note, since it's the kind of thing this repo tracks: the "admissions grep" came back empty again (now 9 attempts, 1 miss). The single candidate it raised — `audit.ts` claiming "no route anywhere returns a row" — is a false positive; that's the file's motivating preamble, and the contract *is* the route.
+
+🏁 success · 87 turns · 3727.9s · $8.099133250000003
+All four gates pass (5437 tests, 358 suites). Here's where things landed.
+
+## 1. Cloud Run service-account suffix — already implemented
+
+This was done on 2026-09-13/14, not outstanding. I verified rather than assumed:
+
+- `.github/actions/gcp-auth` derives `udaan-deployer-**prod**@…` / `-dev@…`, putting the suffix on the address's *local part*, and refuses an address that already carries one.
+- The `resolve` job picks `prod`/`dev` by **containment** in `vars.PRODUCTION_BRANCH` (default `main`), not ref equality — which matters because the trigger is a `v*` tag, and `refs/tags/v1.4.2` is never `refs/heads/main`.
+- `cloud-run-deploy.spec.ts` passes 17/17.
+
+**One thing you should act on:** this repo has no `main` (branches are `development` and `master`), so every release currently resolves to `dev`. The workflow now warns about it rather than doing it silently, but the fix is one repository variable — `vars.PRODUCTION_BRANCH`. There's no `gh` credential in this sandbox, so I can't set or read it.
+
+## 2. Pending items by priority
+
+The board's top seven are all blocked on decisions or access I can't supply (palette sign-off, the branch variable, GCP access, touch hardware). The highest-priority genuinely implementable item was **(22)**, and I closed it.
+
+**I did not implement the fix plan.md ranked first, because rendering disproved it.** plan.md said to give `expectedAt` its own column since "the board has the width at 768 and above". The render says the elastic Order cell is **240px at 1024 and 241px at 768** — *narrower at the wider viewport*, because the nav rail docks at 1024 and takes 236px first. A fourth track would have left the PO code ~120px against the ~144px it needs in mono, trading a deleted date for a clipped identifier. So it wraps instead (the established suppliers treatment).
+
+**Result: 13 → 10 findings on the desk**, the three that went being exactly the purchase-order rows, nothing new, both desk fonts confirmed loaded so the fit numbers are exact.
+
+Reading the cell's other four callers then turned up something the sweeps structurally can't find: `__meta` is documented as holding *one* expendable fact, but **four of its five callers hold two or three**. The lead queue's is `ownerName · phone · city`, and `lead.phone` appears there and **nowhere else in the application** — the row's disclosure holds only the GSTIN and timestamp, and a lead has no detail screen. Three files (the suppliers sheet, its spec row, and CLAUDE.md) all claimed the supplier cell was "the only phone number anywhere on this desk"; that was false from the day it was written. All three corrected.
+
+Two honest caveats on that second fix:
+- It is a **guard, not a repair** — I measured it. With a 35-character owner name *and* the rule reverted, it still doesn't clip; that table has far more room than suppliers' 120px. Both the sheet and the spec row say so explicitly, so nobody later reads it as a defect found in the wild.
+- Trips and orders have the same multi-fact shape but both open records naming every fact, so I deliberately left them and recorded that they were considered.
+
+Both new spec rows were checked against reverted copies: each fails one-for-one, nothing spuriously.
+
+## 3. plan.md and CLAUDE.md updated
+
+Item (22) closed with why the ranked fix was wrong; a new § on the leads cell; the twentieth-run entry; counts moved to 5437/821. One correction worth flagging: the contrast total measures **505**, not the 502 plan.md recorded — `apps/web` was untouched this session, so the discrepancy is in the board, not the client.
+
+One process note, since it's the kind of thing this repo tracks: the "admissions grep" came back empty again (now 9 attempts, 1 miss). The single candidate it raised — `audit.ts` claiming "no route anywhere returns a row" — is a false positive; that's the file's motivating preamble, and the contract *is* the route.
+[2026-09-14 22:42:32] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=2cfa5f74
+💬 I'll look at what's changed before committing.
+🔧 Bash {"command":"git status && echo \"---DIFFSTAT---\" && git diff --stat","description":"Check status and diff stat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git diff -- apps/admin plan.md && echo \"===UNTRACKED===\" && cat apps/admin/src/screens/AdminPurchaseOrders…
+   ↳ diff --git a/apps/admin/src/screens/AdminLeadsScreen.css b/apps/admin/src/screens/AdminLeadsScreen.css index 96cc5a4..c0ae37b 100644 --- a/apps/admin/src/screen…
+🔧 Bash {"command":"git diff -- CLAUDE.md","description":"Review CLAUDE.md diff"}
+   ↳ <persisted-output> Output too large (51.5KB). Full output saved to: /home/sandbox/.claude/projects/-work/2cfa5f74-a0d0-4080-99ba-c603c16a61ca/tool-results/b73hi…
+💬 Changes look coherent — code, spec rows, and both docs in one set. Running the gates the working agreement requires before committing.
+🔧 Bash {"command":"npm run typecheck 2>&1 | tail -20","description":"Run typecheck across workspaces","timeout":600000}
+   ↳ > @udaan/api@0.1.0 typecheck > tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit && tsc -p prisma/tsconfig.json --noEmit   > @udaan/landing@0.…
+🔧 Bash {"command":"npm run lint 2>&1 | tail -15 && echo \"===FORMAT===\" && npm run format:check 2>&1 | tail -15","description"…
+   ↳ > udaan@0.1.0 lint > eslint .  ===FORMAT===  > udaan@0.1.0 format:check > prettier --check .  Checking formatting... All matched files use Prettier code style!
+🔧 Bash {"command":"npm test 2>&1 | tail -60","description":"Run full test suite","timeout":600000}
