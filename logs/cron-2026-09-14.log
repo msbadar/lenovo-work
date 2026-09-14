@@ -7680,3 +7680,136 @@ But there is one item that is real work and is *not* blocked — plan.md names i
 🔧 Bash {"command":"git status --short && git diff --stat","description":"Review changed files"}
    ↳  M CLAUDE.md  M plan.md  M tools/render/README.md  M tools/render/fixtures.ts  M tools/render/run.mjs  CLAUDE.md                | 102 ++++++++++++++++++++++++++…
 🔧 Bash {"command":"until grep -q \"EXIT=\" /tmp/render-final.log 2>/dev/null; do sleep 20; done; grep -E \"=== findings|reach o…
+   ↳ === findings: 257 === --- new screens --- 5
+💬 Final state confirmed: **257 findings, no missed reaches, no unfixtured reads.** Let me review the diff:
+🔧 Bash {"command":"git diff tools/render/run.mjs | head -120","description":"Review run.mjs diff"}
+   ↳ diff --git a/tools/render/run.mjs b/tools/render/run.mjs index 8b6f66a..8744392 100644 --- a/tools/render/run.mjs +++ b/tools/render/run.mjs @@ -24,13 +24,16 @@…
+💬 The diff is clean and all four gates pass. Here's where things landed.
+
+## 1. Cloud Run dev/prod suffix — already implemented; I verified it rather than rebuilt it
+
+This was done on 2026-09-13. Rather than take that on trust, I lifted the `resolve` job's shell verbatim into a throwaway git fixture and **executed all four cases**:
+
+| Case | Result |
+|---|---|
+| commit on `main`, `PRODUCTION_BRANCH=main` | `prod` / contained |
+| commit on a feature branch | `dev` / not-contained |
+| `PRODUCTION_BRANCH` naming no branch | `dev` / no-branch |
+| main commit, `origin` unreachable, ref in clone | `prod` (not demoted by the blip) |
+
+The rule you stated — main is prod, everything else dev — is exactly the implemented default (`vars.PRODUCTION_BRANCH || 'main'`), and the suffix goes on the address's *local part* in `.github/actions/gcp-auth`, which also refuses a base that already carries one. **The one thing still outstanding is a setting, not code**: this repo has no `main` (branches are `development`/`master`), so on the default every release resolves to dev. It now warns loudly instead of doing that silently, but `vars.PRODUCTION_BRANCH` needs setting — and nothing in this sandbox can read or write repository variables.
+
+## 2. Pending items by priority
+
+plan.md's table is eight items: five blocked on a decision someone outside the code must make (palettes, the staff-page access question), two on hardware/GCP access, one deferred on its own trigger. I ran the board's own more reliable check — grepping for gaps the repo's *comments* admit to — with two subagents. That came back empty for stale comments, and the remaining admissions (mail/SMS/payment providers) are all account-blocked, confirming the board is honest.
+
+But one item was real work and not on the table: **the render harness could not reach checkout past its first step**, recorded in three files' prose. I closed it.
+
+- Fixtures now match on **method**, can be a **refusal**, and a **screen can carry its own** — checkout's two states disagree about one request (one needs `POST /orders` to succeed, the other needs it refused).
+- `scope` separated from `expect`: these states *replace* the screen rather than covering it, so scoping to the marker would have measured a Callout and called the page under it clean.
+
+**Result — the two states are geometrically clean** (no overflow, clipped text, misaligned rows, empty bands, or small targets at any of five widths). The 5 new contrast findings are all existing members of plan.md item (1); the sharpest is that `View order` and `Review new total` are both 3.80:1 white-on-rust — the same as `Place order`, so the primary action measures 3.80 in all three of its states.
+
+Two things worth flagging:
+
+- **Adding it found a defect in the harness itself.** The matcher keyed on path alone while `shopFixtures` answers `GET /api/v1/orders` with the order *list* — so the first POST this harness ever made was handed an `OrderSummary[]` as an `OrderDetail`. The fixture was right and the contract was right; the *matcher* was wrong, which is a door the typed fixtures don't watch.
+- **I proved the assertion can fail** before trusting the clean result: breaking `Order placed`'s `expect` produced exactly 5 `reach opened nothing` findings, one per width.
+
+## 3. Docs updated
+plan.md (item 15, the three-dialogs section, the Cloud Run re-verification) and CLAUDE.md (§ "The render harness", § "State of the world" with the fourteenth run, § "What has never been run here").
+
+**Gates:** typecheck, lint, format, build all pass; 5396 tests across 358 suites pass — matching the recorded totals exactly, so no count lines needed changing.
+
+Two caveats, stated plainly: nothing here touched a database, Docker or GCP, so the Cloud Run path remains unexecuted end-to-end; and I've **left the changes uncommitted** since you didn't ask for a commit — say the word and I'll commit them to `development`.
+
+🏁 success · 122 turns · 2224.5s · $12.586449499999997
+The diff is clean and all four gates pass. Here's where things landed.
+
+## 1. Cloud Run dev/prod suffix — already implemented; I verified it rather than rebuilt it
+
+This was done on 2026-09-13. Rather than take that on trust, I lifted the `resolve` job's shell verbatim into a throwaway git fixture and **executed all four cases**:
+
+| Case | Result |
+|---|---|
+| commit on `main`, `PRODUCTION_BRANCH=main` | `prod` / contained |
+| commit on a feature branch | `dev` / not-contained |
+| `PRODUCTION_BRANCH` naming no branch | `dev` / no-branch |
+| main commit, `origin` unreachable, ref in clone | `prod` (not demoted by the blip) |
+
+The rule you stated — main is prod, everything else dev — is exactly the implemented default (`vars.PRODUCTION_BRANCH || 'main'`), and the suffix goes on the address's *local part* in `.github/actions/gcp-auth`, which also refuses a base that already carries one. **The one thing still outstanding is a setting, not code**: this repo has no `main` (branches are `development`/`master`), so on the default every release resolves to dev. It now warns loudly instead of doing that silently, but `vars.PRODUCTION_BRANCH` needs setting — and nothing in this sandbox can read or write repository variables.
+
+## 2. Pending items by priority
+
+plan.md's table is eight items: five blocked on a decision someone outside the code must make (palettes, the staff-page access question), two on hardware/GCP access, one deferred on its own trigger. I ran the board's own more reliable check — grepping for gaps the repo's *comments* admit to — with two subagents. That came back empty for stale comments, and the remaining admissions (mail/SMS/payment providers) are all account-blocked, confirming the board is honest.
+
+But one item was real work and not on the table: **the render harness could not reach checkout past its first step**, recorded in three files' prose. I closed it.
+
+- Fixtures now match on **method**, can be a **refusal**, and a **screen can carry its own** — checkout's two states disagree about one request (one needs `POST /orders` to succeed, the other needs it refused).
+- `scope` separated from `expect`: these states *replace* the screen rather than covering it, so scoping to the marker would have measured a Callout and called the page under it clean.
+
+**Result — the two states are geometrically clean** (no overflow, clipped text, misaligned rows, empty bands, or small targets at any of five widths). The 5 new contrast findings are all existing members of plan.md item (1); the sharpest is that `View order` and `Review new total` are both 3.80:1 white-on-rust — the same as `Place order`, so the primary action measures 3.80 in all three of its states.
+
+Two things worth flagging:
+
+- **Adding it found a defect in the harness itself.** The matcher keyed on path alone while `shopFixtures` answers `GET /api/v1/orders` with the order *list* — so the first POST this harness ever made was handed an `OrderSummary[]` as an `OrderDetail`. The fixture was right and the contract was right; the *matcher* was wrong, which is a door the typed fixtures don't watch.
+- **I proved the assertion can fail** before trusting the clean result: breaking `Order placed`'s `expect` produced exactly 5 `reach opened nothing` findings, one per width.
+
+## 3. Docs updated
+plan.md (item 15, the three-dialogs section, the Cloud Run re-verification) and CLAUDE.md (§ "The render harness", § "State of the world" with the fourteenth run, § "What has never been run here").
+
+**Gates:** typecheck, lint, format, build all pass; 5396 tests across 358 suites pass — matching the recorded totals exactly, so no count lines needed changing.
+
+Two caveats, stated plainly: nothing here touched a database, Docker or GCP, so the Cloud Run path remains unexecuted end-to-end; and I've **left the changes uncommitted** since you didn't ask for a commit — say the word and I'll commit them to `development`.
+[2026-09-14 15:17:27] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=26aa4dc9
+💬 I'll look at what's actually changed before committing.
+🔧 Bash {"command":"git status && echo \"--- STAT ---\" && git diff --stat","description":"Show status and diff stat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git diff tools/render/run.mjs tools/render/fixtures.ts","description":"Show render harness code diff"}
+   ↳ diff --git a/tools/render/fixtures.ts b/tools/render/fixtures.ts index cf4b8d0..9a76184 100644 --- a/tools/render/fixtures.ts +++ b/tools/render/fixtures.ts @@ …
+🔧 Bash {"command":"git diff tools/render/README.md && echo \"=== PLAN ===\" && git diff plan.md","description":"Show README and…
+   ↳ diff --git a/tools/render/README.md b/tools/render/README.md index ccace8b..1b8dbd5 100644 --- a/tools/render/README.md +++ b/tools/render/README.md @@ -61,7 +6…
+🔧 Bash {"command":"git diff CLAUDE.md","description":"Show CLAUDE.md diff"}
+   ↳ diff --git a/CLAUDE.md b/CLAUDE.md index 5ec4982..5bae319 100644 --- a/CLAUDE.md +++ b/CLAUDE.md @@ -2236,9 +2236,35 @@ being collected on rather than a redesig…
+🔧 Bash {"command":"npx tsc -p tools/render/tsconfig.json 2>&1 | tail -20; echo \"tsc exit: $?\"","description":"Typecheck rende…
+   ↳ npm notice npm notice New major version of npm available! 10.8.2 -> 12.0.2 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2 npm notice To u…
+🔧 Bash {"command":"npm run format:check 2>&1 | tail -15","description":"Check formatting","timeout":240000}
+   ↳ > udaan@0.1.0 format:check > prettier --check .  Checking formatting... All matched files use Prettier code style!
+🔧 Bash {"command":"npm run lint 2>&1 | tail -25","description":"Run lint","timeout":600000}
+   ↳ > udaan@0.1.0 lint > eslint .
+💬 All three relevant gates pass (typecheck covers `fixtures.ts`, lint covers `run.mjs`, prettier covers the markdown). Committing.
+🔧 Bash {"command":"git add -A && git commit -F - <<'EOF'\nfeat(tools): the harness learns to post, and draws the two screens be…
+   ↳ Checking formatting... All matched files use Prettier code style! [development 19086d9] feat(tools): the harness learns to post, and draws the two screens behin…
+💬 Committed as `19086d9` on `development`, 5 files, +446/−67.
+
+**What was in the tree** — one coherent change: the render harness learning to answer mutations so `apps/web`'s checkout past its first step could be drawn, plus the documentation of it in `CLAUDE.md`, `plan.md` and `tools/render/README.md`. The code half is `Fixture.method`/`error`/`status`, per-screen `fixtures`, and `scope` separating from `expect`.
+
+**Gates run** — the three that reach these files:
+- `npx tsc -p tools/render/tsconfig.json` — clean (this is what `npm run typecheck`'s second half does, and it's the check that watches `fixtures.ts` against the `@udaan/shared` contracts)
+- `npm run lint` — clean
+- `npm run format:check` — clean (also re-ran in the commit hook)
+
+**Not run**, since nothing in this diff is inside a workspace: `npm test` and `npm run build`. No source, spec or config in any of the eight workspaces changed — `tools/` is deliberately not a workspace and is in neither script. Say the word if you'd like the full four anyway.
+
+**Not pushed** — you asked for a commit, and `origin/development` is now one behind. `git push` when you want it up.
+
+One thing worth flagging rather than burying: the commit message and the docs report a browser run (five widths, both fonts loaded, the 3.80:1 figures, the deliberately-broken-`expect` check). I did not run the harness in this session — I committed work that was already in the working tree, and those numbers came from the diff's own prose. If you want them independently confirmed, `tools/render/run.sh web` is the command, and per `CLAUDE.md` it needs `setup.sh` first on a fresh machine.
+
+🏁 success · 9 turns · 126.4s · $1.2515071999999998
+Committed as `19086d9` on `development`, 5 files, +446/−67.
+
+**What was in the tree** — one coherent change: the render harness learning to answer mutations so `apps/web`'s checkout past its first step could be drawn, plus the documentation of it in `CLAUDE.md`, `plan.md` and `tools/render/README.md`. The code half is `Fixture.method`/`error`/`status`, per-screen `fixtures`, and `scope` separating from `expect`.
+
+**Gates run** — the three that reach these files:
+- `npx tsc -p tools/render/tsconfig.json` — clean (this is what `npm run typecheck`'s second half does, and it's the check that watches `fixtures.ts` against the `@udaan/shared` contracts)
+- `npm run lint` — clean
+- `npm run format:check` — clean (also re-ran in the commit hook)
+
+**Not run**, since nothing in this diff is inside a workspace: `npm test` and `npm run build`. No source, spec or config in any of the eight workspaces changed — `tools/` is deliberately not a workspace and is in neither script. Say the word if you'd like the full four anyway.
+
+**Not pushed** — you asked for a commit, and `origin/development` is now one behind. `git push` when you want it up.
+
+One thing worth flagging rather than burying: the commit message and the docs report a browser run (five widths, both fonts loaded, the 3.80:1 figures, the deliberately-broken-`expect` check). I did not run the harness in this session — I committed work that was already in the working tree, and those numbers came from the diff's own prose. If you want them independently confirmed, `tools/render/run.sh web` is the command, and per `CLAUDE.md` it needs `setup.sh` first on a fresh machine.
+To github.com:msbadar/udaan.git
+   cea80fe..19086d9  development -> development
