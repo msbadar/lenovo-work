@@ -8787,3 +8787,91 @@ Now CLAUDE.md, which this repo requires in the same commit. Let me update the fo
 🔧 Bash {"command":"npm run format:check 2>&1 | tail -5; echo \"=== LINT ===\"; npm run lint 2>&1 | tail -3; echo \"=== TYPECHEC…
    ↳ > udaan@0.1.0 format:check > prettier --check .  Checking formatting... All matched files use Prettier code style! === LINT === > udaan@0.1.0 lint > eslint .  =…
 🔧 Bash {"command":"npm test > /tmp/t2.log 2>&1; echo \"TEST EXIT: $?\"; npm run build > /tmp/b2.log 2>&1; echo \"BUILD EXIT: $?…
+[2026-09-14 17:20:05] Checking if container is running...
+[2026-09-14 17:20:06] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳ TEST EXIT: 0 BUILD EXIT: 0
+💬 All five gates green. Let me update tasks and review the final diff.
+🔧 TaskUpdate {"taskId":"2","status":"completed"}
+   ↳ Updated task #2 status
+🔧 TaskUpdate {"taskId":"3","status":"completed"}
+   ↳ Updated task #3 status
+🔧 Bash {"command":"git status --short; echo \"=== DIFFSTAT ===\"; git diff --stat","description":"Review final changes"}
+   ↳  M CLAUDE.md  M apps/admin/src/components/DeskSearchField.css  M apps/admin/src/styles/stylesheets.spec.ts  M plan.md  M tools/render/fixtures.ts  M tools/rende…
+🔧 Bash {"command":"git diff apps/admin/src/components/DeskSearchField.css","description":"Review the CSS fix"}
+   ↳ diff --git a/apps/admin/src/components/DeskSearchField.css b/apps/admin/src/components/DeskSearchField.css index 15fa510..e5f6979 100644 --- a/apps/admin/src/co…
+💬 Done. Here's what happened.
+
+## 1. Cloud Run env suffix — already implemented; verified, not rebuilt
+
+This was done in two commits dated 2026-09-13/14. I verified it rather than duplicating it:
+
+- **Branch → environment** (`resolve` job): `prod` if the commit is an *ancestor* of `vars.PRODUCTION_BRANCH` (default `main`), else `dev`. Containment rather than equality is deliberate — the trigger is a `v*` tag, and `refs/tags/v1.4.2` is never equal to `refs/heads/main`, so a name-equality rule would silently send every release to dev.
+- **Suffix reaches every name**, which I checked line by line: the service account (`.github/actions/gcp-auth`, suffix on the local part), the migrate job, the API service, all three browser services, and all six Secret Manager entries. The image tag deliberately doesn't — same commit, same bytes.
+
+**One thing to flag:** this repo has no `main` (branches are `development` and `master`). So on the default, *every* release resolves to dev and prod is unreachable. The workflow now warns about exactly this, but the fix is one repository-variable setting I can't make from here — it needs `vars.PRODUCTION_BRANCH` set to whichever branch you release from. That's board item (2), and it's a decision, not a task.
+
+## 2. Pending items by priority
+
+All eight ranked items are blocked on a decision, hardware, or GCP access. So I used the method plan.md says is its highest-yield (5 for 5): grep the repo for gaps its own comments admit to. That found one in the harness's own header — *"anything about a screen that an app's `screens` list does not name, **which is most of them**."*
+
+The harness drew 13 of the desk's 36 routes. I added the four screens a shift actually starts from (ops home, fulfilment queue, retailer directory, products) plus brands, which came free — 6 fixtures, 5 screens.
+
+**It found a real defect on the first run.** `DeskSearchField`'s 44px floor sat on the box, which carries `border: 1px` — so the content area was 42px and the stretched input took 42. Measured 310 × 42 at 390px on three screens, on the control the repo calls "the first thing a sales agent touches."
+
+The interesting part is *why* it survived: `apps/web`'s twin has been correct since the ninth run and **names this file at its own declaration**. The padding half of the fix went desk→web; the floor half was worked out on web and never came back. Neither sweep could see it — each reads its own workspace, and an older twin contradicts nothing. Same class as the credit-note link the fifteenth run found, in the opposite direction. The desk's spec row was itself asserting the bug; it now makes `apps/web`'s assertion word for word, and I confirmed it fails against the old CSS before trusting it.
+
+**What I deliberately did *not* fix:** ten remaining findings, all store/product names ellipsing. The repo's recorded rule is "whether the row says it again somewhere else," and all four tables have `rowHref` to a record that names the thing in full — so by the rule as written they're allowed. It also depends on how long real store names are, which nothing here can answer (no database has ever been touched). I put it on the board as item (17) with measurements and the two questions to settle, rather than re-laying-out three tables on my own fixture.
+
+Verified: **target size 0 on both clients**, `apps/web` unchanged at its standing 257, fonts confirmed loaded so fit results are exact.
+
+## 3. plan.md and CLAUDE.md updated
+
+Board items (17) and (18) added, (19) closed, two new sections enumerating the 18 desk + 12 web screens still unnamed with what each costs. Worth knowing: the cheapest rows are the **eleven signed-out screens** across three apps that need no fixture at all — including the `/login` every operator and shopkeeper sees first, which nothing has ever drawn.
+
+**All five gates pass** — typecheck, lint, format, test (5401/358, unchanged since I edited an existing spec rather than adding one), build. Nothing is committed; the working tree is yours to review.
+
+🏁 success · 120 turns · 3223.2s · $9.4481215
+Done. Here's what happened.
+
+## 1. Cloud Run env suffix — already implemented; verified, not rebuilt
+
+This was done in two commits dated 2026-09-13/14. I verified it rather than duplicating it:
+
+- **Branch → environment** (`resolve` job): `prod` if the commit is an *ancestor* of `vars.PRODUCTION_BRANCH` (default `main`), else `dev`. Containment rather than equality is deliberate — the trigger is a `v*` tag, and `refs/tags/v1.4.2` is never equal to `refs/heads/main`, so a name-equality rule would silently send every release to dev.
+- **Suffix reaches every name**, which I checked line by line: the service account (`.github/actions/gcp-auth`, suffix on the local part), the migrate job, the API service, all three browser services, and all six Secret Manager entries. The image tag deliberately doesn't — same commit, same bytes.
+
+**One thing to flag:** this repo has no `main` (branches are `development` and `master`). So on the default, *every* release resolves to dev and prod is unreachable. The workflow now warns about exactly this, but the fix is one repository-variable setting I can't make from here — it needs `vars.PRODUCTION_BRANCH` set to whichever branch you release from. That's board item (2), and it's a decision, not a task.
+
+## 2. Pending items by priority
+
+All eight ranked items are blocked on a decision, hardware, or GCP access. So I used the method plan.md says is its highest-yield (5 for 5): grep the repo for gaps its own comments admit to. That found one in the harness's own header — *"anything about a screen that an app's `screens` list does not name, **which is most of them**."*
+
+The harness drew 13 of the desk's 36 routes. I added the four screens a shift actually starts from (ops home, fulfilment queue, retailer directory, products) plus brands, which came free — 6 fixtures, 5 screens.
+
+**It found a real defect on the first run.** `DeskSearchField`'s 44px floor sat on the box, which carries `border: 1px` — so the content area was 42px and the stretched input took 42. Measured 310 × 42 at 390px on three screens, on the control the repo calls "the first thing a sales agent touches."
+
+The interesting part is *why* it survived: `apps/web`'s twin has been correct since the ninth run and **names this file at its own declaration**. The padding half of the fix went desk→web; the floor half was worked out on web and never came back. Neither sweep could see it — each reads its own workspace, and an older twin contradicts nothing. Same class as the credit-note link the fifteenth run found, in the opposite direction. The desk's spec row was itself asserting the bug; it now makes `apps/web`'s assertion word for word, and I confirmed it fails against the old CSS before trusting it.
+
+**What I deliberately did *not* fix:** ten remaining findings, all store/product names ellipsing. The repo's recorded rule is "whether the row says it again somewhere else," and all four tables have `rowHref` to a record that names the thing in full — so by the rule as written they're allowed. It also depends on how long real store names are, which nothing here can answer (no database has ever been touched). I put it on the board as item (17) with measurements and the two questions to settle, rather than re-laying-out three tables on my own fixture.
+
+Verified: **target size 0 on both clients**, `apps/web` unchanged at its standing 257, fonts confirmed loaded so fit results are exact.
+
+## 3. plan.md and CLAUDE.md updated
+
+Board items (17) and (18) added, (19) closed, two new sections enumerating the 18 desk + 12 web screens still unnamed with what each costs. Worth knowing: the cheapest rows are the **eleven signed-out screens** across three apps that need no fixture at all — including the `/login` every operator and shopkeeper sees first, which nothing has ever drawn.
+
+**All five gates pass** — typecheck, lint, format, test (5401/358, unchanged since I edited an existing spec rather than adding one), build. Nothing is committed; the working tree is yours to review.
+[2026-09-14 17:24:08] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=cc389e7f
+💬 I'll look at what's changed before committing.
+🔧 Bash {"command":"git status && echo \"---DIFFSTAT---\" && git diff --stat","description":"Show status and diffstat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git diff apps/admin/src/components/DeskSearchField.css apps/admin/src/styles/stylesheets.spec.ts tools/rende…
+   ↳ diff --git a/apps/admin/src/components/DeskSearchField.css b/apps/admin/src/components/DeskSearchField.css index 15fa510..e5f6979 100644 --- a/apps/admin/src/co…
+🔧 Bash {"command":"git diff --stat tools/render/fixtures.ts && git diff tools/render/fixtures.ts | head -60 && echo \"===CLAUDE…
+   ↳ <persisted-output> Output too large (41.4KB). Full output saved to: /home/sandbox/.claude/projects/-work/cc389e7f-fc0f-4470-a102-6efa18dc5367/tool-results/b5wml…
+🔧 Bash {"command":"npx tsc -p tools/render/tsconfig.json 2>&1 | tail -20 && echo \"TSC_EXIT=$?\"","description":"Typecheck rend…
+   ↳ npm notice npm notice New major version of npm available! 10.8.2 -> 12.0.2 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2 npm notice To u…
+🔧 Bash {"command":"npx vitest run src/styles/stylesheets.spec.ts 2>&1 | tail -20","description":"Run admin stylesheet spec","ti…
+   ↳  RUN  v3.2.7 /work   ✓ packages/web-ui/src/styles/stylesheets.spec.ts (8 tests) 50ms  ✓ apps/web/src/styles/stylesheets.spec.ts (21 tests) 35ms  ✓ apps/admin/sr…
