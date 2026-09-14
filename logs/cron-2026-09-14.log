@@ -4024,3 +4024,6 @@ Nothing was pushed. Two things worth flagging that the commit message records bu
 - `vars.PRODUCTION_BRANCH` is still unset and unreadable from here. The code is now loud about it instead of silent, but the actual setting remains owed, and on the evidence `development` is the only branch on the remote.
 To github.com:msbadar/udaan.git
    7826c48..94568be  development -> development
+[2026-09-14 08:20:05] Checking if container is running...
+[2026-09-14 08:20:05] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
