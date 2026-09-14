@@ -97,3 +97,118 @@
    ↳ --- waiting
 🔧 TaskUpdate {"taskId":"1","status":"in_progress"}
    ↳ Updated task #1 status
+💬 I've oriented myself and started the long pole. Here's where I've landed, because "modern design patterns" means something specific in this repo and I want to check the framing before the edits land.
+
+## What I'm not doing, and why
+
+`design.html` is a **read-only input** and CLAUDE.md states twice that the retailer screens *are* the design and that changing that palette "is not a decision to make from inside the code." So a general restyle — new shadows, radii, spacing, a "fresher" look — would be re-litigating the design from inside the code. That's explicitly out of bounds here, and the desk was already transcribed onto the design two days ago.
+
+## What I am doing
+
+There's exactly one surface that has never been held to a modern UI standard, and it's already measured and ranked — `plan.md` item (10), `apps/landing`:
+
+- **7 contrast pairings below WCAG AA** — worst is **1.42:1** on the step numerals (needs 3:1 as large text, so it misses by half), and **2.56:1** on three 10px captions. One of those is the *"An illustration, not a listing"* honesty disclaimer, so the caveat is drawn fainter than the claim it retracts.
+- **36 controls under 44px at 390px** — a page read on a phone by someone who has never seen the product.
+
+The board files this as "a decision", but that's the same status item (1) had yesterday, and it was closed by noticing the repo had **already decided the identical question** on the other two surfaces: *where the design and WCAG AA disagree, AA wins, and the deviation is recorded where the value lives.* Both other palettes took that rule; all three other surfaces took the 44px floor. The landing page is the last holdout, and the `coarse:` Tailwind variant it needs already exists.
+
+That's accessible contrast and WCAG 2.2 target sizing — modern design patterns in the load-bearing sense, and in-bounds by precedent rather than by my taste.
+
+## Status
+
+`tools/render/setup.sh` is installing (~20 min, Chromium is down, shared libs still going). That matters: **every layout claim in this repo made without a browser has been wrong**, and the checks report the offending class string directly, so I'll fix against measurements rather than against my reading of the files. Landing bundle builds clean already.
+
+Two things worth flagging now:
+
+1. **The footer's `<a>` links are exempt** (WCAG inline exception) but its `<button>`s aren't — so flooring them will visibly lengthen the mobile footer. That's the one place this stops being invisible-under-a-mouse and becomes a real layout change.
+2. I'll fix contrast **per call site**, not by overriding the slate ramp — `text-slate-400` is correct on the dark sections and fails only on the light ones, so a blanket change would break the half that currently passes.
+
+Want me to proceed on that scope, or did you have a different reading of "modern design pattern" in mind — e.g. the four remaining drill-downs that `design.html` doesn't draw (item 6), which is genuine design judgement rather than an accessibility floor?
+
+🏁 success · 43 turns · 278.9s · $4.1563353
+I've oriented myself and started the long pole. Here's where I've landed, because "modern design patterns" means something specific in this repo and I want to check the framing before the edits land.
+
+## What I'm not doing, and why
+
+`design.html` is a **read-only input** and CLAUDE.md states twice that the retailer screens *are* the design and that changing that palette "is not a decision to make from inside the code." So a general restyle — new shadows, radii, spacing, a "fresher" look — would be re-litigating the design from inside the code. That's explicitly out of bounds here, and the desk was already transcribed onto the design two days ago.
+
+## What I am doing
+
+There's exactly one surface that has never been held to a modern UI standard, and it's already measured and ranked — `plan.md` item (10), `apps/landing`:
+
+- **7 contrast pairings below WCAG AA** — worst is **1.42:1** on the step numerals (needs 3:1 as large text, so it misses by half), and **2.56:1** on three 10px captions. One of those is the *"An illustration, not a listing"* honesty disclaimer, so the caveat is drawn fainter than the claim it retracts.
+- **36 controls under 44px at 390px** — a page read on a phone by someone who has never seen the product.
+
+The board files this as "a decision", but that's the same status item (1) had yesterday, and it was closed by noticing the repo had **already decided the identical question** on the other two surfaces: *where the design and WCAG AA disagree, AA wins, and the deviation is recorded where the value lives.* Both other palettes took that rule; all three other surfaces took the 44px floor. The landing page is the last holdout, and the `coarse:` Tailwind variant it needs already exists.
+
+That's accessible contrast and WCAG 2.2 target sizing — modern design patterns in the load-bearing sense, and in-bounds by precedent rather than by my taste.
+
+## Status
+
+`tools/render/setup.sh` is installing (~20 min, Chromium is down, shared libs still going). That matters: **every layout claim in this repo made without a browser has been wrong**, and the checks report the offending class string directly, so I'll fix against measurements rather than against my reading of the files. Landing bundle builds clean already.
+
+Two things worth flagging now:
+
+1. **The footer's `<a>` links are exempt** (WCAG inline exception) but its `<button>`s aren't — so flooring them will visibly lengthen the mobile footer. That's the one place this stops being invisible-under-a-mouse and becomes a real layout change.
+2. I'll fix contrast **per call site**, not by overriding the slate ramp — `text-slate-400` is correct on the dark sections and fails only on the light ones, so a blanket change would break the half that currently passes.
+
+Want me to proceed on that scope, or did you have a different reading of "modern design pattern" in mind — e.g. the four remaining drill-downs that `design.html` doesn't draw (item 6), which is genuine design judgement rather than an accessibility floor?
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=dc687bfc
+💬 I'll check what's actually changed before committing.
+🔧 Bash {"command":"git status && echo \"---DIFFSTAT---\" && git diff --stat && echo \"---STAGED---\" && git diff --cached --sta…
+   ↳ On branch development Your branch is up to date with 'origin/development'.  nothing to commit, working tree clean ---DIFFSTAT--- ---STAGED---
+💬 There's nothing to commit — the working tree is clean.
+
+```
+On branch development
+Your branch is up to date with 'origin/development'.
+nothing to commit, working tree clean
+```
+
+`git diff` and `git diff --cached` are both empty, so there are no unstaged or staged changes.
+
+The most recent commit on `development` is:
+
+```
+c201eea fix(web): the phone palette takes AA grades of its own hues, and the invoice agrees with itself again
+```
+
+which matches the last substantive change described in `CLAUDE.md` (§ "The retailer client's palette", the seven AA-corrected token grades) — so that work appears to have already been committed.
+
+A couple of possibilities, if you were expecting changes:
+
+- **The work is in a different branch or worktree.** Local branches here are `development` and `master`; `HEAD` is level with `origin/development`.
+- **You meant push rather than commit.** Nothing is ahead of the remote either, so there'd be nothing to push.
+- **You intended to make a change first** that hasn't been written yet — tell me what it is and I'll make it, then commit.
+
+Which of those is it?
+
+🏁 success · 2 turns · 15.3s · $0.9015944
+There's nothing to commit — the working tree is clean.
+
+```
+On branch development
+Your branch is up to date with 'origin/development'.
+nothing to commit, working tree clean
+```
+
+`git diff` and `git diff --cached` are both empty, so there are no unstaged or staged changes.
+
+The most recent commit on `development` is:
+
+```
+c201eea fix(web): the phone palette takes AA grades of its own hues, and the invoice agrees with itself again
+```
+
+which matches the last substantive change described in `CLAUDE.md` (§ "The retailer client's palette", the seven AA-corrected token grades) — so that work appears to have already been committed.
+
+A couple of possibilities, if you were expecting changes:
+
+- **The work is in a different branch or worktree.** Local branches here are `development` and `master`; `HEAD` is level with `origin/development`.
+- **You meant push rather than commit.** Nothing is ahead of the remote either, so there'd be nothing to push.
+- **You intended to make a change first** that hasn't been written yet — tell me what it is and I'll make it, then commit.
+
+Which of those is it?
+[2026-09-15 00:25:46] Agent run finished.
+Everything up-to-date
