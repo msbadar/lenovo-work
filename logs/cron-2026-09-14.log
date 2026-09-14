@@ -6972,3 +6972,40 @@ Two caveats worth stating plainly:
 🔧 Bash {"command":"npm test 2>&1 | tail -60","description":"Run the full test suite","timeout":600000}
    ↳  ✓ src/lib/error-focus.spec.tsx (17 tests) 2258ms    ✓ a refused submit moves focus to what was refused > Change password puts the caret on the first invalid fi…
 🔧 Bash {"command":"npm test 2>&1 | grep -E \"Test Files|Tests:|Tests  |failed|FAIL\" | head -40","description":"Summarize test …
+   ↳  Test Files  10 passed (10)       Tests  144 passed (144)  Test Files  22 passed (22)       Tests  313 passed (313)  Test Files  17 passed (17)       Tests  196…
+💬 All tests pass — 5396 across 358 suites, matching the updated counts in CLAUDE.md. (The worker-exit warning on `apps/api` is the documented benign `jest-worker` one.)
+🔧 Bash {"command":"npm run build 2>&1 | tail -25","description":"Run the build","timeout":600000}
+   ↳ dist/assets/index-CSCIHdlZ.js   409.95 kB │ gzip: 115.14 kB │ map: 1,750.18 kB ✓ built in 3.97s  > @udaan/web@0.1.0 build > npm run typecheck && vite build   > …
+🔧 Bash {"command":"grep -rn \"text-field\\b\" packages/web-ui/src/components/TextField.tsx | head -20; echo \"---CSS---\"; grep…
+   ↳ packages/web-ui/src/components/TextField.tsx:43:    <div className="text-field"> ---CSS--- 1:.text-field { 2-  display: flex; 3-  flex-direction: column; 4-  ga…
+💬 All four gates pass. One thing I checked before committing: `FormSelect` moves the wrapper from `<label className="text-field">` to `<div className="text-field">` — which is exactly what `@udaan/web-ui`'s `TextField` already does, and `.text-field` is `display: flex` either way, so the box is unchanged and this needs no render-harness run.
+🔧 Bash {"command":"git add -A && git status --short","description":"Stage all changes"}
+   ↳ M  CLAUDE.md M  apps/admin/src/screens/AdminProductForm.tsx A  apps/admin/src/screens/AdminSchemeForm.spec.tsx M  apps/admin/src/screens/AdminSchemeForm.tsx A  …
+🔧 Bash {"command":"git commit -q -F - <<'MSG' && git log --oneline -3 && git show --stat --oneline HEAD | tail -12\nfeat(admin)…
+   ↳ Checking formatting... All matched files use Prettier code style! cea80fe feat(admin): the scheme form picks two of its four targets, and three comments that ha…
+💬 Committed as `cea80fe` on `development` (8 files, +572/−127). Not pushed — say the word if you want that.
+
+**Gates, all run and all green:**
+- `typecheck` — all workspaces plus `tools/render`'s fixtures
+- `lint` and `format:check` — clean (a pre-commit hook re-ran Prettier and agreed)
+- `test` — **5396 tests across 358 suites**, which matches the counts this change wrote into CLAUDE.md exactly. The `apps/api` "worker process has failed to exit gracefully" line is the benign `jest-worker` grace-timer race documented at length in § "State of the world", not a new leak.
+- `build` — all workspaces
+
+**What I checked but did not run:** the render harness. CLAUDE.md requires it after touching a layout, a token, or `desk.css`. This touched none of those, and the one thing that looked like it might — `FormSelect` moving the wrapper from `<label className="text-field">` to `<div className="text-field">` — is the structure `@udaan/web-ui`'s own `TextField` already uses, with `.text-field` being `display: flex` either way. Same class, same box, same children order, so there is no geometry to measure. Worth flagging since "this moves nothing" is the claim the harness has disproved ten times.
+
+**One judgement call on the commit boundary.** The diff holds two things: the scheme-form pickers, and three stale comments (`apps/web/README.md`, `jobs.module.ts`). I kept them in one commit rather than splitting because plan.md itself argues they are one theme — items (13) and (14) are both documentation that had become false without failing anything — and the plan.md prose is interleaved enough that splitting would have left one commit's board internally inconsistent. If you would rather have them apart, it is a clean `reset --soft` away.
+
+🏁 success · 14 turns · 926.7s · $1.5075859999999999
+Committed as `cea80fe` on `development` (8 files, +572/−127). Not pushed — say the word if you want that.
+
+**Gates, all run and all green:**
+- `typecheck` — all workspaces plus `tools/render`'s fixtures
+- `lint` and `format:check` — clean (a pre-commit hook re-ran Prettier and agreed)
+- `test` — **5396 tests across 358 suites**, which matches the counts this change wrote into CLAUDE.md exactly. The `apps/api` "worker process has failed to exit gracefully" line is the benign `jest-worker` grace-timer race documented at length in § "State of the world", not a new leak.
+- `build` — all workspaces
+
+**What I checked but did not run:** the render harness. CLAUDE.md requires it after touching a layout, a token, or `desk.css`. This touched none of those, and the one thing that looked like it might — `FormSelect` moving the wrapper from `<label className="text-field">` to `<div className="text-field">` — is the structure `@udaan/web-ui`'s own `TextField` already uses, with `.text-field` being `display: flex` either way. Same class, same box, same children order, so there is no geometry to measure. Worth flagging since "this moves nothing" is the claim the harness has disproved ten times.
+
+**One judgement call on the commit boundary.** The diff holds two things: the scheme-form pickers, and three stale comments (`apps/web/README.md`, `jobs.module.ts`). I kept them in one commit rather than splitting because plan.md itself argues they are one theme — items (13) and (14) are both documentation that had become false without failing anything — and the plan.md prose is interleaved enough that splitting would have left one commit's board internally inconsistent. If you would rather have them apart, it is a clean `reset --soft` away.
+To github.com:msbadar/udaan.git
+   a72698b..cea80fe  development -> development
