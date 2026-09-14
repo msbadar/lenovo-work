@@ -5413,3 +5413,110 @@ To github.com:msbadar/udaan.git
 💬 Let me check that one test-failure match — it may be a false positive from my grep.
 🔧 Bash {"command":"npm test 2>&1 | grep -E \"FAIL|✕\" | head; echo \"--- totals ---\"; npm test 2>&1 | grep -E \"Test Files|Tes…
 [2026-09-14 11:10:05] Checking if container is running...
+[2026-09-14 11:10:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳ [31m[Nest] 24625  - [39m09/14/2026, 5:34:49 AM [31m  ERROR[39m [38;5;3m[OtpService] [39m[31mNo sign-in code was delivered to a caller (transport reported…
+💬 False positive — that's the expected `FAILED` string inside a deliberate log line from a passing spec. All 356 suites pass.
+
+## What I did
+
+**1. Cloud Run dev/prod service-account suffix — already implemented; I verified rather than rebuilt it.**
+
+`resolve` → `.github/actions/gcp-auth` already does exactly what you asked. I executed the logic against a real git fixture rather than trusting the comments:
+
+| Case | Result |
+|---|---|
+| commit on production branch | `prod` |
+| commit on a feature branch | `dev` |
+| production branch doesn't exist | `dev` + `::warning::` |
+| on prod branch, `git fetch` fails | `prod` (not demoted by a blip) |
+
+The rule is *containment*, not equality — correct, since the trigger is a `v*` tag and `refs/tags/v1.4.2` never equals `refs/heads/main`. The suffix also covers the Cloud Run services and the 12 Secret Manager entries, not just the account.
+
+**One thing needs you, and it's live:** this repo has no `main` — only `development` and `master`, with `origin/development` the sole remote branch. On the default, *every release lands on dev*. Set `vars.PRODUCTION_BRANCH` to `development`. I can't read or write repo variables from here.
+
+**2. Closed both remaining work items on the board** (everything else is blocked on a decision or hardware):
+
+- **Item (8) — section-head link consolidation.** Filed as a tidy-up; it was hiding a real fragility. `.home__section*` is declared in `screens/screens.css`, which **only `HomeScreen.tsx` imports** — yet `BuyAgainRail` (`orders/`) and `BestMarginRail` (`catalog/`) both wore it. They were correct only by accident of Home being the one place either is mounted. Now one `screens/ScreenSection.css`, with two spec rows (declared once; old names nowhere). I checked both rows fail against a re-added copy.
+
+- **Item (7) — render `apps/landing`.** Cost one `APPS` row and two `??`s; `checks.mjs` needed no new assertions.
+
+**3. Rendered, because the gates run in jsdom and see no geometry.** I set the harness up (~20 min, one-off) and ran it:
+
+- **admin 0 findings, web 48** — the 46 known contrast pairings + 2 known clipped strings, i.e. the ninth run's state unchanged. `target size` **0** on both, and no section-head link in the sweep: the consolidation moved nothing.
+- **landing, drawn for the first time: 168 findings** — 130 contrast, 38 target size; zero overflow/clipped/misaligned.
+
+**The most useful thing the landing run returned was two false lines in CLAUDE.md**, which I corrected: that page's face is **Plus Jakarta Sans**, not IBM Plex Sans, and its palette is its own `tailwind.config.ts` — it never imports `tokens.css`. Neither was catchable without drawing it.
+
+**I deliberately did not fix** landing's 7 sub-AA pairings (worst 1.42:1) or its 38 sub-44px controls. That's a third palette on a page never held to either rule, and 38 Tailwind class strings with no shared control — a decision, now filed as item (10) with the question to ask.
+
+**4. plan.md and CLAUDE.md updated**, including reconciling the board's counts/ordering and fixing a pre-existing mis-reference ("(3) is one line in repository settings" — that's (2)).
+
+Gates: typecheck, lint, format, test (5378/356), build — all pass. **Not committed**, since you didn't ask; say the word and I'll commit.
+
+🏁 success · 122 turns · 3715.7s · $9.224151500000005
+False positive — that's the expected `FAILED` string inside a deliberate log line from a passing spec. All 356 suites pass.
+
+## What I did
+
+**1. Cloud Run dev/prod service-account suffix — already implemented; I verified rather than rebuilt it.**
+
+`resolve` → `.github/actions/gcp-auth` already does exactly what you asked. I executed the logic against a real git fixture rather than trusting the comments:
+
+| Case | Result |
+|---|---|
+| commit on production branch | `prod` |
+| commit on a feature branch | `dev` |
+| production branch doesn't exist | `dev` + `::warning::` |
+| on prod branch, `git fetch` fails | `prod` (not demoted by a blip) |
+
+The rule is *containment*, not equality — correct, since the trigger is a `v*` tag and `refs/tags/v1.4.2` never equals `refs/heads/main`. The suffix also covers the Cloud Run services and the 12 Secret Manager entries, not just the account.
+
+**One thing needs you, and it's live:** this repo has no `main` — only `development` and `master`, with `origin/development` the sole remote branch. On the default, *every release lands on dev*. Set `vars.PRODUCTION_BRANCH` to `development`. I can't read or write repo variables from here.
+
+**2. Closed both remaining work items on the board** (everything else is blocked on a decision or hardware):
+
+- **Item (8) — section-head link consolidation.** Filed as a tidy-up; it was hiding a real fragility. `.home__section*` is declared in `screens/screens.css`, which **only `HomeScreen.tsx` imports** — yet `BuyAgainRail` (`orders/`) and `BestMarginRail` (`catalog/`) both wore it. They were correct only by accident of Home being the one place either is mounted. Now one `screens/ScreenSection.css`, with two spec rows (declared once; old names nowhere). I checked both rows fail against a re-added copy.
+
+- **Item (7) — render `apps/landing`.** Cost one `APPS` row and two `??`s; `checks.mjs` needed no new assertions.
+
+**3. Rendered, because the gates run in jsdom and see no geometry.** I set the harness up (~20 min, one-off) and ran it:
+
+- **admin 0 findings, web 48** — the 46 known contrast pairings + 2 known clipped strings, i.e. the ninth run's state unchanged. `target size` **0** on both, and no section-head link in the sweep: the consolidation moved nothing.
+- **landing, drawn for the first time: 168 findings** — 130 contrast, 38 target size; zero overflow/clipped/misaligned.
+
+**The most useful thing the landing run returned was two false lines in CLAUDE.md**, which I corrected: that page's face is **Plus Jakarta Sans**, not IBM Plex Sans, and its palette is its own `tailwind.config.ts` — it never imports `tokens.css`. Neither was catchable without drawing it.
+
+**I deliberately did not fix** landing's 7 sub-AA pairings (worst 1.42:1) or its 38 sub-44px controls. That's a third palette on a page never held to either rule, and 38 Tailwind class strings with no shared control — a decision, now filed as item (10) with the question to ask.
+
+**4. plan.md and CLAUDE.md updated**, including reconciling the board's counts/ordering and fixing a pre-existing mis-reference ("(3) is one line in repository settings" — that's (2)).
+
+Gates: typecheck, lint, format, test (5378/356), build — all pass. **Not committed**, since you didn't ask; say the word and I'll commit.
+[2026-09-14 11:12:27] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=93cd134e
+💬 I'll look at what's changed before committing.
+🔧 Bash {"command":"git status && echo \"---DIFFSTAT---\" && git diff --stat","description":"Show git status and diffstat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git log --oneline -5 && echo \"---BRANCH---\" && git branch --show-current","description":"Show recent commi…
+   ↳ b4b52fb fix(web): thirteen controls a thumb could not reach, and three ways the first pass missed ce781b8 feat(tools): the harness draws the shop too, and it ha…
+💬 Two clusters of change here. Let me read them.
+🔧 Bash {"command":"git diff -- apps/web/ && echo \"===NEW FILE===\" && cat apps/web/src/screens/ScreenSection.css","description…
+   ↳ diff --git a/apps/web/src/catalog/BestMarginRail.tsx b/apps/web/src/catalog/BestMarginRail.tsx index 99939f1..2de56a5 100644 --- a/apps/web/src/catalog/BestMarg…
+🔧 Bash {"command":"git diff -- tools/render/","description":"Diff the render harness changes"}
+   ↳ diff --git a/tools/render/README.md b/tools/render/README.md index ac6ebf8..493ccf5 100644 --- a/tools/render/README.md +++ b/tools/render/README.md @@ -1,12 +1…
+💬 Let me read the doc diffs and start the gates in parallel.
+🔧 Bash {"command":"git diff -- plan.md","description":"Diff plan.md"}
+   ↳ diff --git a/plan.md b/plan.md index 8f5b13f..8b5ad55 100644 --- a/plan.md +++ b/plan.md @@ -21,34 +21,50 @@  Added 2026-09-14, because the board had grown long…
+🔧 Bash {"command":"git diff -- CLAUDE.md","description":"Diff CLAUDE.md"}
+   ↳ <persisted-output> Output too large (34.7KB). Full output saved to: /home/sandbox/.claude/projects/-work/93cd134e-cd12-4308-92e8-9f20048b77ae/tool-results/blwl8…
+🔧 Bash {"command":"sed -n '25,60p' tools/render/run.sh","description":"Check run.sh default app list"}
+   ↳ REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)" HOME_DIR="${UDAAN_RENDER_HOME:-$HOME/.cache/udaan-render}"  if [ ! -f "$HOME_DIR/env.sh" ]; then   ec…
+💬 Two changes here — the `apps/web` section-head consolidation (plan.md item 8) and the harness drawing `apps/landing` (item 7). They're written up as one unit in `plan.md` (the table, and the shared "nothing here is blocked on work any more" framing, only become true once both land), so I'll keep them in one commit rather than rewriting prose to split them.
+
+CLAUDE.md requires all four gates before finishing. Running them now.
+🔧 Bash {"command":"npm run typecheck 2>&1 | tail -20","description":"Run typecheck gate","timeout":600000}
+🔧 Bash {"command":"npm run lint 2>&1 | tail -20","description":"Run lint gate","timeout":600000}
+   ↳ > @udaan/api@0.1.0 typecheck > tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit && tsc -p prisma/tsconfig.json --noEmit   > @udaan/landing@0.…
+   ↳ > udaan@0.1.0 lint > eslint .
+💬 Typecheck and lint pass. Now test, build, and format.
+🔧 Bash {"command":"npm test 2>&1 | tail -40","description":"Run test gate","timeout":600000}
