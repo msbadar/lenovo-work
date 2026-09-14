@@ -1832,3 +1832,114 @@ Everything up-to-date
    ↳  Test Files  10 passed (10)       Tests  167 passed (167)  Test Files  22 passed (22)       Tests  313 passed (313)  Test Files  17 passed (17)       Tests  196…
 💬 All 5473 tests pass (359 suites, +1 test from the new spec row). Final gate:
 🔧 Bash {"command":"npm run build 2>&1 | tail -8","description":"Run the build gate","timeout":900000}
+[2026-09-15 04:20:04] Checking if container is running...
+[2026-09-15 04:20:04] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳ dist/assets/signed-in-screens-Dtkopkhw.css   36.04 kB │ gzip:  4.32 kB dist/assets/query-D3PKdskr.js                36.46 kB │ gzip: 10.66 kB │ map: 147.00 kB d…
+💬 All four gates pass. Now the documentation, which this repo requires in the same commit:
+🔧 Bash {"command":"grep -n \"Nine components of its own\" CLAUDE.md","description":"Find the components paragraph"}
+   ↳ 1716:  **Nine components of its own, in `src/components/`, and the reason they are not in
+🔧 Read {"file_path":"/work/CLAUDE.md","offset":1716,"limit":12}
+   ↳ 1716	  **Nine components of its own, in `src/components/`, and the reason they are not in 1717	  `@udaan/web-ui`.** `DeskTable` (the bordered panel with a grid …
+🔧 Edit {"replace_all":false,"file_path":"/work/CLAUDE.md","old_string":"  **Nine components of its own, in `src/components/`, a…
+   ↳ The file /work/CLAUDE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+🔧 Bash {"command":"grep -n \"The order drill-down is two columns as of\\|a lost one\\.\" CLAUDE.md | head","description":"Locat…
+   ↳ 1835:  **The order drill-down is two columns as of 2026-09-14, and it is the only drill-down the design 1857:  design's h1 would have meant a second breadcrumb …
+🔧 Read {"file_path":"/work/CLAUDE.md","offset":1855,"limit":8}
+   ↳ 1855	  its own, this desk already draws one from the shell, and the mono order number at 28px is recorded 1856	  above as one of the three things that make a dr…
+🔧 Edit {"replace_all":false,"file_path":"/work/CLAUDE.md","old_string":"  design's h1 would have meant a second breadcrumb or a…
+   ↳ The file /work/CLAUDE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+🔧 Bash {"command":"grep -n \"Both were checked against reverted copies; both fail, and nothing else does.\" CLAUDE.md","descrip…
+   ↳ 2079:| `apps/admin/src/styles/stylesheets.spec.ts` | The third copy, over the desk. No hex outside `styles/desk.css`, which is that workspace's palette; every `…
+🔧 Bash {"command":"python3 - <<'PY'\nimport pathlib\np = pathlib.Path('CLAUDE.md'); s = p.read_text()\nold = \"Both were checke…
+   ↳ ok
+🔧 Bash {"command":"grep -n \"twenty-first run, 2026-09-14\\|reasoned rather than rendered. They are correct\\|## The marketing …
+   ↳ 3291:**The twenty-first run, 2026-09-14, took the marketing site from 189 findings to 0, and it is the 3326:## The marketing site's palette and its targets
+🔧 Read {"file_path":"/work/CLAUDE.md","offset":3313,"limit":14}
+   ↳ 3313	plain height: the credit slider at 308 × 44 with `17px/17px` padding and `background-clip: 3314	content-box` (a 44px hit area around the drawn 10px track),…
+🔧 Edit {"replace_all":false,"file_path":"/work/CLAUDE.md","old_string":"say so. The standing item (5), a render on real touch h…
+   ↳ The file /work/CLAUDE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+🔧 Bash {"command":"python3 - <<'PY'\nimport pathlib\np = pathlib.Path('CLAUDE.md'); s = p.read_text()\nsubs = [\n (\"typecheck,…
+   ↳ ok 2690:typecheck, lint, format, test (5473 tests across 359 suites) and build. Per workspace: api
+💬 Now updating `plan.md` — item (6) was wrong about its own set:
+🔧 Bash {"command":"python3 - <<'PY'\nimport pathlib\np = pathlib.Path('plan.md'); s = p.read_text()\nold = \"| 6 | Re-lay-out *…
+   ↳ ok
+🔧 Bash {"command":"python3 - <<'PY'\nimport pathlib\np = pathlib.Path('plan.md'); s = p.read_text()\nold = \"\"\"- design very …
+   ↳ ok
+🔧 Bash {"command":"python3 - <<'PY'\nimport pathlib\np = pathlib.Path('plan.md'); s = p.read_text()\nold = \"\"\"Read the split…
+   ↳ Exit code 1 Traceback (most recent call last):   File "<stdin>", line 30, in <module> AssertionError
+🔧 Bash {"command":"sed -n '24,30p' plan.md | cat -A | sed 's/\\$$//' | head -8","description":"Inspect exact wrapping of the su…
+   ↳ Read the split first, because it is most of the answer: **nothing here is blocked on work any more.** Of the seven open items, four are blocked on a *decision* …
+🔧 Bash {"command":"python3 - <<'PY'\nimport pathlib\np = pathlib.Path('plan.md'); s = p.read_text()\nold = \"\"\"more.** Of the…
+   ↳ ok
+🔧 Bash {"command":"npm run format:check 2>&1 | tail -4 && git diff --stat && git status --short","description":"Check formattin…
+   ↳ > prettier --check .  Checking formatting... All matched files use Prettier code style!  CLAUDE.md                                          |  79 ++++++++-  app…
+💬 Everything is in place. Final verification that the tree is clean and consistent:
+🔧 Bash {"command":"npx vitest run src/styles/stylesheets.spec.ts src/app/screen-skeletons.spec.tsx src/app/a11y.spec.tsx --root…
+   ↳  Test Files  3 passed (3)       Tests  196 passed (196)
+💬 Done. I didn't invent a direction — this repo forbids design decisions made from inside the code, so I worked from `design.html` and its own board.
+
+## What I found
+
+`plan.md` item (6) — *"re-lay-out the remaining drill-downs to `design.html`"* — was the open UI item, blocked on "design judgement". Your request authorised that judgement, so I opened it. **The row was wrong in both directions:**
+
+- It named four screens. There were **six** still laid out as a single stack of phone cards — it omitted the credit line, the product, the trip manifest and the purchase order.
+- Two of the four it *did* name — the invoice and the credit note — **must not be converted**: they're one shared `@udaan/web-ui` component, the same legal document a shopkeeper reads on a phone. I left them alone.
+
+Underneath that, five stylesheets held a byte-identical container rule, and one of the five had grown two columns while the other four hadn't.
+
+## What I changed
+
+`DeskDetail` (`apps/admin/src/components/`) — the design's `minmax(0, 1.7fr) minmax(280px, 1fr)` from `design.html:239–322`, declared once, with all **seven** drill-downs on it. Rail first in the DOM (so a phone stacks `Depart` / `Mark Packed` / `Record cash taken` above the rows), placed right at 1024px. Three `block` buttons that were 2000px-wide targets on a monitor are now rail-width.
+
+The one part that isn't the order screen's CSS renamed is the `--banner` modifier: the obvious unconditional `grid-row: 2` reserves an empty row on the five screens with no banner, and a reserved row still draws the grid's `gap` — the exact empty-band defect `checks.mjs` sweeps for.
+
+## Verification
+
+- Four gates: typecheck, lint, format, **5473 tests / 359 suites**, build — all pass.
+- **Rendered** (`setup.sh` + `run.sh admin`, fonts confirmed loaded): **10 findings → 10**, all pre-existing item (17). No new finding of any kind.
+- **Positively probed**, since a clean sweep is also what a screen that never rendered produces: all seven grids resolve to `695.109px 408.891px` at 1440 with the rail at x=987, sticky, not a scrollport; one 358px column at 390 with the rail first; each screen's own `<h1>`. The empty-band case measured directly — `0px`/`12px`, the container's own padding, so no screen reserves a row it doesn't use.
+- **Six mutations against the new spec rows, six failures, one row each, none spurious.**
+
+`CLAUDE.md` and `plan.md` are updated in the same working tree, per the repo's rule.
+
+Two things I deliberately did **not** do: converting the invoice/credit note (would diverge one legal document across two surfaces), and item (17) — the list tables' ellipsed store names — which is a genuine open judgement needing real store-name lengths from a database this sandbox has never had. I haven't committed; say the word if you want that.
+
+🏁 success · 119 turns · 2008.5s · $12.038022049999993
+Done. I didn't invent a direction — this repo forbids design decisions made from inside the code, so I worked from `design.html` and its own board.
+
+## What I found
+
+`plan.md` item (6) — *"re-lay-out the remaining drill-downs to `design.html`"* — was the open UI item, blocked on "design judgement". Your request authorised that judgement, so I opened it. **The row was wrong in both directions:**
+
+- It named four screens. There were **six** still laid out as a single stack of phone cards — it omitted the credit line, the product, the trip manifest and the purchase order.
+- Two of the four it *did* name — the invoice and the credit note — **must not be converted**: they're one shared `@udaan/web-ui` component, the same legal document a shopkeeper reads on a phone. I left them alone.
+
+Underneath that, five stylesheets held a byte-identical container rule, and one of the five had grown two columns while the other four hadn't.
+
+## What I changed
+
+`DeskDetail` (`apps/admin/src/components/`) — the design's `minmax(0, 1.7fr) minmax(280px, 1fr)` from `design.html:239–322`, declared once, with all **seven** drill-downs on it. Rail first in the DOM (so a phone stacks `Depart` / `Mark Packed` / `Record cash taken` above the rows), placed right at 1024px. Three `block` buttons that were 2000px-wide targets on a monitor are now rail-width.
+
+The one part that isn't the order screen's CSS renamed is the `--banner` modifier: the obvious unconditional `grid-row: 2` reserves an empty row on the five screens with no banner, and a reserved row still draws the grid's `gap` — the exact empty-band defect `checks.mjs` sweeps for.
+
+## Verification
+
+- Four gates: typecheck, lint, format, **5473 tests / 359 suites**, build — all pass.
+- **Rendered** (`setup.sh` + `run.sh admin`, fonts confirmed loaded): **10 findings → 10**, all pre-existing item (17). No new finding of any kind.
+- **Positively probed**, since a clean sweep is also what a screen that never rendered produces: all seven grids resolve to `695.109px 408.891px` at 1440 with the rail at x=987, sticky, not a scrollport; one 358px column at 390 with the rail first; each screen's own `<h1>`. The empty-band case measured directly — `0px`/`12px`, the container's own padding, so no screen reserves a row it doesn't use.
+- **Six mutations against the new spec rows, six failures, one row each, none spurious.**
+
+`CLAUDE.md` and `plan.md` are updated in the same working tree, per the repo's rule.
+
+Two things I deliberately did **not** do: converting the invoice/credit note (would diverge one legal document across two surfaces), and item (17) — the list tables' ellipsed store names — which is a genuine open judgement needing real store-name lengths from a database this sandbox has never had. I haven't committed; say the word if you want that.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=74e0053b
+💬 I'll look at what's changed before committing.
+🔧 Bash {"command":"git status && echo \"---DIFFSTAT---\" && git diff --stat","description":"Check status and diff stat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git diff plan.md && echo \"===CLAUDEMD===\" && git diff CLAUDE.md | head -150","description":"Review plan.md…
+   ↳ <persisted-output> Output too large (62.9KB). Full output saved to: /home/sandbox/.claude/projects/-work/74e0053b-ef22-420d-a4f9-bf084945632f/tool-results/bi5ml…
+🔧 Bash {"command":"cat apps/admin/src/components/DeskDetail.tsx && echo \"===CSS===\" && cat apps/admin/src/components/DeskDeta…
+   ↳ import type { ReactNode } from 'react'; import './DeskDetail.css';  /**  * The desk's drill-down: a record's long content in an elastic column with a rail besid…
+💬 This is the `DeskDetail` work. Let me verify the gates before committing.
+🔧 Bash {"command":"npm run typecheck 2>&1 | tail -20","description":"Run typecheck","timeout":600000}
