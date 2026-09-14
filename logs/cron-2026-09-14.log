@@ -3645,3 +3645,52 @@ Not verified here, as always: anything needing Docker, PostgreSQL or GCP — non
 🔧 Bash {"command":"npm test 2>&1 | tail -40","description":"Run full test suite","timeout":600000}
    ↳    ✓ TabBar > marks exactly one tab as the current page at /  436ms  ✓ src/cart/CartScreen.spec.tsx (8 tests) 1506ms    ✓ a trade scheme on a cart line > says n…
 🔧 Bash {"command":"npm test > /tmp/udaan-test.log 2>&1; echo \"EXIT=$?\"","description":"Run full test suite capturing exit cod…
+[2026-09-14 07:40:05] Checking if container is running...
+[2026-09-14 07:40:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳ EXIT=0
+🔧 Bash {"command":"grep -E \"Test Files|Tests  |Tests:|Suites:|Test Suites\" /tmp/udaan-test.log","description":"Extract per-wo…
+   ↳  Test Files  10 passed (10)       Tests  144 passed (144)  Test Files  22 passed (22)       Tests  313 passed (313)  Test Files  17 passed (17)       Tests  193…
+💬 All green — 5359 tests across 356 suites, matching what CLAUDE.md records. Now the build:
+🔧 Bash {"command":"npm run build > /tmp/udaan-build.log 2>&1; echo \"EXIT=$?\"; tail -15 /tmp/udaan-build.log","description":"R…
+   ↳ EXIT=0 vite v7.3.6 building client environment for production... transforming... ✓ 401 modules transformed. rendering chunks... computing gzip size... dist/inde…
+💬 All four gates pass. Let me check the commit message style before writing one.
+🔧 Bash {"command":"git log -2 --format=\"%n===== %s%n%b\"","description":"Show recent commit message bodies"}
+   ↳ ===== fix(admin): a sentence about both dates, attached to one of them Rendered the desk for the sixth time, over everything that had landed since the fifth run…
+🔧 Bash {"command":"git commit -F - <<'EOF'\nfeat(tools): the browser is a script now, and it found four more\n\nSix ad-hoc runs…
+   ↳ Checking formatting... All matched files use Prettier code style! [development 7826c48] feat(tools): the browser is a script now, and it found four more  17 fil…
+🔧 Bash {"command":"git status --short && git log --oneline -1","description":"Confirm clean tree and new commit"}
+   ↳ 7826c48 feat(tools): the browser is a script now, and it found four more
+💬 Committed as `7826c48` on `development`; working tree is clean. Not pushed — you didn't ask for that.
+
+**Gates, all run and all passing** (the working agreement requires all four before finishing):
+
+- `npm run typecheck` — clean, including the new `tools/render/tsconfig.json` leg that the changed root script now appends
+- `npm run lint` and `npm run format:check` — clean
+- `npm test` — exit 0, **5359 tests across 356 suites** (api 1815/117, mobile 1493/89, admin 800/54, web 417/33, shared 313/22, web-ui 193/17, landing 184/14, client-core 144/10), which matches the figures CLAUDE.md § "State of the world" already records
+- `npm run build` — exit 0
+
+**What went in** (17 files, +2066/−40): `tools/render/` as a committed manual harness, plus the four defects its seventh run found — `--color-warning` re-declared on the desk as a text grade of gold, the `optional` chip moved off `--color-text-faint`, the supplier name wrapped, and `Button`'s `--on-brand` regaining the 44px floor under `any-pointer: coarse`. The documentation edits were already staged alongside the code, which is what § "Keeping this file true" asks for.
+
+Two things worth flagging rather than leaving implied:
+
+- **The `apps/web` half of the `--on-brand` fix is reasoned, not rendered.** The harness serves `apps/admin` only, so the claim that Account and Sign out on the retailer home screen are now thumb-reachable rests on the rule rather than a measurement. The commit message and CLAUDE.md both say so.
+- **I did not re-run the harness itself.** The gates are what I executed; `tools/render/run.sh` needs the ~20-minute `setup.sh` and I took the run's findings as already applied in the staged diff. If you want the committed harness exercised end to end on this machine before pushing, that's the next step and I can do it.
+
+🏁 success · 13 turns · 900.9s · $1.2822839000000001
+Committed as `7826c48` on `development`; working tree is clean. Not pushed — you didn't ask for that.
+
+**Gates, all run and all passing** (the working agreement requires all four before finishing):
+
+- `npm run typecheck` — clean, including the new `tools/render/tsconfig.json` leg that the changed root script now appends
+- `npm run lint` and `npm run format:check` — clean
+- `npm test` — exit 0, **5359 tests across 356 suites** (api 1815/117, mobile 1493/89, admin 800/54, web 417/33, shared 313/22, web-ui 193/17, landing 184/14, client-core 144/10), which matches the figures CLAUDE.md § "State of the world" already records
+- `npm run build` — exit 0
+
+**What went in** (17 files, +2066/−40): `tools/render/` as a committed manual harness, plus the four defects its seventh run found — `--color-warning` re-declared on the desk as a text grade of gold, the `optional` chip moved off `--color-text-faint`, the supplier name wrapped, and `Button`'s `--on-brand` regaining the 44px floor under `any-pointer: coarse`. The documentation edits were already staged alongside the code, which is what § "Keeping this file true" asks for.
+
+Two things worth flagging rather than leaving implied:
+
+- **The `apps/web` half of the `--on-brand` fix is reasoned, not rendered.** The harness serves `apps/admin` only, so the claim that Account and Sign out on the retailer home screen are now thumb-reachable rests on the rule rather than a measurement. The commit message and CLAUDE.md both say so.
+- **I did not re-run the harness itself.** The gates are what I executed; `tools/render/run.sh` needs the ~20-minute `setup.sh` and I took the run's findings as already applied in the staged diff. If you want the committed harness exercised end to end on this machine before pushing, that's the next step and I can do it.
+To github.com:msbadar/udaan.git
+   eb2a020..7826c48  development -> development
