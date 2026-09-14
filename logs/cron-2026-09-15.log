@@ -1951,3 +1951,64 @@ Two things I deliberately did **not** do: converting the invoice/credit note (wo
 [2026-09-15 04:30:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
    ↳  ✓ src/account/ChangePasswordForm.spec.tsx (3 tests) 1424ms    ✓ ChangePasswordForm > validates the new password locally, without calling the API  624ms    ✓ Ch…
 🔧 Bash {"command":"npm test > /tmp/test-all.log 2>&1; echo \"EXIT=$?\"; grep -E \"Test Files|Tests:|Suites\" /tmp/test-all.log …
+   ↳ EXIT=0  Test Files  10 passed (10)  Test Files  22 passed (22)  Test Files  17 passed (17)  Test Files  55 passed (55) Test Suites: 117 passed, 117 total Tests:…
+🔧 Bash {"command":"npm run build > /tmp/build.log 2>&1; echo \"EXIT=$?\"; tail -20 /tmp/build.log","description":"Run build","t…
+   ↳ EXIT=0   > @udaan/web@0.1.0 typecheck > tsc -p tsconfig.json --noEmit && tsc -p tsconfig.node.json --noEmit  vite v7.3.6 building client environment for product…
+💬 All five gates pass. Now the commit — let me match the repo's message style.
+🔧 Bash {"command":"git log --format='%s%n%n%b%n---' -5","description":"Review recent commit message style"}
+   ↳ fix(landing): the page stops moving for a reader who asked it not to, and two animations nothing mounts go  `apps/landing` respected no motion preference at all…
+🔧 Bash {"command":"git diff apps/admin/src/styles/stylesheets.spec.ts","description":"Review spec diff"}
+   ↳ diff --git a/apps/admin/src/styles/stylesheets.spec.ts b/apps/admin/src/styles/stylesheets.spec.ts index de16dfb..5d47461 100644 --- a/apps/admin/src/styles/sty…
+🔧 Bash {"command":"git diff CLAUDE.md | grep -n \"twenty-third\" -A 40 | head -60","description":"Find twenty-third run entry i…
+   ↳ 83:+**The twenty-third run, 2026-09-14, put the desk's other six drill-downs on the arrangement the 84-+order drill-down took on the fifteenth, and it is the fi…
+🔧 Bash {"command":"grep -E \"^ +Tests +[0-9]+ passed|^Tests: +[0-9]+ passed|^ +Test Files\" /tmp/test-all.log","description":"E…
+   ↳  Test Files  10 passed (10)       Tests  167 passed (167)  Test Files  22 passed (22)       Tests  313 passed (313)  Test Files  17 passed (17)       Tests  196…
+🔧 Bash {"command":"git add -A && git status --short","description":"Stage all changes"}
+   ↳ M  CLAUDE.md A  apps/admin/src/components/DeskDetail.css A  apps/admin/src/components/DeskDetail.tsx M  apps/admin/src/screens/AdminCreditDetailScreen.css M  ap…
+🔧 Bash {"command":"git commit -F - <<'MSG'\nfix(admin): the other six drill-downs get the rail they were drawn with, and the bo…
+   ↳ Checking formatting... All matched files use Prettier code style! [development 08a58ff] fix(admin): the other six drill-downs get the rail they were drawn with,…
+💬 Committed as `08a58ff` on `development` (16 files, +810/−507).
+
+**What was in the tree:** the `DeskDetail` work — the desk's other six drill-downs moved onto the two-column arrangement `design.html` draws for the order, with the grid extracted from five byte-identical container stacks into one component.
+
+**Gates, all re-run before committing:**
+
+| Gate | Result |
+| --- | --- |
+| `typecheck` | pass |
+| `lint` | pass |
+| `format:check` | pass |
+| `test` | pass — 5473 tests, 359 suites |
+| `build` | pass |
+
+Two things worth flagging about the message, since both are claims I did not personally verify:
+
+- **The render numbers are quoted, not measured here.** CLAUDE.md's twenty-third-run entry records 10 findings → 10 with the positive probes (all seven grids at `695.109px 408.891px`, rail at x=987, no empty band). I did not re-run `tools/render/run.sh` — it is not a gate and takes a browser stand-up. The commit message says so explicitly rather than implying I checked it.
+- **The six-mutation check on the new spec group** is likewise as recorded in the working tree's own documentation, not something I re-executed.
+
+If you want the render claim to be first-hand rather than inherited, `tools/render/run.sh` against `apps/admin` is the check — it is cheap now that the harness is committed, and this change touched seven screens' layout, which is exactly the category CLAUDE.md says the four gates cannot see.
+
+🏁 success · 15 turns · 932.7s · $1.8826487000000003
+Committed as `08a58ff` on `development` (16 files, +810/−507).
+
+**What was in the tree:** the `DeskDetail` work — the desk's other six drill-downs moved onto the two-column arrangement `design.html` draws for the order, with the grid extracted from five byte-identical container stacks into one component.
+
+**Gates, all re-run before committing:**
+
+| Gate | Result |
+| --- | --- |
+| `typecheck` | pass |
+| `lint` | pass |
+| `format:check` | pass |
+| `test` | pass — 5473 tests, 359 suites |
+| `build` | pass |
+
+Two things worth flagging about the message, since both are claims I did not personally verify:
+
+- **The render numbers are quoted, not measured here.** CLAUDE.md's twenty-third-run entry records 10 findings → 10 with the positive probes (all seven grids at `695.109px 408.891px`, rail at x=987, no empty band). I did not re-run `tools/render/run.sh` — it is not a gate and takes a browser stand-up. The commit message says so explicitly rather than implying I checked it.
+- **The six-mutation check on the new spec group** is likewise as recorded in the working tree's own documentation, not something I re-executed.
+
+If you want the render claim to be first-hand rather than inherited, `tools/render/run.sh` against `apps/admin` is the check — it is cheap now that the harness is committed, and this change touched seven screens' layout, which is exactly the category CLAUDE.md says the four gates cannot see.
+[2026-09-15 04:39:48] Agent run finished.
+To github.com:msbadar/udaan.git
+   e51bfa3..08a58ff  development -> development
