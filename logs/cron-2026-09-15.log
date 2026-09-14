@@ -853,3 +853,49 @@ Nothing is committed — the working tree is yours to review.
    ↳    ✓ TabBar > marks exactly one tab as the current page at /  399ms  ✓ src/account/AccountScreen.spec.tsx (8 tests) 1275ms    ✓ AccountScreen > revokes one devi…
 💬 The tail only shows the last workspace. Let me confirm every workspace passed, particularly landing.
 🔧 Bash {"command":"npm test 2>&1 | grep -E \"Test Files|Tests:|Test Suites:|Tests  |failed|FAIL\" | head -40","description":"Su…
+   ↳  Test Files  10 passed (10)       Tests  167 passed (167)  Test Files  22 passed (22)       Tests  313 passed (313)  Test Files  17 passed (17)       Tests  196…
+💬 All 8 workspaces green — 5463 tests across 358 suites, matching what CLAUDE.md records. Now the build.
+🔧 Bash {"command":"npm run build 2>&1 | tail -25","description":"Run full build","timeout":600000}
+   ↳ dist/assets/index-BoznuNEZ.js   412.06 kB │ gzip: 115.30 kB │ map: 1,755.95 kB ✓ built in 4.08s  > @udaan/web@0.1.0 build > npm run typecheck && vite build   > …
+💬 All four gates pass. Let me check the doc changes are consistent before committing.
+🔧 Bash {"command":"git diff -- plan.md | head -80","description":"Diff of plan.md"}
+   ↳ diff --git a/plan.md b/plan.md index f4b20a5..8fc3e17 100644 --- a/plan.md +++ b/plan.md @@ -22,12 +22,20 @@ Added 2026-09-14, because the board had grown long …
+💬 All four gates pass, and the docs were updated alongside the code as the repo requires. Committing:
+🔧 Bash {"command":"git add -A && git commit -F - <<'EOF'\nfix(landing): the third palette takes AA off its own ramp, and every …
+   ↳ Checking formatting... All matched files use Prettier code style! [development 7a1f891] fix(landing): the third palette takes AA off its own ramp, and every con…
+🔧 Bash {"command":"git status --short && echo \"---\" && git log --oneline -3","description":"Confirm clean tree and log"}
+   ↳ --- 7a1f891 fix(landing): the third palette takes AA off its own ramp, and every control on the page grows to a thumb c201eea fix(web): the phone palette takes …
+💬 Committed as `7a1f891`; working tree is clean.
+
+**What was in it** — the marketing site's palette and target work (plan.md item 10), 16 files, +555/−118:
+
+- **Palette**: four pairings corrected on `apps/landing`'s Tailwind slate ramp — step numerals 1.42→4.55, six white-background captions 2.56→4.76, the phone mock's driver line and the footer's legal block on the dark surfaces. No new colour; each is the neighbouring step of the ramp already in use.
+- **Targets**: 49 controls floored at 44px under `coarse:` (`any-pointer: coarse`), across eleven sections. Two are pairings rather than plain heights — the credit slider (`bg-clip-content` + 17px insets, since a range input's background *is* its track) and the footer link lists (`coarse:flex` first, a `min-h` on an inline box being a no-op).
+- **Docs**: `CLAUDE.md` gained § "The marketing site's palette and its targets"; `plan.md` closed item (10) and re-scoped item (5). These went in the same commit, which this repo's Part I § "Keeping this file true" requires.
+
+**Verification** — all four gates run and passed before committing: typecheck, lint, `format:check`, `npm test` (5463 tests / 358 suites across all eight workspaces), and `build`. The spec additions were checked against reverted copies: 14 mutations, 14 failures, one row each.
+
+Two caveats I did not resolve and that the commit body records rather than hides:
+- The render figures (189 findings → 0) come from the working-tree notes, **not** from a run I performed in this session. I verified the code, docs and gates; I did not re-run `tools/render/run.sh landing`.
+- Two floors remain reasoned rather than rendered by design — the clear-search `×` (needs a typed search term) and the `md:`-only controls (the harness emulates touch at 390px only). Both say so at their declarations.
+
+🏁 success · 12 turns · 929.4s · $1.6817687000000001
+Committed as `7a1f891`; working tree is clean.
+
+**What was in it** — the marketing site's palette and target work (plan.md item 10), 16 files, +555/−118:
+
+- **Palette**: four pairings corrected on `apps/landing`'s Tailwind slate ramp — step numerals 1.42→4.55, six white-background captions 2.56→4.76, the phone mock's driver line and the footer's legal block on the dark surfaces. No new colour; each is the neighbouring step of the ramp already in use.
+- **Targets**: 49 controls floored at 44px under `coarse:` (`any-pointer: coarse`), across eleven sections. Two are pairings rather than plain heights — the credit slider (`bg-clip-content` + 17px insets, since a range input's background *is* its track) and the footer link lists (`coarse:flex` first, a `min-h` on an inline box being a no-op).
+- **Docs**: `CLAUDE.md` gained § "The marketing site's palette and its targets"; `plan.md` closed item (10) and re-scoped item (5). These went in the same commit, which this repo's Part I § "Keeping this file true" requires.
+
+**Verification** — all four gates run and passed before committing: typecheck, lint, `format:check`, `npm test` (5463 tests / 358 suites across all eight workspaces), and `build`. The spec additions were checked against reverted copies: 14 mutations, 14 failures, one row each.
+
+Two caveats I did not resolve and that the commit body records rather than hides:
+- The render figures (189 findings → 0) come from the working-tree notes, **not** from a run I performed in this session. I verified the code, docs and gates; I did not re-run `tools/render/run.sh landing`.
+- Two floors remain reasoned rather than rendered by design — the clear-search `×` (needs a typed search term) and the `md:`-only controls (the harness emulates touch at 390px only). Both say so at their declarations.
+[2026-09-15 02:28:32] Agent run finished.
+To github.com:msbadar/udaan.git
+   c201eea..7a1f891  development -> development
+[2026-09-15 02:30:05] Checking if container is running...
+[2026-09-15 02:30:05] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
