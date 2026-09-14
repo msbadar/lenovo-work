@@ -5908,3 +5908,70 @@ To github.com:msbadar/udaan.git
 🔧 Bash {"command":"npx prettier --write CLAUDE.md plan.md tools/render/README.md 2>&1 | tail -4; timeout 300 npm run format:che…
    ↳ > prettier --check .  Checking formatting... All matched files use Prettier code style!
 🔧 Bash {"command":"timeout 900 npm run typecheck > /tmp/g1.log 2>&1; echo \"typecheck: $?\"\ntimeout 900 npm run lint > /tmp/g2…
+   ↳ typecheck: 0 lint: 0 test: 0 build: 0  Test Files  10 passed (10)       Tests  144 passed (144)  Test Files  22 passed (22)       Tests  313 passed (313)  Test …
+🔧 Bash {"command":"git status --short; echo \"=== diffstat ===\"; git diff --stat","description":"Review working tree"}
+   ↳  M CLAUDE.md  M apps/landing/src/a11y.spec.tsx  M apps/landing/src/components/CategoryShowcase.tsx  M apps/landing/src/components/LeadModal.tsx  M apps/landing/…
+🔧 TaskUpdate {"taskId":"4","status":"completed"}
+   ↳ Updated task #4 status
+💬 Done. Here's where things stand against your three items.
+
+## 1. Cloud Run service account suffix — already implemented; I verified it by execution
+
+It landed on 2026-09-13 and works the way you describe, with one refinement worth knowing: the rule is **containment, not equality**. A commit is `prod` when it's an ancestor of `vars.PRODUCTION_BRANCH` (default `main`), `dev` otherwise. Equality would have been wrong, because the trigger is a `v*` tag and `refs/tags/v1.4.2` is never `refs/heads/main`.
+
+I ran the resolve shell against a real git fixture rather than reading it: on the production branch → `prod`; on a feature branch → `dev`; branch missing → `dev` with a `::warning::`; and on the production branch with `origin` unreachable → `prod`, where the older `fetch && merge-base` form said `dev`. The suffix goes on the local part of the address (`udaan-deployer-prod@…`) in `.github/actions/gcp-auth`, and it's on the Cloud Run services and the twelve Secret Manager entries too.
+
+**One thing is still owed and I can't do it from here:** this repo has no `main` — branches are `development` and `master`, remote has only `origin/development` — so on the default every release resolves to `dev`. There's no `gh` and no credential in this sandbox. Set `vars.PRODUCTION_BRANCH=development` in repository settings.
+
+## 2. Pending items by priority
+
+The board's top items are blocked on decisions, not work — but one real piece of work was **never on the board**, and it outranked everything that was.
+
+`apps/landing`'s three dialogs — `LeadModal`, `PincodeModal` and `CategoryShowcase`'s calculator — were pictures of modals. No focus moved in, none was restored, nothing contained the tab order, nothing inerted the page behind, Escape did nothing, and the scrim was a `<div>` (a mouse-only exit). `aria-modal` was deliberately absent, correctly, because the claim had nothing behind it. `a11y.spec.tsx` said in its own header this was "the next piece of work on these two components"; nothing pointed at it from plan.md.
+
+- One `Modal` shell behind all three (`DeskDrawer`'s argument transplanted, including the cleanup-ordering fix a browser found there), `aria-modal` now true, `Modal.spec.tsx` with 9 keyboard rows — checked against a deliberately broken copy, which fails 5 of the 9.
+- The render harness now opens them (`reach`), which closes the last surface-shaped gap in it. Geometry came back sound at all five widths. Scoping was needed: unscoped, the three dialogs took the page from 162 findings to 678, all of the difference being the page underneath re-reported.
+- The close button was 32×32 on all three and is now 44px under `any-pointer: coarse` — a consequence of adding a focus trap, not a position on the 36 other small targets.
+
+Gates: typecheck, lint, format, test (5387 across 357 suites) and build all pass. plan.md and CLAUDE.md updated in the same change.
+
+## 3. Three decisions I need from you
+
+1. **The retailer client's palette** (board item 1) — 3.80:1 on checkout's `Place order`, 2.16:1 on the invoice's shortfall line. CLAUDE.md says twice that the phone screens *are* the design and changing its palette isn't a call to make from inside the code. Should the phone take AA-corrected grades the way the desk's did?
+2. **The marketing site's 36 sub-44px controls** (item 10) — the mechanical objection is gone; I added the `coarse:` variant the floor needs, so it's now `coarse:min-h-11` on 36 class strings, invisible under a mouse. Extend the floor to that page?
+3. **"add page for add more staffs"** (item 3) — may a `SELLER_ADMIN` invite another operator? Yes makes it a few lines; no makes it a new controller.
+
+Nothing is committed — say the word and I'll commit on `development`.
+
+🏁 success · 148 turns · 2957.3s · $14.1821731
+Done. Here's where things stand against your three items.
+
+## 1. Cloud Run service account suffix — already implemented; I verified it by execution
+
+It landed on 2026-09-13 and works the way you describe, with one refinement worth knowing: the rule is **containment, not equality**. A commit is `prod` when it's an ancestor of `vars.PRODUCTION_BRANCH` (default `main`), `dev` otherwise. Equality would have been wrong, because the trigger is a `v*` tag and `refs/tags/v1.4.2` is never `refs/heads/main`.
+
+I ran the resolve shell against a real git fixture rather than reading it: on the production branch → `prod`; on a feature branch → `dev`; branch missing → `dev` with a `::warning::`; and on the production branch with `origin` unreachable → `prod`, where the older `fetch && merge-base` form said `dev`. The suffix goes on the local part of the address (`udaan-deployer-prod@…`) in `.github/actions/gcp-auth`, and it's on the Cloud Run services and the twelve Secret Manager entries too.
+
+**One thing is still owed and I can't do it from here:** this repo has no `main` — branches are `development` and `master`, remote has only `origin/development` — so on the default every release resolves to `dev`. There's no `gh` and no credential in this sandbox. Set `vars.PRODUCTION_BRANCH=development` in repository settings.
+
+## 2. Pending items by priority
+
+The board's top items are blocked on decisions, not work — but one real piece of work was **never on the board**, and it outranked everything that was.
+
+`apps/landing`'s three dialogs — `LeadModal`, `PincodeModal` and `CategoryShowcase`'s calculator — were pictures of modals. No focus moved in, none was restored, nothing contained the tab order, nothing inerted the page behind, Escape did nothing, and the scrim was a `<div>` (a mouse-only exit). `aria-modal` was deliberately absent, correctly, because the claim had nothing behind it. `a11y.spec.tsx` said in its own header this was "the next piece of work on these two components"; nothing pointed at it from plan.md.
+
+- One `Modal` shell behind all three (`DeskDrawer`'s argument transplanted, including the cleanup-ordering fix a browser found there), `aria-modal` now true, `Modal.spec.tsx` with 9 keyboard rows — checked against a deliberately broken copy, which fails 5 of the 9.
+- The render harness now opens them (`reach`), which closes the last surface-shaped gap in it. Geometry came back sound at all five widths. Scoping was needed: unscoped, the three dialogs took the page from 162 findings to 678, all of the difference being the page underneath re-reported.
+- The close button was 32×32 on all three and is now 44px under `any-pointer: coarse` — a consequence of adding a focus trap, not a position on the 36 other small targets.
+
+Gates: typecheck, lint, format, test (5387 across 357 suites) and build all pass. plan.md and CLAUDE.md updated in the same change.
+
+## 3. Three decisions I need from you
+
+1. **The retailer client's palette** (board item 1) — 3.80:1 on checkout's `Place order`, 2.16:1 on the invoice's shortfall line. CLAUDE.md says twice that the phone screens *are* the design and changing its palette isn't a call to make from inside the code. Should the phone take AA-corrected grades the way the desk's did?
+2. **The marketing site's 36 sub-44px controls** (item 10) — the mechanical objection is gone; I added the `coarse:` variant the floor needs, so it's now `coarse:min-h-11` on 36 class strings, invisible under a mouse. Extend the floor to that page?
+3. **"add page for add more staffs"** (item 3) — may a `SELLER_ADMIN` invite another operator? Yes makes it a few lines; no makes it a new controller.
+
+Nothing is committed — say the word and I'll commit on `development`.
+[2026-09-14 12:29:48] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
