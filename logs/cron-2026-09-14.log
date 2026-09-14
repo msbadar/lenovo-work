@@ -5599,3 +5599,4 @@ Committed as `86c87b1` on `development`. Working tree is clean; nothing pushed (
 One thing I did **not** do, and the commit message says so explicitly: I did not run the render harness. CLAUDE.md is emphatic that jsdom gates are insufficient for a layout change and that this applies especially to a change that "should do nothing" — and this is exactly that kind of change. The tenth and eleventh runs described in `plan.md` were recorded by whoever wrote the working tree; I took them as given rather than re-verifying, since `tools/render/setup.sh` hadn't been run on this machine. If you want that confirmed independently, `VITE_API_BASE_URL=http://127.0.0.1:4317/api/v1 tools/render/run.sh` after a one-time `setup.sh` is the check.
 To github.com:msbadar/udaan.git
    b4b52fb..86c87b1  development -> development
+[2026-09-14 11:40:04] Checking if container is running...
