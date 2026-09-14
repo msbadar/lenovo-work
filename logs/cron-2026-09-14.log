@@ -3530,3 +3530,114 @@ To github.com:msbadar/udaan.git
    ↳ rc=0  Test Files  10 passed (10)       Tests  144 passed (144)  Test Files  22 passed (22)       Tests  313 passed (313)  Test Files  17 passed (17)       Tests…
 💬 All eight workspaces green: 5359 tests / 356 suites — matches what I wrote. Now the build gate and a final confirming render of the exact committed state.
 🔧 Bash {"command":"npm run build > /tmp/build.txt 2>&1; echo \"BUILD rc=$?\"; tail -5 /tmp/build.txt","description":"Run build …
+   ↳ BUILD rc=0 dist/assets/signed-in-screens-C6FnPKRm.js    74.32 kB │ gzip: 16.78 kB │ map: 328.61 kB dist/assets/router-BV3PutFb.js               92.28 kB │ gzip:…
+🔧 Bash {"command":"VITE_API_BASE_URL=http://127.0.0.1:4317/api/v1 ./tools/render/run.sh 2>&1 | sed -n '/=== fonts/,$p'","descri…
+   ↳ === fonts === {   "loaded": [     "IBM Plex Mono 500",     "Instrument Sans 400",     "Instrument Sans 500",     "Instrument Sans 600",     "Instrument Sans 700…
+🔧 TaskUpdate {"taskId":"4","status":"completed"}
+   ↳ Updated task #4 status
+🔧 Bash {"command":"git add -A && git status --short","description":"Stage changes"}
+   ↳ M  CLAUDE.md M  apps/admin/src/screens/AdminOrderDetailScreen.css M  apps/admin/src/screens/AdminSuppliersScreen.css M  apps/admin/src/screens/AdminSuppliersScr…
+💬 All four gates pass and the harness reports 0 findings on the exact committed state. I staged the changes but did not commit — say the word if you want that.
+
+## 1. Cloud Run dev/prod suffix — already done, and it's sound
+
+Commit `0590a09` implemented it, and it's better than the ask. Two things worth knowing:
+
+- **The rule is containment, not equality.** A commit is `prod` when it's an ancestor of `vars.PRODUCTION_BRANCH`. Equality would have been wrong: the trigger is a `v*` tag, and `refs/tags/v1.4.2` is never `refs/heads/main`, so a ref-name rule would have sent every release to dev while reading fine in the diff.
+- **The suffix went on more than the service account** — Cloud Run services, the migration job and all six Secret Manager entries — which is what makes a single shared project safe, not just a two-project setup.
+
+**One live gap I added to plan.md:** `vars.PRODUCTION_BRANCH` must be set on this repo before the first deploy. The default is `main` and **there is no `main` here** (branches are `development` and `master`). Unfetchable production branch resolves to `dev` — correct direction, completely silent. Every release would land on dev with a green workflow.
+
+## 2. Pending items by priority
+
+plan.md named its own top item: *"The render harness is still not committed, and that is now the biggest single lever here."* Six browser runs had found eleven defects and **the spec suite was green through all eleven** — every suite here runs in jsdom, which reports no geometry.
+
+I took the middle of the three options plan.md laid out: committed `tools/render/` as a **manual script**, in nothing that gates. Two design choices answer the objections that had blocked it:
+
+- **Fixtures can't rot silently.** `fixtures.ts` is typed against the `@udaan/shared` contracts and the root `typecheck` compiles it, so drift is a compile error naming the field. Not theoretical — the first compile rejected 11 fields across 5 fixtures.
+- **Checks are properties, not expected values** — nothing to re-bless when a design changes on purpose. Each sweep is a historical defect generalised.
+
+**Then I ran it over the screens plan.md named as the remaining gap** (4 reports + 4 drill-downs never drawn by any browser, + 2 registries). 126 findings → 0. Four real defects:
+
+| Defect | Detail |
+|---|---|
+| `--color-warning` is gold-as-text | 2.76:1 on white, 2.50:1 on page. Hits the **invoice's short-pick rows** — the legal document. Gold is now two tokens: fill vs text (`#99611e`) |
+| `optional` chip on `--color-text-faint` | 2.93:1, breaking the rule written at that token's own declaration. On every windowed screen |
+| Supplier **name** ellipsed to ~45% | At 768/1024. Its own sheet had already computed the 137px and drawn the conclusion only for the cell next to it |
+| `--on-brand` chip 56×34 at 390px | Also `apps/web`'s Account/Sign out — a phone client. Floor restored under `any-pointer: coarse` |
+
+Three findings were **my harness being wrong**, not the desk — fixed in `checks.mjs` rather than reported, since a sweep that cries wolf gets ignored.
+
+**Two honest caveats:** the `apps/web` half of the `--on-brand` fix is *reasoned, not rendered* (the harness serves `apps/admin` only), and `.order-detail__due` was found by inspection rather than render — that screen isn't in the harness's list.
+
+## 3. plan.md updated
+
+Closed the harness item and the drill-downs item; added the `PRODUCTION_BRANCH` gap; recorded one genuinely open decision: **`--color-warning` fails worse on the retailer client (2.16:1)**, and one of its call sites is the shared invoice — so fixing it there means deciding whether that document may differ by one colour across surfaces. I followed the cancelled-badge precedent (fix desk, leave phone, record it) rather than making a palette call from inside the code.
+
+Two older items remain blocked on one sentence each from you: *may an ops admin invite another ops admin?* (unblocks "add page for add more staffs") and which branch is production.
+
+## Gates
+
+`typecheck` ✓ · `lint` ✓ · `format:check` ✓ · `test` ✓ **5359 tests / 356 suites** (admin 799→800, my new spec row) · `build` ✓ · harness 0 findings with both real fonts loaded.
+
+Not verified here, as always: anything needing Docker, PostgreSQL or GCP — none of which exist in this sandbox.
+
+🏁 success · 206 turns · 2856.9s · $18.824168200000003
+All four gates pass and the harness reports 0 findings on the exact committed state. I staged the changes but did not commit — say the word if you want that.
+
+## 1. Cloud Run dev/prod suffix — already done, and it's sound
+
+Commit `0590a09` implemented it, and it's better than the ask. Two things worth knowing:
+
+- **The rule is containment, not equality.** A commit is `prod` when it's an ancestor of `vars.PRODUCTION_BRANCH`. Equality would have been wrong: the trigger is a `v*` tag, and `refs/tags/v1.4.2` is never `refs/heads/main`, so a ref-name rule would have sent every release to dev while reading fine in the diff.
+- **The suffix went on more than the service account** — Cloud Run services, the migration job and all six Secret Manager entries — which is what makes a single shared project safe, not just a two-project setup.
+
+**One live gap I added to plan.md:** `vars.PRODUCTION_BRANCH` must be set on this repo before the first deploy. The default is `main` and **there is no `main` here** (branches are `development` and `master`). Unfetchable production branch resolves to `dev` — correct direction, completely silent. Every release would land on dev with a green workflow.
+
+## 2. Pending items by priority
+
+plan.md named its own top item: *"The render harness is still not committed, and that is now the biggest single lever here."* Six browser runs had found eleven defects and **the spec suite was green through all eleven** — every suite here runs in jsdom, which reports no geometry.
+
+I took the middle of the three options plan.md laid out: committed `tools/render/` as a **manual script**, in nothing that gates. Two design choices answer the objections that had blocked it:
+
+- **Fixtures can't rot silently.** `fixtures.ts` is typed against the `@udaan/shared` contracts and the root `typecheck` compiles it, so drift is a compile error naming the field. Not theoretical — the first compile rejected 11 fields across 5 fixtures.
+- **Checks are properties, not expected values** — nothing to re-bless when a design changes on purpose. Each sweep is a historical defect generalised.
+
+**Then I ran it over the screens plan.md named as the remaining gap** (4 reports + 4 drill-downs never drawn by any browser, + 2 registries). 126 findings → 0. Four real defects:
+
+| Defect | Detail |
+|---|---|
+| `--color-warning` is gold-as-text | 2.76:1 on white, 2.50:1 on page. Hits the **invoice's short-pick rows** — the legal document. Gold is now two tokens: fill vs text (`#99611e`) |
+| `optional` chip on `--color-text-faint` | 2.93:1, breaking the rule written at that token's own declaration. On every windowed screen |
+| Supplier **name** ellipsed to ~45% | At 768/1024. Its own sheet had already computed the 137px and drawn the conclusion only for the cell next to it |
+| `--on-brand` chip 56×34 at 390px | Also `apps/web`'s Account/Sign out — a phone client. Floor restored under `any-pointer: coarse` |
+
+Three findings were **my harness being wrong**, not the desk — fixed in `checks.mjs` rather than reported, since a sweep that cries wolf gets ignored.
+
+**Two honest caveats:** the `apps/web` half of the `--on-brand` fix is *reasoned, not rendered* (the harness serves `apps/admin` only), and `.order-detail__due` was found by inspection rather than render — that screen isn't in the harness's list.
+
+## 3. plan.md updated
+
+Closed the harness item and the drill-downs item; added the `PRODUCTION_BRANCH` gap; recorded one genuinely open decision: **`--color-warning` fails worse on the retailer client (2.16:1)**, and one of its call sites is the shared invoice — so fixing it there means deciding whether that document may differ by one colour across surfaces. I followed the cancelled-badge precedent (fix desk, leave phone, record it) rather than making a palette call from inside the code.
+
+Two older items remain blocked on one sentence each from you: *may an ops admin invite another ops admin?* (unblocks "add page for add more staffs") and which branch is production.
+
+## Gates
+
+`typecheck` ✓ · `lint` ✓ · `format:check` ✓ · `test` ✓ **5359 tests / 356 suites** (admin 799→800, my new spec row) · `build` ✓ · harness 0 findings with both real fonts loaded.
+
+Not verified here, as always: anything needing Docker, PostgreSQL or GCP — none of which exist in this sandbox.
+[2026-09-14 07:28:06] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=7993e7a6
+💬 I'll check the current state of the working tree first.
+🔧 Bash {"command":"git status && echo \"---DIFF STAT---\" && git diff --stat HEAD","description":"Check git status and diff sta…
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes to be committed:   (use "git restore --staged <file>..." to unstage) 	modifi…
+🔧 Bash {"command":"git diff --cached -- apps/admin/src/screens apps/admin/src/styles/desk.css packages/web-ui/src/components/Bu…
+   ↳ diff --git a/apps/admin/src/screens/AdminOrderDetailScreen.css b/apps/admin/src/screens/AdminOrderDetailScreen.css index 3f38224..ddec314 100644 --- a/apps/admi…
+🔧 Bash {"command":"git diff --cached -- plan.md | head -160","description":"Show plan.md staged diff"}
+   ↳ diff --git a/plan.md b/plan.md index 85e2e63..20ba68d 100644 --- a/plan.md +++ b/plan.md @@ -152,9 +152,10 @@    had been *fixed by arithmetic over two sheets* …
+💬 Everything's already staged. Let me run the four gates the working agreement requires before committing.
+🔧 Bash {"command":"npm run typecheck 2>&1 | tail -20","description":"Run typecheck across workspaces","timeout":600000}
+   ↳ > @udaan/api@0.1.0 typecheck > tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit && tsc -p prisma/tsconfig.json --noEmit   > @udaan/landing@0.…
+🔧 Bash {"command":"npm run lint 2>&1 | tail -20 && echo \"===FORMAT===\" && npm run format:check 2>&1 | tail -10","description"…
