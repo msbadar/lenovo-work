@@ -4467,3 +4467,161 @@ To github.com:msbadar/udaan.git
 🔧 Edit {"replace_all":false,"file_path":"/work/tools/render/run.mjs","old_string":" * A real touch device — `any-pointer: coars…
    ↳ The file /work/tools/render/run.mjs has been updated successfully. (file state is current in your context — no need to Read it back)
 🔧 Bash {"command":"npm run lint 2>&1 | tail -5; npm run format:check 2>&1 | tail -3","description":"Re-verify lint and format",…
+   ↳ > udaan@0.1.0 lint > eslint .   Checking formatting... All matched files use Prettier code style!
+🔧 Bash {"command":"grep -n \"findings:\" /tmp/render-final2.txt; echo \"admin: $(grep -c '\\[admin/' /tmp/render-final2.txt)\";…
+   ↳ 41:=== findings: 262 === admin: 0 web:   78 === fonts (web) === {   "loaded": [     "IBM Plex Mono 500",     "IBM Plex Mono 600",     "IBM Plex Sans 400",     "…
+💬 All four gates pass (typecheck, lint, format, test 5361/356, build). Nothing is committed — the working tree holds the change.
+
+## 1. Cloud Run service-account suffix — already done, verified
+
+This shipped in `0590a09` and `94568be` before this session. I checked it against your wording rather than taking the commit message's word:
+
+- `resolve` job answers one word, `prod` or `dev`, and `.github/actions/gcp-auth` puts it on the service account's **local part** (`udaan-deployer-prod@…`).
+- The rule is **containment, not equality** — `git merge-base --is-ancestor` against `vars.PRODUCTION_BRANCH` (default `main`). That matters because the trigger is a `v*` tag: `refs/tags/v1.4.2` is not `refs/heads/main`, so a name-equality rule would have sent *every release* to dev while reading fine in the diff.
+- The suffix also goes on the Cloud Run services, the migration job and the six Secret Manager entries — the account is the boundary only when dev and prod are separate projects.
+- `cloud-run-deploy.spec.ts` pins all of it.
+
+**One thing is still owed and I can't do it from here:** this repo has no `main` (branches are `development` and `master`), so on the default every release resolves to `dev`. Set `vars.PRODUCTION_BRANCH` to `development`. The workflow now raises a `::warning::` about this instead of failing silently, but the setting itself needs the Actions UI.
+
+## 2. Pending items by priority
+
+The board's top items were all decision- or hardware-blocked, so I took the highest-leverage thing that was neither: **the render harness now draws `apps/web`, which nothing had ever drawn.**
+
+That was the largest item on its own "cannot answer" list, and it mattered because a fix shipped *the same day* — `Button`'s `--on-brand` 44px floor for Account/Sign out — had its `apps/web` half recorded as "reasoned rather than rendered."
+
+Results, in IBM Plex Sans (the phone design's real face, so fit numbers are exact):
+
+- **`apps/admin`: 0 findings** — the refactor moved nothing.
+- **`apps/web`: 78** on ten screens at five widths.
+- **The `--on-brand` fix is confirmed.** Account and Sign out are absent from the 390px target sweep.
+
+Two findings were the harness being wrong, and I fixed those in `checks.mjs` rather than reporting them: visually-hidden elements aren't clipped text or targets, and a control inside a wrapping `<label>` is hit through the label.
+
+The 78 reduce to two groups:
+
+**Touch targets — eleven controls, and this is work, not a decision.** The precedent is settled three times over ("the design is the authority on what a surface looks like, not on what a thumb can reach"). The sharpest: **`apps/web`'s `SearchField` is `DeskSearchField`'s own 2026-09-12 defect, unfixed** — a 44px box around a 22px input, so 11px at each edge is drawn control that focuses nothing, on the first thing a shopkeeper touches. Also the cart's steppers at 32×30 and Add-to-cart at 86×33.
+
+**Palette — six token pairings below AA, and this one I did not touch.** Your repo records twice that the retailer screens *are* the design and that changing that palette isn't a decision to make from inside the code, so I left it and wrote the numbers down instead.
+
+## The decision I need from you
+
+The old board tracked this as one token at 2.16:1. Rendering found six, and the worst isn't the one being tracked:
+
+| Ratio | Where |
+|---|---|
+| 1.95 | order detail's "Due 2 Oct" |
+| 2.16 | all three shortfall sentences — **including the invoice** |
+| **3.80** | **`Place order · ₹38,827` — checkout's primary button, white on rust** |
+| 2.91–4.46 | ~15 more across faint/muted/teal-tint |
+
+Worth knowing: the shared invoice **already** renders in two different colours depending on which bundle drew it, because `desk.css` overrode `--color-warning` and `tokens.css` didn't. So "don't let the document diverge" argues *for* fixing the phone, not against.
+
+> Should the phone palette take AA-corrected grades of its own hues, the way the desk's did?
+
+Yes → six declarations in `tokens.css`; every screen reads them through tokens, so nothing else moves. I'd do the eleven touch targets in the same pass.
+
+## 3. plan.md updated
+
+Re-ranked to nine items. The honest headline changed: it used to open "almost nothing here is blocked on work" — that was true of what was *known*, and it isn't any more. New § "The retailer client" carries both tables with the measured numbers, and `CLAUDE.md` has the eighth run plus the corrected harness scope.
+
+🏁 success · 173 turns · 2106.9s · $14.117424849999988
+All four gates pass (typecheck, lint, format, test 5361/356, build). Nothing is committed — the working tree holds the change.
+
+## 1. Cloud Run service-account suffix — already done, verified
+
+This shipped in `0590a09` and `94568be` before this session. I checked it against your wording rather than taking the commit message's word:
+
+- `resolve` job answers one word, `prod` or `dev`, and `.github/actions/gcp-auth` puts it on the service account's **local part** (`udaan-deployer-prod@…`).
+- The rule is **containment, not equality** — `git merge-base --is-ancestor` against `vars.PRODUCTION_BRANCH` (default `main`). That matters because the trigger is a `v*` tag: `refs/tags/v1.4.2` is not `refs/heads/main`, so a name-equality rule would have sent *every release* to dev while reading fine in the diff.
+- The suffix also goes on the Cloud Run services, the migration job and the six Secret Manager entries — the account is the boundary only when dev and prod are separate projects.
+- `cloud-run-deploy.spec.ts` pins all of it.
+
+**One thing is still owed and I can't do it from here:** this repo has no `main` (branches are `development` and `master`), so on the default every release resolves to `dev`. Set `vars.PRODUCTION_BRANCH` to `development`. The workflow now raises a `::warning::` about this instead of failing silently, but the setting itself needs the Actions UI.
+
+## 2. Pending items by priority
+
+The board's top items were all decision- or hardware-blocked, so I took the highest-leverage thing that was neither: **the render harness now draws `apps/web`, which nothing had ever drawn.**
+
+That was the largest item on its own "cannot answer" list, and it mattered because a fix shipped *the same day* — `Button`'s `--on-brand` 44px floor for Account/Sign out — had its `apps/web` half recorded as "reasoned rather than rendered."
+
+Results, in IBM Plex Sans (the phone design's real face, so fit numbers are exact):
+
+- **`apps/admin`: 0 findings** — the refactor moved nothing.
+- **`apps/web`: 78** on ten screens at five widths.
+- **The `--on-brand` fix is confirmed.** Account and Sign out are absent from the 390px target sweep.
+
+Two findings were the harness being wrong, and I fixed those in `checks.mjs` rather than reporting them: visually-hidden elements aren't clipped text or targets, and a control inside a wrapping `<label>` is hit through the label.
+
+The 78 reduce to two groups:
+
+**Touch targets — eleven controls, and this is work, not a decision.** The precedent is settled three times over ("the design is the authority on what a surface looks like, not on what a thumb can reach"). The sharpest: **`apps/web`'s `SearchField` is `DeskSearchField`'s own 2026-09-12 defect, unfixed** — a 44px box around a 22px input, so 11px at each edge is drawn control that focuses nothing, on the first thing a shopkeeper touches. Also the cart's steppers at 32×30 and Add-to-cart at 86×33.
+
+**Palette — six token pairings below AA, and this one I did not touch.** Your repo records twice that the retailer screens *are* the design and that changing that palette isn't a decision to make from inside the code, so I left it and wrote the numbers down instead.
+
+## The decision I need from you
+
+The old board tracked this as one token at 2.16:1. Rendering found six, and the worst isn't the one being tracked:
+
+| Ratio | Where |
+|---|---|
+| 1.95 | order detail's "Due 2 Oct" |
+| 2.16 | all three shortfall sentences — **including the invoice** |
+| **3.80** | **`Place order · ₹38,827` — checkout's primary button, white on rust** |
+| 2.91–4.46 | ~15 more across faint/muted/teal-tint |
+
+Worth knowing: the shared invoice **already** renders in two different colours depending on which bundle drew it, because `desk.css` overrode `--color-warning` and `tokens.css` didn't. So "don't let the document diverge" argues *for* fixing the phone, not against.
+
+> Should the phone palette take AA-corrected grades of its own hues, the way the desk's did?
+
+Yes → six declarations in `tokens.css`; every screen reads them through tokens, so nothing else moves. I'd do the eleven touch targets in the same pass.
+
+## 3. plan.md updated
+
+Re-ranked to nine items. The honest headline changed: it used to open "almost nothing here is blocked on work" — that was true of what was *known*, and it isn't any more. New § "The retailer client" carries both tables with the measured numbers, and `CLAUDE.md` has the eighth run plus the corrected harness scope.
+[2026-09-14 08:55:48] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=28e1cae1
+💬 I'll look at what's changed before committing.
+🔧 Bash {"command":"git status && echo \"=== DIFFSTAT ===\" && git diff --stat","description":"Show status and diffstat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git diff tools/render/run.sh tools/render/run.mjs tools/render/checks.mjs","description":"Diff of render har…
+   ↳ diff --git a/tools/render/checks.mjs b/tools/render/checks.mjs index 3a00f24..82b06a0 100644 --- a/tools/render/checks.mjs +++ b/tools/render/checks.mjs @@ -16,…
+🔧 Bash {"command":"git diff tools/render/README.md && echo \"=== FIXTURES (summary) ===\" && git diff tools/render/fixtures.ts …
+   ↳ diff --git a/tools/render/README.md b/tools/render/README.md index e3d4646..ac6ebf8 100644 --- a/tools/render/README.md +++ b/tools/render/README.md @@ -1,19 +1…
+🔧 Bash {"command":"npx tsc -p tools/render/tsconfig.json 2>&1 | tail -20; echo \"tsc exit: $?\"","description":"Typecheck rende…
+   ↳ npm notice npm notice New major version of npm available! 10.8.2 -> 12.0.2 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2 npm notice To u…
+🔧 Bash {"command":"npx eslint tools/render/*.mjs 2>&1 | tail -20; echo \"eslint exit: ${PIPESTATUS[0]}\"; npx prettier --check …
+   ↳ eslint exit: 0 Checking formatting... All matched files use Prettier code style!
+🔧 Bash {"command":"git diff plan.md | head -150","description":"Diff plan.md"}
+   ↳ diff --git a/plan.md b/plan.md index 21dd1d1..27fbc73 100644 --- a/plan.md +++ b/plan.md @@ -29,20 +29,36 @@ an oversight — the implementation backlog was worke…
+💬 Changes are coherent and the relevant gates pass. Committing.
+🔧 Bash {"command":"git add -A && git commit -q -F - <<'MSG' && git log --oneline -1\nfeat(tools): the harness draws the shop to…
+   ↳ Checking formatting... All matched files use Prettier code style! ce781b8 feat(tools): the harness draws the shop too, and it had never been drawn
+💬 Committed as `ce781b8` on `development`.
+
+**What went in:** the render harness extended to both browser clients (`run.sh`, `run.mjs`, `checks.mjs`, `fixtures.ts`, `README.md`) plus the `CLAUDE.md` and `plan.md` updates that describe it — same commit, per Part I § "Keeping this file true".
+
+**What I verified here:**
+- `tsc -p tools/render/tsconfig.json` — clean (this is the fixture/contract check)
+- `eslint tools/render/*.mjs` — clean
+- `prettier --check` over the touched files — clean
+
+**What I did not run:** `npm test` and `npm run build`. The diff touches only `tools/render/` and two markdown files — `tools/` is not a workspace and is in neither — so no suite covers these changes. If you want the full four gates run anyway before this goes anywhere, say so.
+
+**What is not verified by anything:** the harness itself was not re-run in this session. The findings the commit message reports (0 on the desk, 78 on `apps/web`) are the ones already recorded in `plan.md` and `CLAUDE.md` from the eighth run; I did not reproduce them — `tools/render/run.sh` needs the ~20-minute Chromium setup and is not a gate.
+
+🏁 success · 8 turns · 51.8s · $1.1006711
+Committed as `ce781b8` on `development`.
+
+**What went in:** the render harness extended to both browser clients (`run.sh`, `run.mjs`, `checks.mjs`, `fixtures.ts`, `README.md`) plus the `CLAUDE.md` and `plan.md` updates that describe it — same commit, per Part I § "Keeping this file true".
+
+**What I verified here:**
+- `tsc -p tools/render/tsconfig.json` — clean (this is the fixture/contract check)
+- `eslint tools/render/*.mjs` — clean
+- `prettier --check` over the touched files — clean
+
+**What I did not run:** `npm test` and `npm run build`. The diff touches only `tools/render/` and two markdown files — `tools/` is not a workspace and is in neither — so no suite covers these changes. If you want the full four gates run anyway before this goes anywhere, say so.
+
+**What is not verified by anything:** the harness itself was not re-run in this session. The findings the commit message reports (0 on the desk, 78 on `apps/web`) are the ones already recorded in `plan.md` and `CLAUDE.md` from the eighth run; I did not reproduce them — `tools/render/run.sh` needs the ~20-minute Chromium setup and is not a gate.
+To github.com:msbadar/udaan.git
+   94568be..ce781b8  development -> development
