@@ -1254,3 +1254,87 @@ Now the four gates the repo requires before finishing.
 🔧 Bash {"command":"ls ~/.cache/udaan-render 2>/dev/null && echo \"--- browsers ---\" && ls ~/.cache/udaan-render/browsers 2>/de…
    ↳ NOT INSTALLED (setup.sh is ~20min)
 🔧 Bash {"command":"timeout 1500 tools/render/setup.sh > /tmp/setup.log 2>&1; echo \"exit=$?\"; tail -15 /tmp/setup.log","descri…
+   ↳ exit=0 |■■■■■■■■                                                                        |  10% of 114.3 MiB |■■■■■■■■■■■■■■■■                                   …
+🔧 Bash {"command":"VITE_API_BASE_URL=http://127.0.0.1:4317/api/v1 timeout 900 tools/render/run.sh landing > /tmp/render.log 2>&…
+   ↳ exit=0 === fonts (landing) === === findings: 0 ===
+🔧 Bash {"command":"sed -n '1,60p' /tmp/render.log","description":"Read full render report"}
+   ↳ ==> Building apps/landing ==> Compiling fixtures (this is the contract check) ==> Rendering (node:17496) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of …
+💬 **0 findings**, with Plus Jakarta Sans loaded so fit results are exact — the change moved nothing visually. Let me record that, since it's now a measured claim rather than a reasoned one.
+🔧 Edit {"replace_all":false,"file_path":"/work/CLAUDE.md","old_string":"**Verified in the built bundle rather than in the sourc…
+   ↳ The file /work/CLAUDE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+🔧 Bash {"command":"npm run format:check 2>&1 | tail -3 && git status --short && echo \"=== diff stat ===\" && git diff --stat",…
+   ↳ Checking formatting... All matched files use Prettier code style!  M CLAUDE.md  M apps/landing/src/App.tsx  M apps/landing/src/index.css  M apps/landing/src/lan…
+💬 Done. All four gates pass, plus a browser run.
+
+## What I found, and why the scope is what it is
+
+"Follow modern design patterns" ran into this repo's governing rule immediately: `design.html` is a **read-only reference design**, the retailer screens *are* that design, and the operator desk is a transcription of it. Restyling those surfaces isn't a code decision here. The repo has also already done most of what "modern" usually means — AA contrast on all three palettes, 44px touch targets everywhere, focus-managed modals, skeletons, toasts, `inputmode`/`autocomplete` throughout. That work landed in the last few commits.
+
+So I looked for patterns the design *doesn't* govern, and found a real one.
+
+**`apps/landing` respected no motion preference at all.** No `prefers-reduced-motion` block, `scroll-behavior: smooth` on `html`, nine elements animating in, six hover transforms, two smooth `scrollIntoView` calls. The two browser clients have had this rule all along from `global.css` — landing imports nothing, so it stopped at a package border. It stopped at the surface that needed it *most*: the clients declare a transition in fourteen stylesheets between them; this page smooth-scrolls the whole document on every navbar anchor.
+
+Two things made it more than a copy-paste:
+
+- **The stylesheet fix alone is a trap.** `scroll-behavior` is only the default an *unargumented* scroll uses, so an explicit `behavior: 'smooth'` beats the media query — `!important` included. Copying the block and stopping gives a page that reads as fixed, passes every assertion, and still flings the visitor who asked it not to. That half is `src/lib/scroll.ts`.
+- **Two dead animations were infinite.** `pulse-subtle` was just unused; `marquee` belonged to the brand strip deleted for claiming twelve partnerships that don't exist — a named animation is the affordance that invites it back. Deleted, with `.animate-shimmer`.
+
+## Verification
+
+- 5 deliberate mutations, each caught by the right rows and no others.
+- Built-bundle check: the block is emitted with all four declarations; `marquee`/`shimmer`/`pulseSubtle` appear **zero** times; the two live keyframes appear once each.
+- Full suite green (5472 tests / 359 suites), typecheck, lint, format, build.
+- Installed the render harness and drew the page: **0 findings**, fonts loaded. That confirms the change moved nothing visible — it does *not* confirm the rule works, since the harness emulates a viewport rather than a reader's settings. I've written that limit down rather than letting the clean sweep imply more than it does.
+
+`CLAUDE.md` and `plan.md` are updated in the same change, as the repo requires.
+
+## Worth knowing
+
+This was invisible to every instrument here — no comment admitted it, and the page has been drawn 21 times without it showing. The check that found it is cheap and generalises: **ask which rule the other surfaces have that this one never imported.** The three surfaces share no stylesheet, so anything in `global.css` is a candidate. I walked that list; the only other entry was `:focus-visible`, and landing is fine there (Tailwind's preflight removes no outline, so the UA ring stands).
+
+If you did want visual modernization — different type scale, spacing rhythm, denser tables, a dark mode — that's genuinely available, but it's a change to `design.html`'s authority rather than to the code, and this repo is emphatic that it's not a decision to make from inside. Tell me which surface and I'll scope it as a design proposal instead.
+
+🏁 success · 75 turns · 2326.4s · $5.9738945999999995
+Done. All four gates pass, plus a browser run.
+
+## What I found, and why the scope is what it is
+
+"Follow modern design patterns" ran into this repo's governing rule immediately: `design.html` is a **read-only reference design**, the retailer screens *are* that design, and the operator desk is a transcription of it. Restyling those surfaces isn't a code decision here. The repo has also already done most of what "modern" usually means — AA contrast on all three palettes, 44px touch targets everywhere, focus-managed modals, skeletons, toasts, `inputmode`/`autocomplete` throughout. That work landed in the last few commits.
+
+So I looked for patterns the design *doesn't* govern, and found a real one.
+
+**`apps/landing` respected no motion preference at all.** No `prefers-reduced-motion` block, `scroll-behavior: smooth` on `html`, nine elements animating in, six hover transforms, two smooth `scrollIntoView` calls. The two browser clients have had this rule all along from `global.css` — landing imports nothing, so it stopped at a package border. It stopped at the surface that needed it *most*: the clients declare a transition in fourteen stylesheets between them; this page smooth-scrolls the whole document on every navbar anchor.
+
+Two things made it more than a copy-paste:
+
+- **The stylesheet fix alone is a trap.** `scroll-behavior` is only the default an *unargumented* scroll uses, so an explicit `behavior: 'smooth'` beats the media query — `!important` included. Copying the block and stopping gives a page that reads as fixed, passes every assertion, and still flings the visitor who asked it not to. That half is `src/lib/scroll.ts`.
+- **Two dead animations were infinite.** `pulse-subtle` was just unused; `marquee` belonged to the brand strip deleted for claiming twelve partnerships that don't exist — a named animation is the affordance that invites it back. Deleted, with `.animate-shimmer`.
+
+## Verification
+
+- 5 deliberate mutations, each caught by the right rows and no others.
+- Built-bundle check: the block is emitted with all four declarations; `marquee`/`shimmer`/`pulseSubtle` appear **zero** times; the two live keyframes appear once each.
+- Full suite green (5472 tests / 359 suites), typecheck, lint, format, build.
+- Installed the render harness and drew the page: **0 findings**, fonts loaded. That confirms the change moved nothing visible — it does *not* confirm the rule works, since the harness emulates a viewport rather than a reader's settings. I've written that limit down rather than letting the clean sweep imply more than it does.
+
+`CLAUDE.md` and `plan.md` are updated in the same change, as the repo requires.
+
+## Worth knowing
+
+This was invisible to every instrument here — no comment admitted it, and the page has been drawn 21 times without it showing. The check that found it is cheap and generalises: **ask which rule the other surfaces have that this one never imported.** The three surfaces share no stylesheet, so anything in `global.css` is a candidate. I walked that list; the only other entry was `:focus-visible`, and landing is fine there (Tailwind's preflight removes no outline, so the UA ring stands).
+
+If you did want visual modernization — different type scale, spacing rhythm, denser tables, a dark mode — that's genuinely available, but it's a change to `design.html`'s authority rather than to the code, and this repo is emphatic that it's not a decision to make from inside. Tell me which surface and I'll scope it as a design proposal instead.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=2ac35aad
+💬 I'll look at what's changed and commit it.
+🔧 Bash {"command":"git status && echo \"---DIFFSTAT---\" && git diff --stat","description":"Check git status and diff stat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git diff apps/landing/src/App.tsx apps/landing/src/index.css apps/landing/tailwind.config.ts","description":…
+   ↳ diff --git a/apps/landing/src/App.tsx b/apps/landing/src/App.tsx index 430e05d..5e9f901 100644 --- a/apps/landing/src/App.tsx +++ b/apps/landing/src/App.tsx @@ …
+🔧 Read {"file_path":"/work/apps/landing/src/lib/scroll.ts"}
+   ↳ 1	/** 2	 * Moving the page to a section, at the motion the reader asked for. 3	 * 4	 * `index.css` flattens every animation and transition on this site under 5	…
+🔧 Bash {"command":"ls /work/apps/landing/src/*.spec.* 2>/dev/null; echo \"---\"; ls /work/apps/landing/src/app-anchors.spec.ts …
+   ↳ /work/apps/landing/src/App.spec.tsx /work/apps/landing/src/a11y.spec.tsx /work/apps/landing/src/app-anchors.spec.tsx /work/apps/landing/src/axe-parity.spec.ts /…
+🔧 Bash {"command":"npm run typecheck 2>&1 | tail -20","description":"Run typecheck gate","timeout":600000}
+[2026-09-15 03:20:04] Checking if container is running...
+[2026-09-15 03:20:04] Container 'sandbox-rn-claude-claude' is already running. Exiting.
