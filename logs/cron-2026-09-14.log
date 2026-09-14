@@ -3985,3 +3985,42 @@ Two caveats worth stating plainly: **nothing here has touched GCP** — no `gclo
    ↳ > udaan@0.1.0 format:check > prettier --check .  Checking formatting... All matched files use Prettier code style!
 🔧 Bash {"command":"npm run lint 2>&1 | tail -15","description":"Run lint across workspaces","timeout":600000}
    ↳ > udaan@0.1.0 lint > eslint .
+[2026-09-14 08:10:04] Checking if container is running...
+🔧 Bash {"command":"npm run typecheck 2>&1 | tail -15","description":"Run typecheck across workspaces","timeout":900000}
+[2026-09-14 08:10:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳ > @udaan/api@0.1.0 typecheck > tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit && tsc -p prisma/tsconfig.json --noEmit   > @udaan/landing@0.…
+🔧 Bash {"command":"npm run build 2>&1 | tail -12","description":"Run full build","timeout":900000}
+   ↳ rendering chunks... computing gzip size... dist/index.html                               1.42 kB │ gzip:  0.66 kB dist/assets/index-BbbkUt7R.css               2…
+💬 All five gates pass. Committing on `development` (not the default branch, so no branching needed).
+🔧 Bash {"command":"git add -A && git status --short","description":"Stage all changes"}
+   ↳ M  .github/workflows/deploy-cloud-run.yml M  CLAUDE.md M  apps/admin/src/app/cloud-run-deploy.spec.ts M  docs/configuration.md M  plan.md
+🔧 Bash {"command":"git commit -F - <<'EOF'\nfix(deploy): a missing branch is not the same as a commit that is not on it\n\nThe …
+   ↳ Checking formatting... All matched files use Prettier code style! [development 94568be] fix(deploy): a missing branch is not the same as a commit that is not on…
+💬 Committed as `94568be` on `development`.
+
+**What was in the working tree** — the `resolve` job in `deploy-cloud-run.yml` collapsing two different facts into one green message, plus a behavioural bug in the same block where the ancestor test hung off `git fetch`'s exit code rather than the ref's existence. The commit covers the fix, two spec rows in `cloud-run-deploy.spec.ts` that pin both halves, and the CLAUDE.md / plan.md / docs updates that go with them.
+
+**Gates, all run here:**
+- `npm test --workspace @udaan/admin` — 802 tests / 54 suites, which matches the counts CLAUDE.md was updated to
+- `npm run format:check`, `npm run lint`, `npm run typecheck`, `npm run build` — all clean
+
+Nothing was pushed. Two things worth flagging that the commit message records but this session did not verify:
+
+- The claim that the old and new forms resolve differently under a failed fetch comes from the diff's own notes about a git fixture run in a prior session — I did not re-execute it.
+- `vars.PRODUCTION_BRANCH` is still unset and unreadable from here. The code is now loud about it instead of silent, but the actual setting remains owed, and on the evidence `development` is the only branch on the remote.
+
+🏁 success · 11 turns · 297.3s · $1.1672588
+Committed as `94568be` on `development`.
+
+**What was in the working tree** — the `resolve` job in `deploy-cloud-run.yml` collapsing two different facts into one green message, plus a behavioural bug in the same block where the ancestor test hung off `git fetch`'s exit code rather than the ref's existence. The commit covers the fix, two spec rows in `cloud-run-deploy.spec.ts` that pin both halves, and the CLAUDE.md / plan.md / docs updates that go with them.
+
+**Gates, all run here:**
+- `npm test --workspace @udaan/admin` — 802 tests / 54 suites, which matches the counts CLAUDE.md was updated to
+- `npm run format:check`, `npm run lint`, `npm run typecheck`, `npm run build` — all clean
+
+Nothing was pushed. Two things worth flagging that the commit message records but this session did not verify:
+
+- The claim that the old and new forms resolve differently under a failed fetch comes from the diff's own notes about a git fixture run in a prior session — I did not re-execute it.
+- `vars.PRODUCTION_BRANCH` is still unset and unreadable from here. The code is now loud about it instead of silent, but the actual setting remains owed, and on the evidence `development` is the only branch on the remote.
+To github.com:msbadar/udaan.git
+   7826c48..94568be  development -> development
