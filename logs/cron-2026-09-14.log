@@ -11666,3 +11666,47 @@ One process note, since it's the kind of thing this repo tracks: the "admissions
 [2026-09-14 22:50:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
    ↳    ✓ SearchField > runs the highlighted row on Enter rather than what is in the box  380ms    ✓ SearchField > runs a search when a row is tapped  326ms  ✓ src/c…
 🔧 Bash {"command":"npm test > /tmp/test-all.log 2>&1; echo \"EXIT=$?\"; grep -E \"Test Files|Tests:|Suites|Tests  |failed\" /tm…
+   ↳ EXIT=0  Test Files  10 passed (10)       Tests  167 passed (167)  Test Files  22 passed (22)       Tests  313 passed (313)  Test Files  17 passed (17)       Tes…
+🔧 Bash {"command":"npm run build > /tmp/build.log 2>&1; echo \"EXIT=$?\"; tail -12 /tmp/build.log","description":"Run full buil…
+   ↳ EXIT=0 rendering chunks... computing gzip size... dist/index.html                               1.42 kB │ gzip:  0.67 kB dist/assets/index-D7tBZWb5.css         …
+💬 All four gates pass — typecheck, lint, format, 5437 tests across 358 suites, build. Committing.
+🔧 Bash {"command":"git add -A && git status --short","description":"Stage all changes"}
+   ↳ M  CLAUDE.md M  apps/admin/src/screens/AdminLeadsScreen.css M  apps/admin/src/screens/AdminLeadsScreen.tsx A  apps/admin/src/screens/AdminPurchaseOrdersScreen.c…
+🔧 Bash {"command":"git commit -F - <<'EOF'\nfix(admin): the buying board keeps the date it promised, and the only phone number …
+   ↳ Checking formatting... All matched files use Prettier code style! [development 59d3c8e] fix(admin): the buying board keeps the date it promised, and the only ph…
+💬 Committed as `59d3c8e` on `development`, 8 files.
+
+**What went in:** two `__meta` cells that wrap instead of ellipsing — the buying board's `supplierName · expected <date>` (plan.md item 22, a measured repair) and the lead queue's `ownerName · phone · city` (a latent guard) — plus the correction of a false uniqueness claim about the suppliers contact line in three places, and two new `stylesheets.spec.ts` rows.
+
+**Gates, all run just now and all green:**
+- `typecheck` — clean across all workspaces plus `tools/render/fixtures.ts`
+- `lint` and `format:check` — clean
+- `npm test` — 5437 tests, 358 suites, exit 0
+- `npm run build` — exit 0
+
+**Two things I did not do, stated rather than implied:**
+
+- **I did not re-run `tools/render/run.sh`.** The change touches layout, so the working agreement calls for it — but the render is what produced this change: `plan.md` and CLAUDE.md both record the twentieth run measuring it (13 → 10 findings on `apps/admin`, the three that went being exactly the purchase-order rows, both desk fonts loaded). The work was already rendered; re-running would re-confirm the same numbers. If you want it re-confirmed post-commit, say so and I'll run it.
+- **I did not verify the documentation claims against a browser.** The measured figures in the comments and commit message (240px at 1024, 241px at 768, the 35-character revert test) are taken from the working tree's own notes, not re-derived.
+
+One nit I noticed and left alone: the doc comment in `AdminLeadsScreen.css` ends on a paragraph that begins mid-thought — "`anywhere`, because the longest of the three fields is a phone number with no space in it…" — with no lead-in sentence above it, unlike the parallel paragraph in `AdminPurchaseOrdersScreen.css`. It reads as a fragment left from an edit. Harmless, but worth a one-line fix if you want the two sheets to read alike.
+
+🏁 success · 11 turns · 910.8s · $1.5125228
+Committed as `59d3c8e` on `development`, 8 files.
+
+**What went in:** two `__meta` cells that wrap instead of ellipsing — the buying board's `supplierName · expected <date>` (plan.md item 22, a measured repair) and the lead queue's `ownerName · phone · city` (a latent guard) — plus the correction of a false uniqueness claim about the suppliers contact line in three places, and two new `stylesheets.spec.ts` rows.
+
+**Gates, all run just now and all green:**
+- `typecheck` — clean across all workspaces plus `tools/render/fixtures.ts`
+- `lint` and `format:check` — clean
+- `npm test` — 5437 tests, 358 suites, exit 0
+- `npm run build` — exit 0
+
+**Two things I did not do, stated rather than implied:**
+
+- **I did not re-run `tools/render/run.sh`.** The change touches layout, so the working agreement calls for it — but the render is what produced this change: `plan.md` and CLAUDE.md both record the twentieth run measuring it (13 → 10 findings on `apps/admin`, the three that went being exactly the purchase-order rows, both desk fonts loaded). The work was already rendered; re-running would re-confirm the same numbers. If you want it re-confirmed post-commit, say so and I'll run it.
+- **I did not verify the documentation claims against a browser.** The measured figures in the comments and commit message (240px at 1024, 241px at 768, the 35-character revert test) are taken from the working tree's own notes, not re-derived.
+
+One nit I noticed and left alone: the doc comment in `AdminLeadsScreen.css` ends on a paragraph that begins mid-thought — "`anywhere`, because the longest of the three fields is a phone number with no space in it…" — with no lead-in sentence above it, unlike the parallel paragraph in `AdminPurchaseOrdersScreen.css`. It reads as a fragment left from an edit. Harmless, but worth a one-line fix if you want the two sheets to read alike.
+To github.com:msbadar/udaan.git
+   a81bd2f..59d3c8e  development -> development
