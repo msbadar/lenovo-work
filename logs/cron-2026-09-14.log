@@ -5074,3 +5074,31 @@ One caveat worth flagging: every floor rests on `@media (any-pointer: coarse)`, 
    ↳ EXIT=0 vite v7.3.6 building client environment for production... transforming... ✓ 401 modules transformed. rendering chunks... computing gzip size... dist/inde…
 🔧 Bash {"command":"git log -2 --format='%B%n===' | head -60; echo \"---STATUS---\"; git status --short","description":"Show rec…
    ↳ feat(tools): the harness draws the shop too, and it had never been drawn  `tools/render/` served `apps/admin` only, so every layout and colour claim about the r…
+🔧 Bash {"command":"git add -A && git commit -F - <<'EOF'\nfix(web): thirteen controls a thumb could not reach, and three ways t…
+   ↳ Checking formatting... All matched files use Prettier code style! [development b4b52fb] fix(web): thirteen controls a thumb could not reach, and three ways the …
+💬 Committed as `b4b52fb` on `development` — 18 files, +530/−43.
+
+**Gates, all run here and all green:**
+- `npm run typecheck` — all eight workspaces plus `tools/render/fixtures.ts`
+- `npm run lint` and `npm run format:check`
+- `npm test` — exit 0, 5378 tests across 356 suites (api 1815/117, mobile 1493/89, admin 802/54, web 431/33, shared 313/22, web-ui 196/17, landing 184/14, client-core 144/10)
+- `npm run build`
+
+**What went in:** the thirteen `apps/web` touch targets from the ninth render, each floored to 44px behind `@media (any-pointer: coarse)`, plus `LocaleSwitch` in `@udaan/web-ui`; `SearchField`'s block padding moved off the box onto the input; 21 new spec rows in `apps/web/src/styles/stylesheets.spec.ts` and 3 in the `web-ui` copy, written as pairings rather than single properties. `CLAUDE.md` and `plan.md` were already updated in the working tree and went in the same commit, per the working agreement.
+
+Two things I did not verify, since neither is checkable from here: the browser numbers in the message (the 0-findings re-run, the 35 × 44 and 42 × 44 measurements) are taken from the working tree's own `plan.md` and `CLAUDE.md` entries rather than from a render I performed — `tools/render/run.sh` was not run in this session. And the commit is local; nothing has been pushed.
+
+🏁 success · 13 turns · 901.2s · $1.3890338
+Committed as `b4b52fb` on `development` — 18 files, +530/−43.
+
+**Gates, all run here and all green:**
+- `npm run typecheck` — all eight workspaces plus `tools/render/fixtures.ts`
+- `npm run lint` and `npm run format:check`
+- `npm test` — exit 0, 5378 tests across 356 suites (api 1815/117, mobile 1493/89, admin 802/54, web 431/33, shared 313/22, web-ui 196/17, landing 184/14, client-core 144/10)
+- `npm run build`
+
+**What went in:** the thirteen `apps/web` touch targets from the ninth render, each floored to 44px behind `@media (any-pointer: coarse)`, plus `LocaleSwitch` in `@udaan/web-ui`; `SearchField`'s block padding moved off the box onto the input; 21 new spec rows in `apps/web/src/styles/stylesheets.spec.ts` and 3 in the `web-ui` copy, written as pairings rather than single properties. `CLAUDE.md` and `plan.md` were already updated in the working tree and went in the same commit, per the working agreement.
+
+Two things I did not verify, since neither is checkable from here: the browser numbers in the message (the 0-findings re-run, the 35 × 44 and 42 × 44 measurements) are taken from the working tree's own `plan.md` and `CLAUDE.md` entries rather than from a render I performed — `tools/render/run.sh` was not run in this session. And the commit is local; nothing has been pushed.
+To github.com:msbadar/udaan.git
+   ce781b8..b4b52fb  development -> development
