@@ -6011,3 +6011,37 @@ Nothing is committed — say the word and I'll commit on `development`.
    ↳ diff --git a/plan.md b/plan.md index 8b5ad55..0ddc8ab 100644 --- a/plan.md +++ b/plan.md @@ -24,28 +24,45 @@ had stopped being the same list. The ranking is by …
 🔧 Bash {"command":"git add -A && git status --short","description":"Stage all changes"}
    ↳ M  CLAUDE.md M  apps/landing/src/a11y.spec.tsx M  apps/landing/src/components/CategoryShowcase.tsx M  apps/landing/src/components/LeadModal.tsx A  apps/landing/…
+🔧 Bash {"command":"git commit -F - <<'EOF'\nfeat(landing): three dialogs that were pictures of modals, and a harness that can o…
+   ↳ Checking formatting... All matched files use Prettier code style! [development cdf9b00] feat(landing): three dialogs that were pictures of modals, and a harness…
+💬 Committed as `cdf9b00` on `development`.
+
+**What went in** — twelve files, one coherent change in two halves:
+
+- **`apps/landing/src/components/Modal.tsx`** (new) — the shared modal shell behind all three dialogs, with `aria-modal="true"`, the `inert` walk, the `<button>` scrim, focus in/out, and Escape. `DeskDrawer`'s argument transplanted, including its browser-found ordering fix (clear `inert` before restoring focus, in one effect).
+- **`Modal.spec.tsx`** (new, 9 tests) — keyboard assertions, not an axe audit.
+- **`LeadModal`, `PincodeModal`, `CategoryShowcase`** — converted to callers; `LeadModal`'s `onClose` is now `handleReset`, so Escape and the scrim clear the form.
+- **`tailwind.config.ts`** — a `coarse:` variant (`@media (any-pointer: coarse)`), worn only by the close button.
+- **`tools/render/{run,checks}.mjs`** — `reach` and `SCOPE`, so the three dialogs are drawn open and scoped.
+- **`CLAUDE.md`, `plan.md`, `tools/render/README.md`, `a11y.spec.tsx`** header — updated in the same commit, per the repo's rule.
+
+**Gates, all run here and all passing:** `typecheck`, `lint`, `format:check`, `npm test` (5387 tests across 357 suites, exit 0 — `Modal.spec.tsx` collected and green), `npm run build`.
+
+**Not verified here, and stated as such:** no browser was run in this session. The twelfth-run figures in the message and docs are what those files already recorded; I did not re-run `tools/render/run.sh` to confirm them. Nothing was pushed — `origin/development` is still at `86c87b1`.
+
+🏁 success · 16 turns · 921.9s · $1.6634774
+Committed as `cdf9b00` on `development`.
+
+**What went in** — twelve files, one coherent change in two halves:
+
+- **`apps/landing/src/components/Modal.tsx`** (new) — the shared modal shell behind all three dialogs, with `aria-modal="true"`, the `inert` walk, the `<button>` scrim, focus in/out, and Escape. `DeskDrawer`'s argument transplanted, including its browser-found ordering fix (clear `inert` before restoring focus, in one effect).
+- **`Modal.spec.tsx`** (new, 9 tests) — keyboard assertions, not an axe audit.
+- **`LeadModal`, `PincodeModal`, `CategoryShowcase`** — converted to callers; `LeadModal`'s `onClose` is now `handleReset`, so Escape and the scrim clear the form.
+- **`tailwind.config.ts`** — a `coarse:` variant (`@media (any-pointer: coarse)`), worn only by the close button.
+- **`tools/render/{run,checks}.mjs`** — `reach` and `SCOPE`, so the three dialogs are drawn open and scoped.
+- **`CLAUDE.md`, `plan.md`, `tools/render/README.md`, `a11y.spec.tsx`** header — updated in the same commit, per the repo's rule.
+
+**Gates, all run here and all passing:** `typecheck`, `lint`, `format:check`, `npm test` (5387 tests across 357 suites, exit 0 — `Modal.spec.tsx` collected and green), `npm run build`.
+
+**Not verified here, and stated as such:** no browser was run in this session. The twelfth-run figures in the message and docs are what those files already recorded; I did not re-run `tools/render/run.sh` to confirm them. Nothing was pushed — `origin/development` is still at `86c87b1`.
+To github.com:msbadar/udaan.git
+   86c87b1..cdf9b00  development -> development
