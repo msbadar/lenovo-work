@@ -1338,3 +1338,9 @@ If you did want visual modernization — different type scale, spacing rhythm, d
 🔧 Bash {"command":"npm run typecheck 2>&1 | tail -20","description":"Run typecheck gate","timeout":600000}
 [2026-09-15 03:20:04] Checking if container is running...
 [2026-09-15 03:20:04] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳ > @udaan/api@0.1.0 typecheck > tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit && tsc -p prisma/tsconfig.json --noEmit   > @udaan/landing@0.…
+🔧 Bash {"command":"npm run lint 2>&1 | tail -15","description":"Run lint gate","timeout":600000}
+   ↳ > udaan@0.1.0 lint > eslint .
+🔧 Bash {"command":"npm run format:check 2>&1 | tail -15","description":"Run format check","timeout":600000}
+   ↳ > udaan@0.1.0 format:check > prettier --check .  Checking formatting... All matched files use Prettier code style!
+🔧 Bash {"command":"npm test 2>&1 | tail -60","description":"Run full test suite","timeout":600000}
