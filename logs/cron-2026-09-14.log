@@ -11235,3 +11235,49 @@ I also ran the admissions grep the board recommends. **It came back empty — fi
    ↳ Checking formatting... All matched files use Prettier code style! [development a81bd2f] feat(tools): the harness draws the last fifteen screens, and the formatt…
 🔧 Bash {"command":"git log --oneline -3 && echo \"---\" && git status --short && echo \"(clean if blank)\"","description":"Veri…
    ↳ a81bd2f feat(tools): the harness draws the last fifteen screens, and the formatters get the specs they never had 1c6f96d feat(tools): the harness draws seven mo…
+💬 Committed as `a81bd2f` on `development`. Working tree is clean; nothing pushed.
+
+**Gates, all run before committing:**
+
+| Gate | Result |
+| --- | --- |
+| `npm run typecheck` | pass |
+| `npm run lint` | pass |
+| `npm test` | pass — 5435 tests / 358 suites, exit 0 |
+| `npm run build` | pass |
+| `npm run format:check` | pass (re-run after the doc edits) |
+
+**What went in:** the nineteenth render run's fifteen screens (9 desk + 6 web, closing plan.md item 18 and the harness screen list at 36/36 and 23/23 routes), the six fixes it found, and `format.ts`'s specs closing item 21.
+
+**One thing I changed beyond the staged work.** The docs' accounting didn't match the code, so I corrected it rather than committing a false line:
+
+- CLAUDE.md and plan.md both said **seven defects, six target-size**. The CSS contains **five** target floors (`.admin-replenish__add`, `.saved-list__rename`, `.saved-list__delete`, `.saved-list-line__remove`, `.order-tracking__call`) plus one contrast fix — six. The seventh was the products list's clipped `__ident` cell, which the same section elsewhere calls *not* new and folds into item (17); it was being counted both ways.
+- CLAUDE.md said "all six fixes are behind `@media (any-pointer: coarse)`". The contrast fix is a token swap behind no query.
+- The count of controls resting on that query read "fourteen on `apps/web` and four on the desk" — stale by two runs, and on a counting basis that changed when the four section-head copies consolidated. Counted mechanically from the `any-pointer: coarse` blocks: **18** on `apps/web`, **5** on the desk, **2** in `@udaan/web-ui`. The `.filter-bar__sort` group counts as one control across its three rules.
+
+**Not verified:** the harness has not been re-run since these fixes — the run that found them is the nineteenth, and `tools/render/run.sh` is not a gate. The "verified after: target size is 0 on both clients" claim in CLAUDE.md is the prior session's, not something I re-measured.
+
+🏁 success · 37 turns · 1153.9s · $3.402235399999999
+Committed as `a81bd2f` on `development`. Working tree is clean; nothing pushed.
+
+**Gates, all run before committing:**
+
+| Gate | Result |
+| --- | --- |
+| `npm run typecheck` | pass |
+| `npm run lint` | pass |
+| `npm test` | pass — 5435 tests / 358 suites, exit 0 |
+| `npm run build` | pass |
+| `npm run format:check` | pass (re-run after the doc edits) |
+
+**What went in:** the nineteenth render run's fifteen screens (9 desk + 6 web, closing plan.md item 18 and the harness screen list at 36/36 and 23/23 routes), the six fixes it found, and `format.ts`'s specs closing item 21.
+
+**One thing I changed beyond the staged work.** The docs' accounting didn't match the code, so I corrected it rather than committing a false line:
+
+- CLAUDE.md and plan.md both said **seven defects, six target-size**. The CSS contains **five** target floors (`.admin-replenish__add`, `.saved-list__rename`, `.saved-list__delete`, `.saved-list-line__remove`, `.order-tracking__call`) plus one contrast fix — six. The seventh was the products list's clipped `__ident` cell, which the same section elsewhere calls *not* new and folds into item (17); it was being counted both ways.
+- CLAUDE.md said "all six fixes are behind `@media (any-pointer: coarse)`". The contrast fix is a token swap behind no query.
+- The count of controls resting on that query read "fourteen on `apps/web` and four on the desk" — stale by two runs, and on a counting basis that changed when the four section-head copies consolidated. Counted mechanically from the `any-pointer: coarse` blocks: **18** on `apps/web`, **5** on the desk, **2** in `@udaan/web-ui`. The `.filter-bar__sort` group counts as one control across its three rules.
+
+**Not verified:** the harness has not been re-run since these fixes — the run that found them is the nineteenth, and `tools/render/run.sh` is not a gate. The "verified after: target size is 0 on both clients" claim in CLAUDE.md is the prior session's, not something I re-measured.
+To github.com:msbadar/udaan.git
+   1c6f96d..a81bd2f  development -> development
