@@ -8366,3 +8366,37 @@ Worth knowing: my first round of break-tests was **unreliable** — `perl -i` wa
 [2026-09-14 16:20:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
    ↳    ✓ SearchField > runs the highlighted row on Enter rather than what is in the box  355ms    ✓ SearchField > runs a search when a row is tapped  345ms  ✓ src/l…
 🔧 Bash {"command":"npm test > /tmp/udaan-test.log 2>&1; echo \"EXIT=$?\"; grep -E \"^ *(Test Files|Tests:|Tests) \" /tmp/udaan-…
+   ↳ EXIT=0  Test Files  10 passed (10)       Tests  144 passed (144)  Test Files  22 passed (22)       Tests  313 passed (313)  Test Files  17 passed (17)       Tes…
+🔧 Bash {"command":"npm run build > /tmp/udaan-build.log 2>&1; echo \"EXIT=$?\"; tail -12 /tmp/udaan-build.log","description":"R…
+   ↳ EXIT=0 rendering chunks... computing gzip size... dist/index.html                               1.42 kB │ gzip:  0.67 kB dist/assets/index-xsM63u_w.css         …
+🔧 Bash {"command":"git diff -- plan.md | head -120","description":"Diff of plan.md"}
+   ↳ diff --git a/plan.md b/plan.md index 3b2f380..b1403ef 100644 --- a/plan.md +++ b/plan.md @@ -64,7 +64,7 @@ sweep is cheap.  | 3 | "add page for add more staffs"…
+💬 All four gates pass (typecheck, lint + format, 5401 tests across 358 suites, build). Committing:
+🔧 Bash {"command":"git add -A && git commit -q -F - <<'MSG'\nfeat(admin): the order drill-down takes the design's two columns, …
+   ↳ Checking formatting... All matched files use Prettier code style! commit 0d21b3452d07fed1ab12deddb1000e9d951cd1e0 Author: Udaan Dev <dev@udaan.local> Date:   Mo…
+🔧 Bash {"command":"git status --short && git --no-pager log --oneline -3","description":"Confirm clean tree and recent log"}
+   ↳ 0d21b34 feat(admin): the order drill-down takes the design's two columns, and a target its twin had already grown 19086d9 feat(tools): the harness learns to pos…
+💬 Committed as `0d21b34` on `development`; working tree is clean. Not pushed — say the word if you want it on `origin/development`.
+
+**What went in** (7 files, all one change):
+
+- `AdminOrderDetailScreen.tsx` / `.css` — the drill-down re-laid-out to `design.html`'s two columns, the two navigations moved into the header, and the 99 × 18 `.order-return__credit-note` floored to 44px under `any-pointer: coarse`.
+- `stylesheets.spec.ts` — four new rows, each pinning a pairing (stack-vs-grid, the two `grid-column`s, the spanned status line, sticky-without-`overflow`) plus the target row.
+- `tools/render/{fixtures.ts,run.mjs}` — the screen added to the desk's list in both its states, with a per-screen fixture for the worked one.
+- `CLAUDE.md` / `plan.md` — § "The clients", § "The specs…", § "The render harness", § "State of the world" (fifteenth run) and § "What has never been run here" updated; plan item (16) closed and (6) narrowed.
+
+**Verification:** all four gates run and green before the commit — `typecheck`, `lint` + `format:check`, `npm test` (5401 tests / 358 suites, exit 0), `build`. The render figures quoted in the message and docs come from the harness run that produced this change; nothing needing Docker or PostgreSQL was exercised, per the standing gap.
+
+🏁 success · 12 turns · 906.5s · $1.4447584999999998
+Committed as `0d21b34` on `development`; working tree is clean. Not pushed — say the word if you want it on `origin/development`.
+
+**What went in** (7 files, all one change):
+
+- `AdminOrderDetailScreen.tsx` / `.css` — the drill-down re-laid-out to `design.html`'s two columns, the two navigations moved into the header, and the 99 × 18 `.order-return__credit-note` floored to 44px under `any-pointer: coarse`.
+- `stylesheets.spec.ts` — four new rows, each pinning a pairing (stack-vs-grid, the two `grid-column`s, the spanned status line, sticky-without-`overflow`) plus the target row.
+- `tools/render/{fixtures.ts,run.mjs}` — the screen added to the desk's list in both its states, with a per-screen fixture for the worked one.
+- `CLAUDE.md` / `plan.md` — § "The clients", § "The specs…", § "The render harness", § "State of the world" (fifteenth run) and § "What has never been run here" updated; plan item (16) closed and (6) narrowed.
+
+**Verification:** all four gates run and green before the commit — `typecheck`, `lint` + `format:check`, `npm test` (5401 tests / 358 suites, exit 0), `build`. The render figures quoted in the message and docs come from the harness run that produced this change; nothing needing Docker or PostgreSQL was exercised, per the standing gap.
+To github.com:msbadar/udaan.git
+   19086d9..0d21b34  development -> development
