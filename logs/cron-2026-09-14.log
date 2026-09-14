@@ -4950,3 +4950,98 @@ Now let me pin the fixes so they can't silently regress.
 🔧 Bash {"command":"npm run format:check 2>&1 | tail -8","description":"Check formatting after doc edits","timeout":300000}
    ↳ > udaan@0.1.0 format:check > prettier --check .  Checking formatting... All matched files use Prettier code style!
 🔧 Bash {"command":"npm test 2>&1 | grep -E \"Tests  |Tests: |failed|FAIL\" | head -20","description":"Final full test run","tim…
+   ↳       Tests  144 passed (144)       Tests  313 passed (313)       Tests  196 passed (196)    ✓ a failed read is never a dead end > Ops home offers a retry that …
+💬 All 5378 pass. Let me do a final review of the complete change.
+🔧 Bash {"command":"git diff --stat","description":"Review full diff stat"}
+   ↳  CLAUDE.md                                      |  49 ++++++++-  apps/web/src/account/AccountScreen.css         |   9 ++  apps/web/src/cart/CartLineRow.css     …
+🔧 Bash {"command":"git diff apps/web/src/catalog/SearchField.css","description":"Review the SearchField diff in full"}
+   ↳ diff --git a/apps/web/src/catalog/SearchField.css b/apps/web/src/catalog/SearchField.css index 303cb22..26b4ec1 100644 --- a/apps/web/src/catalog/SearchField.cs…
+🔧 TaskUpdate {"taskId":"5","status":"completed"}
+   ↳ Updated task #5 status
+🔧 Bash {"command":"sed -n '30,60p' plan.md","description":"Verify the re-ranked board reads coherently"}
+   ↳ | # | Item | Blocked on | Cost of leaving it | | --- | --- | --- | --- | | 1 | The retailer client's palette — six token pairings below AA | **a decision** — th…
+💬 One counting error — the table has nine rows, not eight. Fixing:
+🔧 Edit {"replace_all":false,"file_path":"/work/plan.md","old_string":"**The touch-target item came off this table on 2026-09-14…
+   ↳ The file /work/plan.md has been updated successfully. (file state is current in your context — no need to Read it back)
+🔧 Bash {"command":"npm run format:check 2>&1 | tail -4 && npx vitest run src/styles/stylesheets.spec.ts --root apps/web 2>&1 | …
+   ↳ > prettier --check .  Checking formatting... All matched files use Prettier code style!  Test Files  1 passed (1)       Tests  21 passed (21)
+💬 Done. Here's where things landed.
+
+## 1. Cloud Run service-account dev/prod suffix — already done
+
+This shipped in commits `0590a09` and `94568be`, before this session. I verified rather than assumed: a `resolve` job answers `prod`/`dev` and `.github/actions/gcp-auth` puts the suffix on the service account's local part. Two details are better than what the TODO asked for:
+
+- The rule is **containment, not equality** (`git merge-base --is-ancestor`). Since the trigger is a `v*` tag, `refs/tags/v1.4.2` never equals `refs/heads/main` — an equality rule would have sent every release to dev while reading fine in the diff.
+- The suffix is on the Cloud Run services and Secret Manager entries too, not just the account, which is what makes a single shared project safe.
+
+**One thing is still genuinely open and I can't close it from here:** the default is `main`, and this repo has no `main` (branches are `development` and `master`). So every release currently resolves to dev. The workflow now warns loudly about it, but `vars.PRODUCTION_BRANCH` has to be set in repository settings — no credential in this sandbox can read or write those.
+
+## 2. Top-priority item: retailer touch targets
+
+plan.md ranked this #2 and the only unambiguous *work* item. Done and verified.
+
+I set up the render harness (~20 min, one-off) rather than reasoning over stylesheets, and that decision paid for itself — **the plan said eleven controls; there were thirteen**, and my first pass got three things wrong in the way this repo keeps documenting: *a rule that is present, correct, and attached to the wrong box.*
+
+- The section-link floor went on `.home__section-link`, which is a real class but not either of the two the eight measured links actually wear.
+- The search-field floor on the *box* left the input at 42px — the `--light` border eats the content area. It belongs on the input. That's the same defect one layer inside the one I was fixing.
+- `CLEAR` and `Remove` were floored on height only, leaving 35 × 44 — missed sideways.
+
+**Verified: target size 0 on both clients** (was 13), and `apps/admin` stayed at 0, which was the check that mattered for the one change inside `@udaan/web-ui`.
+
+I deliberately did **not** touch the 46 contrast findings. Those are plan.md item #1, and CLAUDE.md records twice that the retailer screens *are* the design and that changing its palette isn't a decision to make from inside the code.
+
+## 3. plan.md updated
+
+Re-ranked (touch targets closed, board back to decision-led), the item rewritten with what was measured, and a new item #8 that fell out of the work: four sheets declare the same section-head link byte-for-byte, so one floor had to be written four times.
+
+CLAUDE.md updated in the sections its own rules require — § "The clients", the specs table, § "State of the world" (including the ninth run and corrected test counts).
+
+## Gates
+
+typecheck, lint, format, test (5378/356), build — all pass. The 17 new tests were checked against the pre-fix sheets: 13 of 21 fail there, so they pin the work rather than passing either way.
+
+I haven't committed — say the word and I will.
+
+One caveat worth flagging: every floor rests on `@media (any-pointer: coarse)`, and the only evidence that query behaves is Chromium's emulation agreeing with itself. That's plan.md item #5 and it got sharper with this change, not softer.
+
+🏁 success · 139 turns · 2386.6s · $10.441639599999991
+Done. Here's where things landed.
+
+## 1. Cloud Run service-account dev/prod suffix — already done
+
+This shipped in commits `0590a09` and `94568be`, before this session. I verified rather than assumed: a `resolve` job answers `prod`/`dev` and `.github/actions/gcp-auth` puts the suffix on the service account's local part. Two details are better than what the TODO asked for:
+
+- The rule is **containment, not equality** (`git merge-base --is-ancestor`). Since the trigger is a `v*` tag, `refs/tags/v1.4.2` never equals `refs/heads/main` — an equality rule would have sent every release to dev while reading fine in the diff.
+- The suffix is on the Cloud Run services and Secret Manager entries too, not just the account, which is what makes a single shared project safe.
+
+**One thing is still genuinely open and I can't close it from here:** the default is `main`, and this repo has no `main` (branches are `development` and `master`). So every release currently resolves to dev. The workflow now warns loudly about it, but `vars.PRODUCTION_BRANCH` has to be set in repository settings — no credential in this sandbox can read or write those.
+
+## 2. Top-priority item: retailer touch targets
+
+plan.md ranked this #2 and the only unambiguous *work* item. Done and verified.
+
+I set up the render harness (~20 min, one-off) rather than reasoning over stylesheets, and that decision paid for itself — **the plan said eleven controls; there were thirteen**, and my first pass got three things wrong in the way this repo keeps documenting: *a rule that is present, correct, and attached to the wrong box.*
+
+- The section-link floor went on `.home__section-link`, which is a real class but not either of the two the eight measured links actually wear.
+- The search-field floor on the *box* left the input at 42px — the `--light` border eats the content area. It belongs on the input. That's the same defect one layer inside the one I was fixing.
+- `CLEAR` and `Remove` were floored on height only, leaving 35 × 44 — missed sideways.
+
+**Verified: target size 0 on both clients** (was 13), and `apps/admin` stayed at 0, which was the check that mattered for the one change inside `@udaan/web-ui`.
+
+I deliberately did **not** touch the 46 contrast findings. Those are plan.md item #1, and CLAUDE.md records twice that the retailer screens *are* the design and that changing its palette isn't a decision to make from inside the code.
+
+## 3. plan.md updated
+
+Re-ranked (touch targets closed, board back to decision-led), the item rewritten with what was measured, and a new item #8 that fell out of the work: four sheets declare the same section-head link byte-for-byte, so one floor had to be written four times.
+
+CLAUDE.md updated in the sections its own rules require — § "The clients", the specs table, § "State of the world" (including the ninth run and corrected test counts).
+
+## Gates
+
+typecheck, lint, format, test (5378/356), build — all pass. The 17 new tests were checked against the pre-fix sheets: 13 of 21 fail there, so they pin the work rather than passing either way.
+
+I haven't committed — say the word and I will.
+
+One caveat worth flagging: every floor rests on `@media (any-pointer: coarse)`, and the only evidence that query behaves is Chromium's emulation agreeing with itself. That's plan.md item #5 and it got sharper with this change, not softer.
+[2026-09-14 09:49:55] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
