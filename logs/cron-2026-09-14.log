@@ -10149,3 +10149,51 @@ Four gates green: typecheck, lint, format, **5406 tests / 358 suites**, build. F
 🔧 Bash {"command":"npm test > /tmp/udaan-test.log 2>&1; echo \"EXIT=$?\"; grep -E \"Tests:|Test Files|Suites|failed\" /tmp/udaa…
    ↳ EXIT=0  Test Files  10 passed (10)  Test Files  22 passed (22)  Test Files  17 passed (17)    ✓ a failed read is never a dead end > Ops home offers a retry that…
 🔧 Bash {"command":"npm run build > /tmp/udaan-build.log 2>&1; echo \"BUILD_EXIT=$?\"; tail -5 /tmp/udaan-build.log; npm run for…
+[2026-09-14 20:10:05] Checking if container is running...
+[2026-09-14 20:10:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳ BUILD_EXIT=0 dist/assets/signed-in-screens-Jk8B9-tP.js    74.34 kB │ gzip: 16.77 kB │ map: 328.74 kB dist/assets/router-BV3PutFb.js               92.28 kB │ gzi…
+🔧 Bash {"command":"git log -2 --format='%B%n---------'","description":"Inspect recent commit message bodies"}
+   ↳ feat(tools): the harness draws the nine screens before a session, and the way to the OTP is too short  A screen may say `signedOut`. The nine screens that exist…
+💬 All five gates pass (typecheck, lint, test 5406/358, build, format). Committing.
+🔧 Bash {"command":"cat > /tmp/udaan-commit-msg.txt <<'MSG'\nfeat(tools): the harness draws seven more screens, and a select its…
+   ↳ Checking formatting... All matched files use Prettier code style! 1c6f96dea42ac1a5c9a4b954b425b65fe357e056 feat(tools): the harness draws seven more screens, an…
+💬 Committed as `1c6f96d` on `development` — nine files, all working-tree changes staged.
+
+**Gates run before committing, all passing:**
+- `npm run typecheck` — all workspaces plus `tools/render/tsconfig.json`
+- `npm run lint`
+- `npm test` — exit 0, **5406 tests across 358 suites** (api 1815/117, mobile 1493/89, admin 817/55, web 435/33, shared 313/22, web-ui 196/17, landing 193/15, client-core 144/10), which matches CLAUDE.md's recorded figure exactly
+- `npm run build`
+- `npm run format:check`
+
+**What the commit contains**, in three linked pieces:
+- **The harness** (`run.mjs`, `fixtures.ts`) grows seven screens — the trip board and a manifest, the buying board and a purchase order, a credit line plus its cash form behind a `reach`, and `apps/web`'s `/catalog/:categorySlug` and `/products/:slug`.
+- **`setup.sh`** — the installer's two silent guards, plus the `libxcb-render0` its newly-firing `ldd` check found.
+- **`apps/web`** — three 44px floors under `any-pointer: coarse` (`FilterBar.css`, `ProductScreen.css`) with their spec rows, and `checks.mjs`'s fifth exemption for negative margins on an aligned edge.
+
+Two things worth flagging in what I did *not* verify, since the repo's rule is to say so explicitly:
+
+1. **I did not re-run `tools/render/run.sh`.** The gates all run in jsdom. The render results this commit's message and CLAUDE.md report — the 332 × 41 measurement, `target size` being 0 on both clients afterwards, the broken-`reach` control — are the ones already recorded in the working tree; I committed them as written rather than re-measuring. If you want the post-fix sweep confirmed independently, that is `VITE_API_BASE_URL=http://127.0.0.1:4317/api/v1 tools/render/run.sh`.
+2. **The CLAUDE.md and plan.md edits were already in the working tree**, so the "same commit as the code" rule is satisfied — but by your prior work, not by a documentation pass I did. I read both diffs and they are consistent with the code changes (§ "The render harness", § "State of the world", the `stylesheets.spec.ts` row, and plan.md items 22/23/24).
+
+🏁 success · 12 turns · 929.5s · $1.6452965000000004
+Committed as `1c6f96d` on `development` — nine files, all working-tree changes staged.
+
+**Gates run before committing, all passing:**
+- `npm run typecheck` — all workspaces plus `tools/render/tsconfig.json`
+- `npm run lint`
+- `npm test` — exit 0, **5406 tests across 358 suites** (api 1815/117, mobile 1493/89, admin 817/55, web 435/33, shared 313/22, web-ui 196/17, landing 193/15, client-core 144/10), which matches CLAUDE.md's recorded figure exactly
+- `npm run build`
+- `npm run format:check`
+
+**What the commit contains**, in three linked pieces:
+- **The harness** (`run.mjs`, `fixtures.ts`) grows seven screens — the trip board and a manifest, the buying board and a purchase order, a credit line plus its cash form behind a `reach`, and `apps/web`'s `/catalog/:categorySlug` and `/products/:slug`.
+- **`setup.sh`** — the installer's two silent guards, plus the `libxcb-render0` its newly-firing `ldd` check found.
+- **`apps/web`** — three 44px floors under `any-pointer: coarse` (`FilterBar.css`, `ProductScreen.css`) with their spec rows, and `checks.mjs`'s fifth exemption for negative margins on an aligned edge.
+
+Two things worth flagging in what I did *not* verify, since the repo's rule is to say so explicitly:
+
+1. **I did not re-run `tools/render/run.sh`.** The gates all run in jsdom. The render results this commit's message and CLAUDE.md report — the 332 × 41 measurement, `target size` being 0 on both clients afterwards, the broken-`reach` control — are the ones already recorded in the working tree; I committed them as written rather than re-measuring. If you want the post-fix sweep confirmed independently, that is `VITE_API_BASE_URL=http://127.0.0.1:4317/api/v1 tools/render/run.sh`.
+2. **The CLAUDE.md and plan.md edits were already in the working tree**, so the "same commit as the code" rule is satisfied — but by your prior work, not by a documentation pass I did. I read both diffs and they are consistent with the code changes (§ "The render harness", § "State of the world", the `stylesheets.spec.ts` row, and plan.md items 22/23/24).
+To github.com:msbadar/udaan.git
+   a3c7e20..1c6f96d  development -> development
