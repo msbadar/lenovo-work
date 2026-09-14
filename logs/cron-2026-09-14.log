@@ -6491,3 +6491,38 @@ Two things worth flagging: I corrected one of my own claims mid-write — I'd ca
 [2026-09-14 13:30:04] Container 'sandbox-rn-claude-claude' is already running. Exiting.
    ↳  ✓ src/cart/CartScreen.spec.tsx (8 tests) 1448ms    ✓ a trade scheme on a cart line > says nothing on a line no scheme reached  340ms  ✓ src/orders/InvoiceScree…
 🔧 Bash {"command":"npm run build 2>&1 | tail -15","description":"Run build","timeout":600000}
+   ↳ vite v7.3.6 building client environment for production... transforming... ✓ 402 modules transformed. rendering chunks... computing gzip size... dist/index.html …
+💬 All four gates pass. Committing:
+🔧 Bash {"command":"git status --porcelain","description":"Check for stray artifacts"}
+   ↳  M CLAUDE.md  M plan.md  M tools/render/README.md  M tools/render/fixtures.ts  M tools/render/run.mjs
+🔧 Bash {"command":"git add -A && git commit -F - <<'EOF'\nfeat(tools): the harness opens the desk's three closed boxes, and fin…
+   ↳ Checking formatting... All matched files use Prettier code style! [development a72698b] feat(tools): the harness opens the desk's three closed boxes, and finds …
+💬 Committed as `a72698b` on `development`.
+
+**What went in** — five files, all docs plus the render harness:
+
+- `tools/render/run.mjs` — `reach` grows an `expect` field (defaulting to `[role=dialog]`, doubling as the measurement scope) and a screen may name the `widths` it exists at; three new desk screens: the nav drawer at 390/768, the `DeskDrawer` category editor, the lead queue's `rowDetail`.
+- `tools/render/fixtures.ts` — an `AdminLead[]` fixture shaped for the editor rather than the table, and the public `/categories` tree added to `deskFixtures`.
+- `tools/render/README.md`, `CLAUDE.md`, `plan.md` — the thirteenth run written up, the harness's remaining gap restated as `apps/web`'s checkout (behind a mutation, not a click), and item (12) closed on the board.
+
+**Gates** — all four run here and green: `typecheck` (includes `tools/render/tsconfig.json`, which is what checks the new fixture against the `@udaan/shared` contracts), `lint`, `format:check`, `npm test` (5387 tests / 357 suites), `build`.
+
+One thing worth flagging about what I did *not* verify: I did not re-run `tools/render/run.sh`. The commit's claims about the thirteenth run — 0 findings, the deliberately-broken-`expect` check — are the ones already written into the diff I was handed, not something I re-measured this session. The harness is not a gate and nothing in the four commands touches it.
+
+🏁 success · 11 turns · 608.1s · $1.3606915999999998
+Committed as `a72698b` on `development`.
+
+**What went in** — five files, all docs plus the render harness:
+
+- `tools/render/run.mjs` — `reach` grows an `expect` field (defaulting to `[role=dialog]`, doubling as the measurement scope) and a screen may name the `widths` it exists at; three new desk screens: the nav drawer at 390/768, the `DeskDrawer` category editor, the lead queue's `rowDetail`.
+- `tools/render/fixtures.ts` — an `AdminLead[]` fixture shaped for the editor rather than the table, and the public `/categories` tree added to `deskFixtures`.
+- `tools/render/README.md`, `CLAUDE.md`, `plan.md` — the thirteenth run written up, the harness's remaining gap restated as `apps/web`'s checkout (behind a mutation, not a click), and item (12) closed on the board.
+
+**Gates** — all four run here and green: `typecheck` (includes `tools/render/tsconfig.json`, which is what checks the new fixture against the `@udaan/shared` contracts), `lint`, `format:check`, `npm test` (5387 tests / 357 suites), `build`.
+
+One thing worth flagging about what I did *not* verify: I did not re-run `tools/render/run.sh`. The commit's claims about the thirteenth run — 0 findings, the deliberately-broken-`expect` check — are the ones already written into the diff I was handed, not something I re-measured this session. The harness is not a gate and nothing in the four commands touches it.
+To github.com:msbadar/udaan.git
+   cdf9b00..a72698b  development -> development
+[2026-09-14 13:40:05] Checking if container is running...
+[2026-09-14 13:40:05] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
