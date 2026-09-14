@@ -6405,3 +6405,85 @@ And **`apps/admin` came back at 0** — including all three newly-measured inter
    ↳ Checking formatting... All matched files use Prettier code style! > udaan@0.1.0 lint > eslint .  LINT=0
 🔧 Bash {"command":"VITE_API_BASE_URL=http://127.0.0.1:4317/api/v1 timeout 900 tools/render/run.sh admin 2>&1 | grep -E 'finding…
    ↳ === findings: 0 ===
+💬 All gates green and the harness re-confirms 0. Here's where things stand.
+
+## 1. Cloud Run dev/prod suffix — already implemented; verified, not rebuilt
+
+This was done on 2026-09-13/14. I verified it against the actual workflow rather than trusting the docs:
+
+- `resolve` job answers one word by **containment** — `prod` if the commit is an ancestor of `vars.PRODUCTION_BRANCH` (default `main`), else `dev`. Containment rather than equality is correct here because the trigger is a `v*` tag, and `refs/tags/v1.4.2` never equals `refs/heads/main`.
+- The suffix reaches the impersonated **service account** (via `.github/actions/gcp-auth`, on the address's local part), the **Cloud Run services**, the **migrate job**, and all **six Secret Manager entries**.
+- `cloud-run-deploy.spec.ts` — 17 tests pass.
+
+**One real gap, and it's not code:** this repo has no `main`. Branches are `development` and `master`, and `origin` only carries `development` — so on the default, every release resolves to `dev`. The workflow already warns about exactly this (`::warning::` naming the variable). Setting `vars.PRODUCTION_BRANCH` needs an Actions credential this sandbox doesn't have, so it stays plan.md item (2) — one setting, not an investigation.
+
+## 2. Pending items by priority
+
+The ranked board is **entirely decision-blocked** — items (1) and (10) are palette changes that CLAUDE.md twice forbids making from inside the code; (2) needs repo settings; (4) and (5) need GCP access and hardware. So I used plan.md's own stated escape hatch:
+
+> the cheap check against it is to grep the repo for the gaps its own comments admit to
+
+That produced real work: **the desk's nav drawer, `DeskDrawer` editor and `DeskTable` `rowDetail` had never had their geometry measured.** Their specs cover behaviour (focus, `inert`, Escape) and are silent on geometry, because jsdom reports none.
+
+Two mechanisms had to grow, both pre-written in the driver's own comment (*"the day one opens something else, this grows an `expect` field"*): `expect` (a nav drawer is a `<header>`, a row detail is a `role="row"` — neither is a dialog), doubling as the measurement scope; and `widths`, since above 1024px the rail is docked and `navOpen` is unreachable by construction.
+
+**Result: 0 findings**, both design faces loaded so fit results are exact. That only counts because I deliberately broke the nav drawer's `expect` and re-ran — 2 findings at exactly the 2 declared widths, proving the assertion and the width filter both fire. The run also caught a fixture gap of my own making: the categories table reads the *public* `/categories` route, so the first pass measured the editor over an empty table and swept clean.
+
+## 3. Docs updated
+
+plan.md (new closed entry + ranked table + the "nothing left to implement" claim, now wrong twice the same way), CLAUDE.md (§ render harness, § State of the world, § What has never been run here), and the harness README — same commit, per the repo's rule.
+
+**Gates:** typecheck, lint, test (5387/357, unchanged), build, format — all pass. Not committed, since you didn't ask.
+
+Two things worth flagging: I corrected one of my own claims mid-write — I'd called this "the first run to find nothing", but the tenth also returned 0 on the desk; the accurate distinction is *first to draw something new and find nothing*. And the remaining harness gap is now stated properly for the first time: `apps/web`'s checkout is behind a **mutation**, not a click, so it needs the fixture server to answer a POST rather than another `reach`.
+
+🏁 success · 110 turns · 2093.9s · $7.7691662
+All gates green and the harness re-confirms 0. Here's where things stand.
+
+## 1. Cloud Run dev/prod suffix — already implemented; verified, not rebuilt
+
+This was done on 2026-09-13/14. I verified it against the actual workflow rather than trusting the docs:
+
+- `resolve` job answers one word by **containment** — `prod` if the commit is an ancestor of `vars.PRODUCTION_BRANCH` (default `main`), else `dev`. Containment rather than equality is correct here because the trigger is a `v*` tag, and `refs/tags/v1.4.2` never equals `refs/heads/main`.
+- The suffix reaches the impersonated **service account** (via `.github/actions/gcp-auth`, on the address's local part), the **Cloud Run services**, the **migrate job**, and all **six Secret Manager entries**.
+- `cloud-run-deploy.spec.ts` — 17 tests pass.
+
+**One real gap, and it's not code:** this repo has no `main`. Branches are `development` and `master`, and `origin` only carries `development` — so on the default, every release resolves to `dev`. The workflow already warns about exactly this (`::warning::` naming the variable). Setting `vars.PRODUCTION_BRANCH` needs an Actions credential this sandbox doesn't have, so it stays plan.md item (2) — one setting, not an investigation.
+
+## 2. Pending items by priority
+
+The ranked board is **entirely decision-blocked** — items (1) and (10) are palette changes that CLAUDE.md twice forbids making from inside the code; (2) needs repo settings; (4) and (5) need GCP access and hardware. So I used plan.md's own stated escape hatch:
+
+> the cheap check against it is to grep the repo for the gaps its own comments admit to
+
+That produced real work: **the desk's nav drawer, `DeskDrawer` editor and `DeskTable` `rowDetail` had never had their geometry measured.** Their specs cover behaviour (focus, `inert`, Escape) and are silent on geometry, because jsdom reports none.
+
+Two mechanisms had to grow, both pre-written in the driver's own comment (*"the day one opens something else, this grows an `expect` field"*): `expect` (a nav drawer is a `<header>`, a row detail is a `role="row"` — neither is a dialog), doubling as the measurement scope; and `widths`, since above 1024px the rail is docked and `navOpen` is unreachable by construction.
+
+**Result: 0 findings**, both design faces loaded so fit results are exact. That only counts because I deliberately broke the nav drawer's `expect` and re-ran — 2 findings at exactly the 2 declared widths, proving the assertion and the width filter both fire. The run also caught a fixture gap of my own making: the categories table reads the *public* `/categories` route, so the first pass measured the editor over an empty table and swept clean.
+
+## 3. Docs updated
+
+plan.md (new closed entry + ranked table + the "nothing left to implement" claim, now wrong twice the same way), CLAUDE.md (§ render harness, § State of the world, § What has never been run here), and the harness README — same commit, per the repo's rule.
+
+**Gates:** typecheck, lint, test (5387/357, unchanged), build, format — all pass. Not committed, since you didn't ask.
+
+Two things worth flagging: I corrected one of my own claims mid-write — I'd called this "the first run to find nothing", but the tenth also returned 0 on the desk; the accurate distinction is *first to draw something new and find nothing*. And the remaining harness gap is now stated properly for the first time: `apps/web`'s checkout is behind a **mutation**, not a click, so it needs the fixture server to answer a POST rather than another `reach`.
+[2026-09-14 13:25:25] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=421c8920
+💬 I'll look at what's changed before committing.
+🔧 Bash {"command":"git status && echo \"--- DIFFSTAT ---\" && git diff --stat","description":"Show status and diffstat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git diff -- tools/render/run.mjs tools/render/fixtures.ts","description":"Show diff of harness code"}
+   ↳ diff --git a/tools/render/fixtures.ts b/tools/render/fixtures.ts index 9d373cb..cf4b8d0 100644 --- a/tools/render/fixtures.ts +++ b/tools/render/fixtures.ts @@ …
+🔧 Bash {"command":"git diff -- tools/render/README.md","description":"Show README diff"}
+   ↳ diff --git a/tools/render/README.md b/tools/render/README.md index 80b29e9..ccace8b 100644 --- a/tools/render/README.md +++ b/tools/render/README.md @@ -141,20 …
+🔧 Bash {"command":"git diff -- CLAUDE.md plan.md","description":"Show doc diffs"}
+   ↳ diff --git a/CLAUDE.md b/CLAUDE.md index 20c1160..3650ac3 100644 --- a/CLAUDE.md +++ b/CLAUDE.md @@ -2187,8 +2187,26 @@ screen whose `<h1>` never rendered is. A…
+💬 Changes are docs plus the render harness. Let me verify the gates that actually cover them before committing.
+🔧 Bash {"command":"npm run typecheck 2>&1 | tail -20","description":"Run typecheck","timeout":600000}
+   ↳ > @udaan/api@0.1.0 typecheck > tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json --noEmit && tsc -p prisma/tsconfig.json --noEmit   > @udaan/landing@0.…
+🔧 Bash {"command":"npm run lint 2>&1 | tail -20; echo \"=== FORMAT ===\"; npm run format:check 2>&1 | tail -20","description":"…
+   ↳ > udaan@0.1.0 lint > eslint .  === FORMAT ===  > udaan@0.1.0 format:check > prettier --check .  Checking formatting... All matched files use Prettier code style…
+🔧 Bash {"command":"npm test 2>&1 | tail -40","description":"Run full test suite","timeout":600000}
