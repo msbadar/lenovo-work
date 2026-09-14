@@ -8875,3 +8875,34 @@ Board items (17) and (18) added, (19) closed, two new sections enumerating the 1
    ↳ npm notice npm notice New major version of npm available! 10.8.2 -> 12.0.2 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.2 npm notice To u…
 🔧 Bash {"command":"npx vitest run src/styles/stylesheets.spec.ts 2>&1 | tail -20","description":"Run admin stylesheet spec","ti…
    ↳  RUN  v3.2.7 /work   ✓ packages/web-ui/src/styles/stylesheets.spec.ts (8 tests) 50ms  ✓ apps/web/src/styles/stylesheets.spec.ts (21 tests) 35ms  ✓ apps/admin/sr…
+🔧 Bash {"command":"git add -A && git commit -q -F - <<'EOF'\nfeat(tools): the harness draws the four screens a shift starts fro…
+   ↳ Checking formatting... All matched files use Prettier code style! 7ec5c84 feat(tools): the harness draws the four screens a shift starts from, and the search bo…
+💬 Committed as `7ec5c84`.
+
+**What went in** (6 files, +549/−8):
+- `tools/render/run.mjs` + `fixtures.ts` — five desk screens added to the harness (ops home, fulfilment queue, retailer directory, products, brands) with their fixtures
+- `apps/admin/src/components/DeskSearchField.css` — the 44px floor moved from `.desk-search__box` (a border box, so a 42px content area) onto `.desk-search__input`
+- `apps/admin/src/styles/stylesheets.spec.ts` — the row that was asserting the bug now makes `apps/web`'s assertion word for word
+- `CLAUDE.md`, `plan.md` — the sixteenth-run entry and the open list-table judgement
+
+**Verified here:** `tsc -p tools/render/tsconfig.json` clean, and the three `stylesheets.spec.ts` files pass (102 tests). A pre-commit hook ran Prettier's check and it passed.
+
+**Not verified here:** I did not run the full four gates (`typecheck && lint && test && build`) — only the affected spec and the harness typecheck. Nor did I re-run `tools/render/run.sh`; the render numbers in the commit message and the docs are from the working-tree changes as they were handed to me, not from a run I performed.
+
+🏁 success · 7 turns · 74.2s · $1.0888382
+Committed as `7ec5c84`.
+
+**What went in** (6 files, +549/−8):
+- `tools/render/run.mjs` + `fixtures.ts` — five desk screens added to the harness (ops home, fulfilment queue, retailer directory, products, brands) with their fixtures
+- `apps/admin/src/components/DeskSearchField.css` — the 44px floor moved from `.desk-search__box` (a border box, so a 42px content area) onto `.desk-search__input`
+- `apps/admin/src/styles/stylesheets.spec.ts` — the row that was asserting the bug now makes `apps/web`'s assertion word for word
+- `CLAUDE.md`, `plan.md` — the sixteenth-run entry and the open list-table judgement
+
+**Verified here:** `tsc -p tools/render/tsconfig.json` clean, and the three `stylesheets.spec.ts` files pass (102 tests). A pre-commit hook ran Prettier's check and it passed.
+
+**Not verified here:** I did not run the full four gates (`typecheck && lint && test && build`) — only the affected spec and the harness typecheck. Nor did I re-run `tools/render/run.sh`; the render numbers in the commit message and the docs are from the working-tree changes as they were handed to me, not from a run I performed.
+To github.com:msbadar/udaan.git
+   0d21b34..7ec5c84  development -> development
+[2026-09-14 17:30:05] Checking if container is running...
+[2026-09-14 17:30:05] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
