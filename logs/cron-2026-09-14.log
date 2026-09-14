@@ -3897,3 +3897,91 @@ To github.com:msbadar/udaan.git
 🔧 Bash {"command":"grep -E \"Tests +[0-9]+ passed|Tests: +[0-9]+ passed\" /tmp/gate-test.log; echo \"--- suites ---\"; grep -E …
    ↳       Tests  144 passed (144)       Tests  313 passed (313)       Tests  193 passed (193)       Tests  802 passed (802) Tests:       1815 passed, 1815 total    …
 🔧 Bash {"command":"npm run format:check > /tmp/f2.log 2>&1; echo \"format=$?\"; tail -3 /tmp/f2.log; npm run build > /tmp/b.log…
+   ↳ format=0  Checking formatting... All matched files use Prettier code style! build=0 dist/assets/index-BJRBKVDz.js               164.52 kB │ gzip: 44.27 kB │ map…
+💬 All five gates pass. Updating the test counts in CLAUDE.md (admin gained 2 rows):
+🔧 Bash {"command":"grep -n \"5359 tests across 356 suites\\|admin 800/54\" CLAUDE.md","description":"Find test count line"}
+   ↳ 2168:typecheck, lint, format, test (5359 tests across 356 suites) and build. Per workspace: api 2169:1815/117, mobile 1493/89, admin 800/54, web 417/33, shared …
+🔧 Edit {"replace_all":false,"file_path":"/work/CLAUDE.md","old_string":"typecheck, lint, format, test (5359 tests across 356 su…
+   ↳ The file /work/CLAUDE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+🔧 Bash {"command":"npm run format:check 2>&1 | tail -3; echo \"---\"; git diff --stat","description":"Re-check format and show …
+   ↳ Checking formatting... All matched files use Prettier code style! ---  .github/workflows/deploy-cloud-run.yml      | 59 +++++++++++++++---  CLAUDE.md           …
+🔧 TaskUpdate {"taskId":"4","status":"completed"}
+   ↳ Updated task #4 status
+🔧 Bash {"command":"git diff .github/workflows/deploy-cloud-run.yml","description":"Final review of workflow diff"}
+   ↳ diff --git a/.github/workflows/deploy-cloud-run.yml b/.github/workflows/deploy-cloud-run.yml index ef8d671..28d3d65 100644 --- a/.github/workflows/deploy-cloud-…
+💬 All five gates pass. Here's where things landed.
+
+## TODO 1 — service account dev/prod suffix: already done
+
+Commit `0590a09` implemented it, and more thoroughly than the request: the suffix goes on the service account **and** the Cloud Run services, the migration job and the six Secret Manager entries, derived once in `.github/actions/gcp-auth` rather than in each of the four authenticating jobs. I verified it rather than redoing it.
+
+But the rule doesn't actually work on this repository, and that turned out to be the real remaining gap:
+
+**`resolve` had three outcomes and printed two.** "This commit isn't on the production branch" and "the production branch doesn't exist" both printed ``not on `main` `` and exited green. The second means *no commit can ever be prod* — and **this repo has no `main`** (branches are `development` and `master`), so on the default every release silently lands on dev. The missing-branch case is now its own outcome: a `::warning::` annotation naming the variable, plus a summary saying it isn't a judgement about your commit. It warns rather than fails — what's broken is the route to production, so refusing the *dev* deploy over it punishes the environment that works.
+
+**A second, behavioural defect fell out of writing that.** The ancestor test hung off `git fetch`'s exit code (`fetch && merge-base`). Since `actions/checkout` runs at `fetch-depth: 0`, the branch is usually already in the clone — so a transient network failure answered "not contained" for a release cut from main. I ran both forms against a fixture with the ref present and `origin` pointed at nothing: **old said `dev`, new says `prod`.**
+
+Executed against a real git fixture — contained→prod, not-contained→dev, no-branch→dev+warning, plus the blip case. Two new spec rows, and I confirmed both **fail against the previous workflow** (a spec that passes either way pins nothing).
+
+## TODO 2 — pending items by priority
+
+I added a ranked table to `plan.md`, and the honest finding is that **five of seven open items are blocked on decisions, not work** — the implementation backlog was worked down; the decision backlog wasn't. Two need your answer:
+
+1. **Which branch is production?** One repository variable. On the evidence it's `development`. I can't read or write repo variables from here.
+2. **`--color-warning` on the retailer client** — and I found the existing write-up was wrong in a load-bearing way. It asks whether fixing it "means deciding whether the legal document may differ by one colour across the two surfaces." **It already differs.** `packages/web-ui/src/orders/InvoiceScreen.css` is shared and reads `var(--color-warning)`; `desk.css` overrides it to `#99611e` while `apps/web` gets `#e8a33d` at **2.16:1**. So leaving it alone *preserves* the divergence rather than preventing it, and keeps the illegible half. That reverses which option is conservative. Still your call, but the question is now narrower: *the invoice already reads differently on the two surfaces; should the phone's copy be the legible one?*
+
+I deliberately did **not** make either decision — the repo has an explicit, twice-recorded rule against changing the phone palette from inside the code.
+
+## Verification
+
+`typecheck`, `lint`, `format:check`, `test` (5361 across 356 suites), `build` — all pass. Docs updated in the same change per the repo's rule: `CLAUDE.md` (§ Cloud Run, § spec table, § State of the world, § What has never been run here, test counts), `docs/configuration.md` § "Dev and prod", `plan.md`.
+
+Two caveats worth stating plainly: **nothing here has touched GCP** — no `gcloud`, no project — so roles, secret names and whether a revision starts remain unknown; and the changes are **uncommitted** in the working tree, since you didn't ask me to commit.
+
+🏁 success · 68 turns · 995.5s · $4.993051550000001
+All five gates pass. Here's where things landed.
+
+## TODO 1 — service account dev/prod suffix: already done
+
+Commit `0590a09` implemented it, and more thoroughly than the request: the suffix goes on the service account **and** the Cloud Run services, the migration job and the six Secret Manager entries, derived once in `.github/actions/gcp-auth` rather than in each of the four authenticating jobs. I verified it rather than redoing it.
+
+But the rule doesn't actually work on this repository, and that turned out to be the real remaining gap:
+
+**`resolve` had three outcomes and printed two.** "This commit isn't on the production branch" and "the production branch doesn't exist" both printed ``not on `main` `` and exited green. The second means *no commit can ever be prod* — and **this repo has no `main`** (branches are `development` and `master`), so on the default every release silently lands on dev. The missing-branch case is now its own outcome: a `::warning::` annotation naming the variable, plus a summary saying it isn't a judgement about your commit. It warns rather than fails — what's broken is the route to production, so refusing the *dev* deploy over it punishes the environment that works.
+
+**A second, behavioural defect fell out of writing that.** The ancestor test hung off `git fetch`'s exit code (`fetch && merge-base`). Since `actions/checkout` runs at `fetch-depth: 0`, the branch is usually already in the clone — so a transient network failure answered "not contained" for a release cut from main. I ran both forms against a fixture with the ref present and `origin` pointed at nothing: **old said `dev`, new says `prod`.**
+
+Executed against a real git fixture — contained→prod, not-contained→dev, no-branch→dev+warning, plus the blip case. Two new spec rows, and I confirmed both **fail against the previous workflow** (a spec that passes either way pins nothing).
+
+## TODO 2 — pending items by priority
+
+I added a ranked table to `plan.md`, and the honest finding is that **five of seven open items are blocked on decisions, not work** — the implementation backlog was worked down; the decision backlog wasn't. Two need your answer:
+
+1. **Which branch is production?** One repository variable. On the evidence it's `development`. I can't read or write repo variables from here.
+2. **`--color-warning` on the retailer client** — and I found the existing write-up was wrong in a load-bearing way. It asks whether fixing it "means deciding whether the legal document may differ by one colour across the two surfaces." **It already differs.** `packages/web-ui/src/orders/InvoiceScreen.css` is shared and reads `var(--color-warning)`; `desk.css` overrides it to `#99611e` while `apps/web` gets `#e8a33d` at **2.16:1**. So leaving it alone *preserves* the divergence rather than preventing it, and keeps the illegible half. That reverses which option is conservative. Still your call, but the question is now narrower: *the invoice already reads differently on the two surfaces; should the phone's copy be the legible one?*
+
+I deliberately did **not** make either decision — the repo has an explicit, twice-recorded rule against changing the phone palette from inside the code.
+
+## Verification
+
+`typecheck`, `lint`, `format:check`, `test` (5361 across 356 suites), `build` — all pass. Docs updated in the same change per the repo's rule: `CLAUDE.md` (§ Cloud Run, § spec table, § State of the world, § What has never been run here, test counts), `docs/configuration.md` § "Dev and prod", `plan.md`.
+
+Two caveats worth stating plainly: **nothing here has touched GCP** — no `gcloud`, no project — so roles, secret names and whether a revision starts remain unknown; and the changes are **uncommitted** in the working tree, since you didn't ask me to commit.
+[2026-09-14 08:07:10] Agent run finished.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=a6851331
+💬 I'll look at what's changed before committing.
+🔧 Bash {"command":"git status && echo \"---DIFFSTAT---\" && git diff --stat","description":"Check git status and diff stat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+🔧 Bash {"command":"git diff -- .github/workflows/deploy-cloud-run.yml apps/admin/src/app/cloud-run-deploy.spec.ts docs/configur…
+   ↳ diff --git a/.github/workflows/deploy-cloud-run.yml b/.github/workflows/deploy-cloud-run.yml index ef8d671..28d3d65 100644 --- a/.github/workflows/deploy-cloud-…
+🔧 Bash {"command":"git diff -- plan.md CLAUDE.md | head -250","description":"Show plan.md and CLAUDE.md diff"}
+   ↳ diff --git a/CLAUDE.md b/CLAUDE.md index adfb199..96721c0 100644 --- a/CLAUDE.md +++ b/CLAUDE.md @@ -1795,7 +1795,7 @@ do.  | `packages/web-ui/src/components/Te…
+💬 Changes are coherent: the `resolve` job fix, its two spec rows, and the doc updates. Let me verify the gates before committing.
+🔧 Bash {"command":"npm test --workspace @udaan/admin 2>&1 | tail -25","description":"Run admin workspace tests","timeout":60000…
+   ↳  ✓ src/screens/admin-tax-queries.spec.tsx (7 tests) 232ms  ✓ src/screens/admin-csv-import-queries.spec.tsx (8 tests) 70ms  ✓ src/app/release-images.spec.ts (15 …
+💬 802/54 — matches the count CLAUDE.md was updated to. Now lint, format and typecheck.
+🔧 Bash {"command":"npm run format:check 2>&1 | tail -8","description":"Run prettier format check","timeout":300000}
+   ↳ > udaan@0.1.0 format:check > prettier --check .  Checking formatting... All matched files use Prettier code style!
+🔧 Bash {"command":"npm run lint 2>&1 | tail -15","description":"Run lint across workspaces","timeout":600000}
+   ↳ > udaan@0.1.0 lint > eslint .
