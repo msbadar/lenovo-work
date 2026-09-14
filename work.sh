@@ -15,20 +15,20 @@ fi
 # Working on udaan
 cd ~/workspace/udaan || exit 1
 
-# Prompt
-read -r -d '' PROMPT << 'EOM' || true
-TODO: 
-- github actions , cloud run service account should have suffix dev or prod based on branch. if main, it should be prod. otherwise it should be dev.
-- work on pending items by priority as per priority
-- update plan.md for pending items 
-EOM
+# # Prompt
+# read -r -d '' PROMPT << 'EOM' || true
+# TODO: 
+# - work on improving overall ui to follow modern design pattern 
+# - update plan.md for pending items 
+# EOM
 
 # invoking agent
 log "Invoking agent with prompt..."
-ccr "$PROMPT"
-log "Agent run finished."
+
+ccr "work on improving overall ui to follow modern design pattern "
 ccr "commit changes"
 
+log "Agent run finished."
 # Pushing changes
 git push origin development
 
