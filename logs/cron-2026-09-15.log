@@ -2672,3 +2672,34 @@ If "modern design patterns" meant something more visual than this — a restyle,
 💬 web-ui shows 1 new row where CLAUDE.md claims three. Let me check whether that's a table-style row.
 [2026-09-15 06:10:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
 🔧 Bash {"command":"git diff -- packages/web-ui/src/styles/stylesheets.spec.ts","description":"Diff web-ui stylesheet spec"}
+   ↳ diff --git a/packages/web-ui/src/styles/stylesheets.spec.ts b/packages/web-ui/src/styles/stylesheets.spec.ts index c0a48b4..a93e6a1 100644 --- a/packages/web-ui…
+🔧 Bash {"command":"grep -E '^ +(Test Files|Tests) ' /tmp/udaan-test.log; echo \"---jest---\"; grep -E '^(Tests|Test Suites):' /…
+   ↳  Test Files  10 passed (10)       Tests  167 passed (167)  Test Files  22 passed (22)       Tests  313 passed (313)  Test Files  17 passed (17)       Tests  199…
+💬 Everything checks out, and CLAUDE.md's stated counts (5484/359) match what I measured. Committing:
+🔧 Bash {"command":"cat > /tmp/udaan-commit-msg.txt <<'MSG'\nfeat(tools): the harness draws a sheet of paper, and the invoice pr…
+   ↳ Checking formatting... All matched files use Prettier code style! [development 69d5882] feat(tools): the harness draws a sheet of paper, and the invoice printed…
+🔧 Bash {"command":"git status --short && echo \"---\" && git log --oneline -2 && echo \"---\" && git log -1 --stat --format='' …
+   ↳ --- 69d5882 feat(tools): the harness draws a sheet of paper, and the invoice printed the app around it 08a58ff fix(admin): the other six drill-downs get the rai…
+💬 Committed as `69d5882` on `development`; working tree is clean. Not pushed — say the word if you want that.
+
+**What was in it** — one coherent change, the print-media work: `tools/render` gained a sixth layout (an A4 page box, with `PRINT_NOT_PINNED` and `PRINT_NOT_CLIPPED`), and the chrome defects that pass found are fixed in the file that draws each piece — the desk's top bar, `apps/web`'s shell cap and tab bar, `@udaan/web-ui`'s toast region and offline banner, the product screen's action bar unpinned rather than hidden, and three rules on the marketing page. Eleven spec rows across four workspaces, plus `CLAUDE.md` and `plan.md` updated in the same commit as the working agreement requires.
+
+**What I verified myself:** all four gates, run fresh before committing — typecheck, lint, `format:check`, build, and `npm test` at exit 0 with **5484 tests across 359 suites**. I counted the per-workspace totals rather than trusting the number: they add up to exactly the 5484/359 CLAUDE.md claims, so that line is accurate. The `jest-worker` "failed to exit gracefully" warning appeared, which is the documented benign one (plan.md K14).
+
+**What I did not verify, and you should read the commit body with this in mind:** I did not run `tools/render`. Every measurement the message and the code comments cite — the 794 × 52 top bar, the invoice at 478px on a 794px sheet, the 471px of lost category pills, "0 print findings after" — comes from the run recorded in the working tree, not from anything I executed. The commit body says so explicitly in its last paragraph. If you want those numbers re-confirmed, `tools/render/run.sh` plus `run.sh landing` is the check; it's not a gate and nothing will prompt for it.
+
+One thing I noticed while checking counts, not worth a change but worth knowing: CLAUDE.md's twenty-fourth-run entry says "eight spec mutations across three workspaces" while its State-of-the-world line says eleven across four. Both are true in their own scope — eight is the chrome group excluding the three landing rows — but the two sentences read as though they describe the same set.
+
+🏁 success · 19 turns · 1034.7s · $2.2945819999999997
+Committed as `69d5882` on `development`; working tree is clean. Not pushed — say the word if you want that.
+
+**What was in it** — one coherent change, the print-media work: `tools/render` gained a sixth layout (an A4 page box, with `PRINT_NOT_PINNED` and `PRINT_NOT_CLIPPED`), and the chrome defects that pass found are fixed in the file that draws each piece — the desk's top bar, `apps/web`'s shell cap and tab bar, `@udaan/web-ui`'s toast region and offline banner, the product screen's action bar unpinned rather than hidden, and three rules on the marketing page. Eleven spec rows across four workspaces, plus `CLAUDE.md` and `plan.md` updated in the same commit as the working agreement requires.
+
+**What I verified myself:** all four gates, run fresh before committing — typecheck, lint, `format:check`, build, and `npm test` at exit 0 with **5484 tests across 359 suites**. I counted the per-workspace totals rather than trusting the number: they add up to exactly the 5484/359 CLAUDE.md claims, so that line is accurate. The `jest-worker` "failed to exit gracefully" warning appeared, which is the documented benign one (plan.md K14).
+
+**What I did not verify, and you should read the commit body with this in mind:** I did not run `tools/render`. Every measurement the message and the code comments cite — the 794 × 52 top bar, the invoice at 478px on a 794px sheet, the 471px of lost category pills, "0 print findings after" — comes from the run recorded in the working tree, not from anything I executed. The commit body says so explicitly in its last paragraph. If you want those numbers re-confirmed, `tools/render/run.sh` plus `run.sh landing` is the check; it's not a gate and nothing will prompt for it.
+
+One thing I noticed while checking counts, not worth a change but worth knowing: CLAUDE.md's twenty-fourth-run entry says "eight spec mutations across three workspaces" while its State-of-the-world line says eleven across four. Both are true in their own scope — eight is the chrome group excluding the three landing rows — but the two sentences read as though they describe the same set.
+[2026-09-15 06:11:28] Agent run finished.
+To github.com:msbadar/udaan.git
+   08a58ff..69d5882  development -> development
