@@ -2515,3 +2515,136 @@ To github.com:msbadar/udaan.git
 🔧 Bash {"command":"npm test >/tmp/test.log 2>&1 && echo \"TEST PASS\" || echo \"TEST FAIL\"; grep -E \"Tests  |Tests:\" /tmp/te…
 [2026-09-15 05:50:04] Checking if container is running...
 [2026-09-15 05:50:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳ TEST PASS       Tests  167 passed (167)       Tests  313 passed (313)       Tests  199 passed (199)       Tests  824 passed (824) Tests:       1815 passed, 1815…
+🔧 Bash {"command":"npm run build >/tmp/build.log 2>&1 && echo \"BUILD PASS\" || { echo \"BUILD FAIL\"; tail -20 /tmp/build.log;…
+   ↳ BUILD PASS === suite/test totals ===  Test Files  10 passed (10)       Tests  167 passed (167)  Test Files  22 passed (22)       Tests  313 passed (313)  Test F…
+💬 All four gates pass. Let me update the counts in the docs — 11 new tests, same suite count:
+🔧 Bash {"command":"grep -n \"5473 tests across 359 suites\\|api\\s*1815/117, mobile\\|1815/117\" CLAUDE.md | head","description…
+   ↳ 2736:typecheck, lint, format, test (5473 tests across 359 suites) and build. Per workspace: api 2737:1815/117, mobile 1493/89, admin 822/55, web 439/33, shared …
+🔧 Read {"file_path":"/work/CLAUDE.md","offset":2733,"limit":14}
+   ↳ 2733	## State of the world 2734	 2735	What is built and what is not, as of 2026-09-14. All four gates passed on that date: 2736	typecheck, lint, format, test (5…
+🔧 Edit {"replace_all":false,"file_path":"/work/CLAUDE.md","old_string":"What is built and what is not, as of 2026-09-14. All fo…
+   ↳ The file /work/CLAUDE.md has been updated successfully. (file state is current in your context — no need to Read it back)
+🔧 Bash {"command":"grep -n \"| \\`apps/admin\\` | Vitest | jsdom | 55 |\\|apps/web\\` | Vitest | jsdom | 33\\|web-ui\\` | Vites…
+   ↳ 2702:| `apps/admin` | Vitest | jsdom | 55 | 66 / 79 / 69 / 66 | 2703:| `apps/web` | Vitest | jsdom | 33 | 85 / 80 / 74 / 85, plus 13 pinned files | 2705:| `pack…
+💬 Now let me verify the landing print fixes render clean:
+🔧 Bash {"command":"VITE_API_BASE_URL=http://127.0.0.1:4317/api/v1 VITE_SITE_URL=https://example.test tools/render/run.sh landin…
+   ↳ === fonts (landing) === {   "loaded": [     "Plus Jakarta Sans 400",     "Plus Jakarta Sans 500",     "Plus Jakarta Sans 600",     "Plus Jakarta Sans 700",     …
+🔧 Bash {"command":"npm run format:check >/tmp/g3.log 2>&1 && echo \"format PASS\" || { echo \"format FAIL\"; tail -8 /tmp/g3.lo…
+   ↳ format PASS === print rules in the BUILT bundles (what a visitor actually gets) === --- apps/admin/dist/assets/admin-screens-B7rLvVeT.css @media print{.invoice-…
+🔧 Bash {"command":"echo \"=== shell print rules in built CSS ===\"\ngrep -o \"@media print{\\.admin-shell[^@]*\" apps/admin/dis…
+   ↳ === shell print rules in built CSS === apps/admin/dist/assets/index-BnET67vu.css:@media print{.admin-shell__topbar,.admin-shell__bar,.admin-shell__scrim{display…
+🔧 Bash {"command":"git status --short; echo \"=== stat ===\"; git diff --stat | tail -6","description":"Final repo status check…
+   ↳  M CLAUDE.md  M apps/admin/src/app/AdminShell.css  M apps/admin/src/styles/stylesheets.spec.ts  M apps/landing/src/App.tsx  M apps/landing/src/components/Catego…
+💬 All four gates pass, all three surfaces render clean. Here's what happened.
+
+## First, the framing
+
+I didn't do a generic restyle, and I want to be upfront that this was deliberate. This repo's central rule is that `design.html` is the design authority, and `CLAUDE.md` records at length what happened the last time UI was invented rather than measured. "Make it look more modern" isn't a change I can make without you deciding it.
+
+What *is* unambiguously in scope is a modern platform pattern the surfaces should follow and don't. So I went looking for those — and found one where the intent was **already written in the code and had never actually worked**.
+
+## What was broken: printing
+
+`InvoiceScreen.css` has carried an `@media print` block since the invoice was written, stating its goal in words — everything outside the document *"is chrome for reading this screen on a phone, not part of the document a retailer would hand to their accountant."* It can only hide the screen's own header. Every shell around it wears nothing.
+
+Nothing in the repo could see this: jsdom parses no CSS, axe reads no print media, and `tools/render` emulated a viewport. I rendered it at an A4 page box:
+
+| Surface | What actually printed |
+|---|---|
+| Desk | `Menu  Ops / Orders` — a nav strip **794×52** across the head of a GST invoice |
+| Shop | The invoice **478px wide at x=158 on a 794px sheet**, ruled down both edges |
+| Shop | Tab bar pinned at 478×65; toast + offline banner mounted above the router |
+| Landing | Sticky header, a floating CTA, and a rail that **silently dropped 471px** of categories |
+
+The desk and the shop printed **different documents for the same order** — the same divergence the shared invoice component exists to prevent.
+
+**The generalisation is worth more than the fix:** Chromium lays a page box out at paper width (794px A4), so *every `min-width` query in all three apps is in its phone branch on paper*. `@media (min-width: 1024px)` reads as "the desk" and a desk is what operators print from — but it never matches. That's exactly why the Menu handle was on the invoice.
+
+## What I changed
+
+24 lines of CSS in six blocks, plus three Tailwind `print:` classes — each piece of chrome declaring its own absence from paper, in the file that draws it. The split that mattered: **hide navigation, only unpin information** (the tab bar goes; the product page's action bar just stops being `sticky`, since it's the only place that screen states its line total).
+
+I also added a **print pass to the harness** — two property sweeps, `PRINT_NOT_PINNED` and `PRINT_NOT_CLIPPED`. That closed the blind spot permanently, and it immediately earned itself: with all four chrome fixes already in, it found a fifth defect on nobody's list.
+
+## Verification
+
+- **Gates:** typecheck, lint, format, test (5484/359), build — all pass
+- **Rendered:** 0 print findings on all three surfaces, fonts confirmed loaded
+- **Proved able to fail:** reverted the tab bar fix → exactly 5 findings, one per tab screen
+- **11 spec mutations, 11 expected failures, none spurious** — including both traps (a print block nested in a width query; the blunt "hide everything" fix that yields a blank sheet)
+
+Docs updated per the repo's own rule: a new Part I convention, the harness section, three spec-table rows, a State-of-the-world run entry, and plan.md item 26. **Not committed** — I didn't want to commit without you asking.
+
+## What I found but did not do
+
+`forced-colors`, `prefers-contrast` and `prefers-color-scheme` appear **nowhere** in the source — and `CLAUDE.md` explicitly *reasons about* forced colours (the rail's teal dot is justified by "a fill alone is what disappears under forced colours") without any such block existing. That's the same shape as this bug, one register over, and it's the obvious next thing.
+
+Two caveats on it, so you can judge: a `forced-colors` pass would be the emulator agreeing with itself the way `any-pointer: coarse` already does, and `color-scheme` shades into a dark-mode question, which *is* a design decision and therefore yours rather than mine.
+
+If "modern design patterns" meant something more visual than this — a restyle, denser tables, a different type scale — say which surface and I'll scope it, but that one needs you to own the design call.
+
+🏁 success · 173 turns · 3840.3s · $18.623571450000007
+All four gates pass, all three surfaces render clean. Here's what happened.
+
+## First, the framing
+
+I didn't do a generic restyle, and I want to be upfront that this was deliberate. This repo's central rule is that `design.html` is the design authority, and `CLAUDE.md` records at length what happened the last time UI was invented rather than measured. "Make it look more modern" isn't a change I can make without you deciding it.
+
+What *is* unambiguously in scope is a modern platform pattern the surfaces should follow and don't. So I went looking for those — and found one where the intent was **already written in the code and had never actually worked**.
+
+## What was broken: printing
+
+`InvoiceScreen.css` has carried an `@media print` block since the invoice was written, stating its goal in words — everything outside the document *"is chrome for reading this screen on a phone, not part of the document a retailer would hand to their accountant."* It can only hide the screen's own header. Every shell around it wears nothing.
+
+Nothing in the repo could see this: jsdom parses no CSS, axe reads no print media, and `tools/render` emulated a viewport. I rendered it at an A4 page box:
+
+| Surface | What actually printed |
+|---|---|
+| Desk | `Menu  Ops / Orders` — a nav strip **794×52** across the head of a GST invoice |
+| Shop | The invoice **478px wide at x=158 on a 794px sheet**, ruled down both edges |
+| Shop | Tab bar pinned at 478×65; toast + offline banner mounted above the router |
+| Landing | Sticky header, a floating CTA, and a rail that **silently dropped 471px** of categories |
+
+The desk and the shop printed **different documents for the same order** — the same divergence the shared invoice component exists to prevent.
+
+**The generalisation is worth more than the fix:** Chromium lays a page box out at paper width (794px A4), so *every `min-width` query in all three apps is in its phone branch on paper*. `@media (min-width: 1024px)` reads as "the desk" and a desk is what operators print from — but it never matches. That's exactly why the Menu handle was on the invoice.
+
+## What I changed
+
+24 lines of CSS in six blocks, plus three Tailwind `print:` classes — each piece of chrome declaring its own absence from paper, in the file that draws it. The split that mattered: **hide navigation, only unpin information** (the tab bar goes; the product page's action bar just stops being `sticky`, since it's the only place that screen states its line total).
+
+I also added a **print pass to the harness** — two property sweeps, `PRINT_NOT_PINNED` and `PRINT_NOT_CLIPPED`. That closed the blind spot permanently, and it immediately earned itself: with all four chrome fixes already in, it found a fifth defect on nobody's list.
+
+## Verification
+
+- **Gates:** typecheck, lint, format, test (5484/359), build — all pass
+- **Rendered:** 0 print findings on all three surfaces, fonts confirmed loaded
+- **Proved able to fail:** reverted the tab bar fix → exactly 5 findings, one per tab screen
+- **11 spec mutations, 11 expected failures, none spurious** — including both traps (a print block nested in a width query; the blunt "hide everything" fix that yields a blank sheet)
+
+Docs updated per the repo's own rule: a new Part I convention, the harness section, three spec-table rows, a State-of-the-world run entry, and plan.md item 26. **Not committed** — I didn't want to commit without you asking.
+
+## What I found but did not do
+
+`forced-colors`, `prefers-contrast` and `prefers-color-scheme` appear **nowhere** in the source — and `CLAUDE.md` explicitly *reasons about* forced colours (the rail's teal dot is justified by "a fill alone is what disappears under forced colours") without any such block existing. That's the same shape as this bug, one register over, and it's the obvious next thing.
+
+Two caveats on it, so you can judge: a `forced-colors` pass would be the emulator agreeing with itself the way `any-pointer: coarse` already does, and `color-scheme` shades into a dark-mode question, which *is* a design decision and therefore yours rather than mine.
+
+If "modern design patterns" meant something more visual than this — a restyle, denser tables, a different type scale — say which surface and I'll scope it, but that one needs you to own the design call.
+/usr/local/bin/ccr: line 1: GNU: command not found
+⚙️  model=claude-opus-5 session=de83c52f
+💬 I'll look at what's actually changed before committing.
+🔧 Bash {"command":"git status && echo \"---DIFFSTAT---\" && git diff --stat","description":"Show status and diffstat"}
+   ↳ On branch development Your branch is up to date with 'origin/development'.  Changes not staged for commit:   (use "git add <file>..." to update what will be com…
+💬 This is the print-media work. Let me read the actual diff before writing a message.
+🔧 Bash {"command":"git diff -- apps/admin/src/app/AdminShell.css apps/web/src/app/AppShell.css apps/web/src/app/TabBar.css apps…
+   ↳ diff --git a/apps/admin/src/app/AdminShell.css b/apps/admin/src/app/AdminShell.css index 131c56a..195abfd 100644 --- a/apps/admin/src/app/AdminShell.css +++ b/a…
+🔧 Bash {"command":"git diff -- apps/landing/src/App.tsx apps/landing/src/components/CategoryShowcase.tsx apps/landing/src/compo…
+   ↳ diff --git a/apps/landing/src/App.tsx b/apps/landing/src/App.tsx index 5e9f901..6ff930d 100644 --- a/apps/landing/src/App.tsx +++ b/apps/landing/src/App.tsx @@ …
+🔧 Bash {"command":"git diff -- tools/render/run.mjs tools/render/checks.mjs | head -250","description":"Diff render harness cha…
+   ↳ diff --git a/tools/render/checks.mjs b/tools/render/checks.mjs index 5889995..f353f8c 100644 --- a/tools/render/checks.mjs +++ b/tools/render/checks.mjs @@ -401…
+🔧 Bash {"command":"git diff -- plan.md && echo \"===CLAUDE.md sections touched===\" && git diff -U0 -- CLAUDE.md | grep -E '^@@…
+   ↳ diff --git a/plan.md b/plan.md index 52718ce..fcb1a22 100644 --- a/plan.md +++ b/plan.md @@ -169,6 +169,7 @@ conclude there is nothing left.  | ~~20~~ | ~~The n…
+💬 Docs are updated alongside the code, as the working agreement requires. Now the gates.
+🔧 Bash {"command":"npm run typecheck 2>&1 | tail -20","description":"Run typecheck across workspaces","timeout":600000}
