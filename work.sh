@@ -22,10 +22,11 @@ cd ~/workspace/udaan || exit 1
 # - update plan.md for pending items 
 # EOM
 
+git pull origin development
 # invoking agent
 log "Invoking agent with prompt..."
 
-ccr "work on improving overall ui to follow modern design pattern "
+ccr "work as per plan.md and update plan.md for remaining items"
 ccr "commit changes"
 
 log "Agent run finished."
