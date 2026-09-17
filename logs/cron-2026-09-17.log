@@ -571,3 +571,639 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
    ↳ 2940	`development` — was settled on 2026-09-16 in favour of the workflow, and the row now pins both 2941	names. **What settled it was the history rather than an…
 💬 Let me get the real admin count and confirm the workspace is green.
 🔧 Bash {"command":"cd /work/apps/admin && npx vitest run --reporter=dot 2>&1 | tail -12","description":"Run the full admin work…
+[2026-09-17 01:50:04] Checking if container is running...
+[2026-09-17 01:50:05] Container 'sandbox-rn-claude-claude' is already running. Exiting.
+   ↳  RUN  v3.2.7 /work/apps/admin  ·································································································································…
+💬 829/55, green. Now the counts paragraph and the section's opening claim:
+work.sh: line 32: unexpected EOF while looking for matching `"'
+[2026-09-17 02:00:04] Checking if container is running...
+time="2026-09-17T02:00:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 02:00:07] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T02:00:07+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T02:00:07+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 02:00:07] Agent run finished.
+To github.com:msbadar/udaan.git
+   8eb84d0..4d0a5b7  development -> development
+[2026-09-17 02:10:05] Checking if container is running...
+time="2026-09-17T02:10:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 02:10:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T02:10:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T02:10:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 02:10:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 02:20:06] Checking if container is running...
+time="2026-09-17T02:20:07+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 02:20:11] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T02:20:11+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T02:20:11+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 02:20:11] Agent run finished.
+Everything up-to-date
+[2026-09-17 02:30:05] Checking if container is running...
+time="2026-09-17T02:30:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 02:30:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T02:30:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T02:30:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 02:30:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 02:40:08] Checking if container is running...
+time="2026-09-17T02:40:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 02:40:11] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T02:40:11+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T02:40:11+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 02:40:11] Agent run finished.
+Everything up-to-date
+[2026-09-17 02:50:05] Checking if container is running...
+time="2026-09-17T02:50:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 02:50:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T02:50:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T02:50:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 02:50:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 03:00:05] Checking if container is running...
+time="2026-09-17T03:00:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 03:00:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T03:00:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T03:00:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 03:00:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 03:10:04] Checking if container is running...
+time="2026-09-17T03:10:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 03:10:07] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T03:10:07+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T03:10:07+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 03:10:07] Agent run finished.
+Everything up-to-date
+[2026-09-17 03:20:04] Checking if container is running...
+time="2026-09-17T03:20:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 03:20:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T03:20:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T03:20:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 03:20:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 03:30:05] Checking if container is running...
+time="2026-09-17T03:30:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 03:30:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T03:30:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T03:30:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 03:30:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 03:40:05] Checking if container is running...
+time="2026-09-17T03:40:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 03:40:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T03:40:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T03:40:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 03:40:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 03:50:05] Checking if container is running...
+time="2026-09-17T03:50:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 03:50:09] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T03:50:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T03:50:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 03:50:09] Agent run finished.
+Everything up-to-date
+[2026-09-17 04:00:04] Checking if container is running...
+time="2026-09-17T04:00:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 04:00:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T04:00:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T04:00:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 04:00:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 04:10:04] Checking if container is running...
+time="2026-09-17T04:10:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 04:10:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T04:10:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T04:10:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 04:10:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 04:20:05] Checking if container is running...
+time="2026-09-17T04:20:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 04:20:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T04:20:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T04:20:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 04:20:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 04:30:08] Checking if container is running...
+time="2026-09-17T04:30:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 04:30:12] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T04:30:12+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T04:30:12+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 04:30:12] Agent run finished.
+Everything up-to-date
+[2026-09-17 04:40:04] Checking if container is running...
+time="2026-09-17T04:40:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 04:40:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T04:40:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T04:40:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 04:40:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 04:50:10] Checking if container is running...
+time="2026-09-17T04:50:10+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 04:50:13] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T04:50:13+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T04:50:13+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 04:50:13] Agent run finished.
+Everything up-to-date
+[2026-09-17 05:00:04] Checking if container is running...
+time="2026-09-17T05:00:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 05:00:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T05:00:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T05:00:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 05:00:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 05:10:04] Checking if container is running...
+time="2026-09-17T05:10:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 05:10:07] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T05:10:07+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T05:10:07+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 05:10:07] Agent run finished.
+Everything up-to-date
+[2026-09-17 05:20:25] Checking if container is running...
+time="2026-09-17T05:20:25+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 05:20:29] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T05:20:29+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T05:20:29+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 05:20:29] Agent run finished.
+Everything up-to-date
+[2026-09-17 05:30:05] Checking if container is running...
+time="2026-09-17T05:30:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 05:30:09] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T05:30:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T05:30:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 05:30:09] Agent run finished.
+Everything up-to-date
+[2026-09-17 05:40:05] Checking if container is running...
+time="2026-09-17T05:40:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 05:40:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T05:40:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T05:40:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 05:40:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 05:50:05] Checking if container is running...
+time="2026-09-17T05:50:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 05:50:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T05:50:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T05:50:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 05:50:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 06:00:04] Checking if container is running...
+time="2026-09-17T06:00:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 06:00:07] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T06:00:07+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T06:00:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 06:00:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 06:10:04] Checking if container is running...
+time="2026-09-17T06:10:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 06:10:07] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T06:10:07+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T06:10:07+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 06:10:07] Agent run finished.
+Everything up-to-date
+[2026-09-17 06:20:05] Checking if container is running...
+time="2026-09-17T06:20:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 06:20:09] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T06:20:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T06:20:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 06:20:09] Agent run finished.
+Everything up-to-date
+[2026-09-17 06:30:04] Checking if container is running...
+time="2026-09-17T06:30:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 06:30:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T06:30:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T06:30:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 06:30:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 06:40:05] Checking if container is running...
+time="2026-09-17T06:40:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 06:40:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T06:40:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T06:40:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 06:40:09] Agent run finished.
+Everything up-to-date
+[2026-09-17 06:50:05] Checking if container is running...
+time="2026-09-17T06:50:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 06:50:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T06:50:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T06:50:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 06:50:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 07:00:05] Checking if container is running...
+time="2026-09-17T07:00:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 07:00:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T07:00:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T07:00:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 07:00:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 07:10:05] Checking if container is running...
+time="2026-09-17T07:10:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 07:10:09] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T07:10:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T07:10:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 07:10:09] Agent run finished.
+Everything up-to-date
+[2026-09-17 07:20:05] Checking if container is running...
+time="2026-09-17T07:20:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 07:20:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T07:20:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T07:20:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 07:20:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 07:30:06] Checking if container is running...
+time="2026-09-17T07:30:06+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 07:30:09] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T07:30:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T07:30:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 07:30:09] Agent run finished.
+Everything up-to-date
+[2026-09-17 07:40:07] Checking if container is running...
+time="2026-09-17T07:40:07+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 07:40:10] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T07:40:10+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T07:40:10+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 07:40:10] Agent run finished.
+Everything up-to-date
+[2026-09-17 07:50:05] Checking if container is running...
+time="2026-09-17T07:50:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 07:50:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T07:50:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T07:50:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 07:50:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 08:00:05] Checking if container is running...
+time="2026-09-17T08:00:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 08:00:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T08:00:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T08:00:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 08:00:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 08:10:04] Checking if container is running...
+time="2026-09-17T08:10:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 08:10:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T08:10:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T08:10:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 08:10:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 08:20:04] Checking if container is running...
+time="2026-09-17T08:20:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 08:20:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T08:20:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T08:20:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 08:20:08] Agent run finished.
+Everything up-to-date
+[2026-09-17 08:30:05] Checking if container is running...
+time="2026-09-17T08:30:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 08:30:09] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T08:30:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T08:30:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 08:30:09] Agent run finished.
+Everything up-to-date
+[2026-09-17 08:40:05] Checking if container is running...
+time="2026-09-17T08:40:05+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 08:40:09] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T08:40:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T08:40:09+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 08:40:09] Agent run finished.
+Everything up-to-date
+[2026-09-17 08:50:04] Checking if container is running...
+time="2026-09-17T08:50:04+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+From github.com:msbadar/udaan
+ * branch            development -> FETCH_HEAD
+Already up to date.
+[2026-09-17 08:50:08] Invoking agent with prompt...
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T08:50:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+/usr/local/bin/ccr: line 1: GNU: command not found
+time="2026-09-17T08:50:08+05:30" level=warning msg="RunRoot is pointing to a path (/run/user/1000/containers) which is not writable. Most likely podman will fail."
+Error: default OCI runtime "crun" not found: invalid argument
+[2026-09-17 08:50:08] Agent run finished.
+Everything up-to-date
