@@ -1,39 +1,90 @@
 #!/bin/bash
+set -eo pipefail
 
-# Define timestamp logger
+# Monitored images that cannot run concurrently
+TRACKED_IMAGES=("sandbox-rn-claude-claude" "antigravity")
+
+# Timestamp logger
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"
 }
 
-IMAGE_NAME="sandbox-rn-claude-claude"
-log "Checking if container is running..."
-if podman ps --format "{{.Image}}" | grep -q "${IMAGE_NAME}"; then
-    log "Container '${IMAGE_NAME}' is already running. Exiting."
-    exit 0
-fi
+# Checks if ANY monitored image is running; exits immediately if found
+ensure_none_running() {
+    log "Checking if any monitored container is currently active..."
+    for img in "${TRACKED_IMAGES[@]}"; do
+        if podman ps --format "{{.Image}}" | grep -q "${img}"; then
+            log "Container '${img}' is currently running. Exiting script."
+            exit 0
+        fi
+    done
+}
 
-# Working on udaan
-cd ~/workspace/udaan || exit 1
+work1() {
+    # Working on udaan
+    cd ~/workspace/udaan || exit 1
 
-# # Prompt
-# read -r -d '' PROMPT << 'EOM' || true
-# TODO: 
-# - work on improving overall ui to follow modern design pattern 
-# - update plan.md for pending items 
-# EOM
+    git checkout work
+    git pull origin work
 
-git checkout work
-git pull origin work
+    # Invoking agent
+    log "Invoking agent for work1... $PWD"
+    ccr "work as per plan.md"
+    ccr "update plan.md for remaining items"
+    ccr "commit changes"
 
-# invoking agent
-log "Invoking agent with prompt..."
+    log "Agent run finished."
 
-ccr "work as per plan.md"
-ccr "update plan.md  for remaining items"
-ccr "commit changes"
+    # Pushing changes
+    git push origin work
+}
 
-log "Agent run finished."
+work2() {
 
-# Pushing changes
-git push origin work
+    # Working on design
+    cd ~/workspace/blinkit || exit 1
+
+    git checkout work
+    #git pull origin work
+
+    # Invoking agent
+    log "Invoking agent for work2...$PWD"
+    agy -p "work on /work folder,  as per plan.md"
+    agy -p "work on /work folder, update plan.md for remaining items"
+    agy -p "work on /work folder, commit changes"
+
+    log "Agent run finished."
+
+    # Pushing changes
+    #git push origin work
+}
+
+ensure_none_running
+#work1
+#work2
+
+
+works=(work1,work2)
+
+
+#!/usr/bin/env bash
+
+# 1. Use spaces instead of commas to separate elements
+works=(work1 work2)
+echo "WORKS: ${works[*]}"
+
+# 2. Get total element count
+wtotal=${#works[@]}
+echo "TOTAL: $wtotal"
+
+# 3. Pick a random index
+windex=$(( RANDOM % wtotal ))
+echo "INDEX: $windex"
+
+# 4. Access the selected element
+s_work=${works[$windex]}
+echo "WORK: $s_work"
+
+# 5. Execute it as a command (if intended)
+$s_work
 
