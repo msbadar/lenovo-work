@@ -60,7 +60,7 @@ work2() {
 }
 
 ensure_none_running
-#work1
+work1
 #work2
 
 
@@ -86,5 +86,5 @@ s_work=${works[$windex]}
 echo "WORK: $s_work"
 
 # 5. Execute it as a command (if intended)
-$s_work
+# $s_work
 
