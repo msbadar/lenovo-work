@@ -3,7 +3,7 @@ set -eo pipefail
 
 # Running os
 
-kill -9 $(lsof -t -i:4000)
+# kill -9 $(lsof -t -i:4000)
 
 cd ~/workspace/nova-os
 ./dist/nova-os --port 4000 &
