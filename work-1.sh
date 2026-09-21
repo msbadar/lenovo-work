@@ -1,60 +1,45 @@
 # Working on design
 
 # Working on udaan
-cd ~/workspace/udaan 
-
-git checkout work
-git pull origin work
-
-# Invoking agent
-echo "Invoking agent for work1... $PWD"
-
-ccr "work as per plan.md"
-ccr "update plan.md for remaining items"
-ccr "commit changes"
-
-echo "Agent run finished."
-
-git push origin work
 
 
-# # Monitored images that cannot run concurrently
-# TRACKED_IMAGES=("sandbox-rn-claude-claude" "antigravity")
+# Monitored images that cannot run concurrently
+TRACKED_IMAGES=("sandbox-rn-claude-claude" "antigravity")
 
-# # Timestamp logger
-# log() {
-#     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"
-# }
+# Timestamp logger
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"
+}
 
-# # Checks if ANY monitored image is running; exits immediately if found
-# ensure_none_running() {
-#     log "Checking if any monitored container is currently active..."
-#     for img in "${TRACKED_IMAGES[@]}"; do
-#         if podman ps --format "{{.Image}}" | grep -q "${img}"; then
-#             log "Container '${img}' is currently running. Exiting script."
-#             exit 0
-#         fi
-#     done
-# }
+# Checks if ANY monitored image is running; exits immediately if found
+ensure_none_running() {
+    log "Checking if any monitored container is currently active..."
+    for img in "${TRACKED_IMAGES[@]}"; do
+        if podman ps --format "{{.Image}}" | grep -q "${img}"; then
+            log "Container '${img}' is currently running. Exiting script."
+            exit 0
+        fi
+    done
+}
 
-# work1() {
-#     # Working on udaan
-#     cd ~/workspace/udaan || exit 1
+work1() {
+    # Working on udaan
+    cd ~/workspace/udaan || exit 1
 
-#     git checkout work
-#     git pull origin work
+    git checkout work
+    git pull origin work
 
-#     # Invoking agent
-#     log "Invoking agent for work1... $PWD"
-#     ccr "work as per plan.md"
-#     ccr "update plan.md for remaining items"
-#     ccr "commit changes"
+    # Invoking agent
+    log "Invoking agent for work1... $PWD"
+    ccr "work as per plan.md"
+    ccr "update plan.md for remaining items"
+    ccr "commit changes"
 
-#     log "Agent run finished."
+    log "Agent run finished."
 
-#     # Pushing changes
-#     git push origin work
-# }
+    # Pushing changes
+    git push origin work
+}
 
 # # work2() {
 
@@ -77,7 +62,7 @@ git push origin work
 # }
 
 # #ensure_none_running
-# #work1
+work1
 # #work2
 
 
