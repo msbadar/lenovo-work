@@ -59,10 +59,21 @@ work2() {
     #git push origin work
 }
 
-ensure_none_running
-work1
+#ensure_none_running
+#work1
 #work2
 
+# Running os
+
+cd ~/workspace/nova-os
+./dist/nova-os --port 4000 &
+
+
+cd ~/workspace/cloudflare
+bash ./tunnel.sh
+
+# Works
+ensure_none_running
 
 works=(work1,work2)
 
