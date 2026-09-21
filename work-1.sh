@@ -1,7 +1,4 @@
 # Working on design
-# cd ~/workspace/blinkit || exit 1
-
-cd ~/workspace/udaan || exit 1
 
 # Working on udaan
 cd ~/workspace/udaan || exit 1
