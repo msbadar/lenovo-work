@@ -9,7 +9,7 @@ wait_for_port() {
   local count=0
 
   while ! lsof -Pi :"$port" -sTCP:LISTEN -t >/dev/null 2>&1; do
-    if ! kill -0 "$pid" 2>/dev/null; then
+    if [ -n "$pid" ] && ! kill -0 "$pid" 2>/dev/null; then
       echo "Error: $service (PID $pid) terminated unexpectedly." >&2
       return 1
     fi
@@ -34,10 +34,8 @@ else
   cd ~/workspace/nova-os
   ./dist/nova-os --port "$PORT" &
   NOVA_PID=$!
-
   wait_for_port "$PORT" "$NOVA_PID" "nova-os"
 fi
-
 
 # 2. Start webterm
 PORT=4001
@@ -51,13 +49,27 @@ else
   wait_for_port "$PORT" "$TERM_PID" "webterm"
 fi
 
+# 3. Start local reverse proxy (Nginx) on port 8080
+PROXY_PORT=8080
+if podman ps --format '{{.Names}}' 2>/dev/null | grep -qx "local-proxy"; then
+  echo "Reverse proxy container is already running."
+else
+  echo "Starting Nginx reverse proxy on port $PROXY_PORT..."
+  podman run -d \
+    --name local-proxy \
+    --replace \
+    --net=host \
+    -v "$HOME/workspace/tunnel/nginx.conf:/etc/nginx/nginx.conf:ro,Z" \
+    docker.io/library/nginx:alpine
 
+  wait_for_port "$PROXY_PORT" "" "local-proxy"
+fi
 
-# 3. Check and start Cloudflare tunnel
+# 4. Check and start Cloudflare tunnel (routes traffic to 8080 only)
 if podman ps --format '{{.Image}}' 2>/dev/null | grep -qi "cloudflared"; then
   echo "Cloudflared container is already running. Skipping tunnel."
 else
   echo "Starting Cloudflare tunnel..."
-  cd ~/workspace/cloudflare
+  cd ~/workspace/tunnel
   bash ./tunnel.sh
 fi
