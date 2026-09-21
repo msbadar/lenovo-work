@@ -1,7 +1,7 @@
 # Working on design
 
 # Working on udaan
-cd ~/workspace/udaan || exit 1
+cd ~/workspace/udaan 
 
 git checkout work
 git pull origin work
