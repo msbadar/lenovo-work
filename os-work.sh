@@ -59,7 +59,7 @@ else
     --name local-proxy \
     --replace \
     --net=host \
-    -v "$HOME/workspace/tunnel/nginx.conf:/etc/nginx/nginx.conf:ro,Z" \
+    -v "$HOME/workspace/work/nginx.conf:/etc/nginx/nginx.conf:ro,Z" \
     docker.io/library/nginx:alpine
 
   wait_for_port "$PROXY_PORT" "" "local-proxy"
