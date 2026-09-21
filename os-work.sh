@@ -44,7 +44,7 @@ if lsof -Pi :"$PORT" -sTCP:LISTEN -t >/dev/null 2>&1; then
 else
   echo "Port $PORT is free. Starting terminal..."
   cd ~/workspace/terminal
-  WEBTERM_STATIC_DIR=dist/web ./dist/webterm --port "$PORT" &
+  WEBTERM_STATIC_DIR=dist/web ./dist/webterm --port "$PORT" --base-path /terminal &
   TERM_PID=$!
   wait_for_port "$PORT" "$TERM_PID" "webterm"
 fi
