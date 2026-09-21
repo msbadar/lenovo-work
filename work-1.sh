@@ -12,9 +12,9 @@ git pull origin work
 # Invoking agent
 echo "Invoking agent for work1... $PWD"
 
-# ccr "work as per plan.md"
-# ccr "update plan.md for remaining items"
-# ccr "commit changes"
+ccr "work as per plan.md"
+ccr "update plan.md for remaining items"
+ccr "commit changes"
 
 echo "Agent run finished."
 
