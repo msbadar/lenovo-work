@@ -1,6 +1,18 @@
 #!/bin/bash
 set -eo pipefail
 
+# Running os
+
+kill -9 $(lsof -t -i:4000)
+
+cd ~/workspace/nova-os
+./dist/nova-os --port 4000 &
+
+
+cd ~/workspace/cloudflare
+bash ./tunnel.sh
+
+
 # Monitored images that cannot run concurrently
 TRACKED_IMAGES=("sandbox-rn-claude-claude" "antigravity")
 
@@ -63,14 +75,6 @@ work2() {
 #work1
 #work2
 
-# Running os
-
-cd ~/workspace/nova-os
-./dist/nova-os --port 4000 &
-
-
-cd ~/workspace/cloudflare
-bash ./tunnel.sh
 
 # Works
 ensure_none_running
