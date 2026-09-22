@@ -24,7 +24,7 @@ git reset --hard origin/development
 git clean -fd  
 
 # Write status files
-echo "test $(date +'%Y-%m-%d %H:%M')" > run.txt
+echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
 
 # Tunnel
 if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
