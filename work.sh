@@ -22,14 +22,14 @@ echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
 # Terminal
 (
   cd ~/workspace/terminal
-  WEBTERM_STATIC_DIR=dist/web nohup ./dist/webterm --port 4000 --base-path /terminal > webterm.log 2>&1 &
+ WEBTERM_STATIC_DIR=dist/web  ./dist/webterm --port 4002
 )
 
-# Nova OS
-(
-  cd ~/workspace/nova-os
-  ./dist/nova-os --port 4001 &
-)
+# # Nova OS
+# (
+#   cd ~/workspace/nova-os
+#   ./dist/nova-os --port 4001 &
+# )
 
 
 # Tunnel
