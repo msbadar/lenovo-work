@@ -14,3 +14,8 @@ is_port_in_use() {
     (exec 3<>/dev/tcp/127.0.0.1/"$port") 2>/dev/null && exec 3>&-
   fi
 }
+
+
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"
+}
