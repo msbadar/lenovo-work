@@ -1,9 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-#podman kill --all
 
-bash terminal.sh
-bash tunnel.sh
-# bash work-1.sh
-
+# Terminal
+cd ~/workspace/terminal
+WEBTERM_STATIC_DIR=dist/web nohup ./dist/webterm --port 4000 --base-path /terminal > webterm.log 2>&1 &
