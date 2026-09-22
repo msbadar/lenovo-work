@@ -19,18 +19,8 @@ git clean -fd
 # Write status files
 echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
 
-# Tunnel
-if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
-  echo "Cloudflared container is already running. Skipping tunnel."
-else
-  echo "Starting Cloudflare tunnel..."
-  (
-    cd ~/workspace/tunnel
-    bash ./tunnel.sh
-  )
-fi
 
-
+# Terminal
 (
   cd ~/workspace/terminal
   WEBTERM_STATIC_DIR=dist/web nohup ./dist/webterm --port 4000 --base-path /terminal > webterm.log 2>&1 &
@@ -43,6 +33,17 @@ fi
 )
 
 
+# Tunnel
+if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
+  echo "Cloudflared container is already running. Skipping tunnel."
+else
+  echo "Starting Cloudflare tunnel..."
+  (
+    cd ~/workspace/tunnel
+    bash ./tunnel.sh
+  )
+fi
+
 # LOGS
 podman ps > containers.txt
 {
@@ -54,7 +55,6 @@ podman ps > containers.txt
     done
   done
 } > ports.txt
-echo "done" >> run.txt
 
 # Commit and push only if changes exist
 git add .
