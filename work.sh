@@ -7,8 +7,8 @@ set -eo pipefail
 
 
 # Nova OS
-cd ~/workspace/nova-os
-./dist/nova-os --port 4001 &
+# cd ~/workspace/nova-os
+# ./dist/nova-os --port 4001 &
 
 
 # Tunnel
