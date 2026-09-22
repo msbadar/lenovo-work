@@ -36,7 +36,7 @@ git clean -fd
 
 # Write status files
 echo "test $(date +'%Y-%m-%d %H:%M')" > test.txt
-#podman ps >> containers.txt
+podman ps >> containers.txt
 
 # # Query all ports at once. '|| true' prevents set -e from aborting when a port is inactive.
 # lsof -t -i :4000,4001,4002,8080,8000 > ports.txt 2>/dev/null || true
