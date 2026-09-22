@@ -28,7 +28,7 @@ set -eo pipefail
 # fi
 
 # --- Git Synchronization & Diagnostics ---
-
+podman kill --all
 # Match git push target branch
 git fetch origin
 git reset --hard origin/development
