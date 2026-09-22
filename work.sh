@@ -30,20 +30,22 @@ set -eo pipefail
 # --- Git Synchronization & Diagnostics ---
 
 # Match git push target branch
-git pull --rebase origin development
+git fetch origin
+git reset --hard origin/development
+git clean -fd  
 
 # Write status files
 echo "test $(date +'%Y-%m-%d %H:%M')" > test.txt
 podman ps -a > containers.txt
 
-# Query all ports at once. '|| true' prevents set -e from aborting when a port is inactive.
-lsof -t -i :4000,4001,4002,8080,8000 > ports.txt 2>/dev/null || true
+# # Query all ports at once. '|| true' prevents set -e from aborting when a port is inactive.
+# lsof -t -i :4000,4001,4002,8080,8000 > ports.txt 2>/dev/null || true
 
-# Commit and push only if changes exist
-git add test.txt containers.txt ports.txt
-if ! git diff-index --quiet HEAD --; then
-  git commit -m "logs update $(date +'%Y-%m-%d %H:%M')"
-  git push origin development
-else
-  echo "No log changes to commit."
-fi
+# # Commit and push only if changes exist
+# git add test.txt containers.txt ports.txt
+# if ! git diff-index --quiet HEAD --; then
+#   git commit -m "logs update $(date +'%Y-%m-%d %H:%M')"
+#   git push origin development
+# else
+#   echo "No log changes to commit."
+# fi
