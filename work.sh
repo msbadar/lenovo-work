@@ -36,10 +36,16 @@ else
     bash ./tunnel.sh
   )
 fi
-podman ps > containers.txt
 
-# # Query all ports at once. '|| true' prevents set -e from aborting when a port is inactive.
-# lsof -t -i :4000,4001,4002,8080,8000 > ports.txt 2>/dev/null || true
+
+(
+  cd ~/workspace/terminal
+  WEBTERM_STATIC_DIR=dist/web nohup ./dist/webterm --port 4000 --base-path /terminal > webterm.log 2>&1 &
+)
+
+
+podman ps > containers.txt
+lsof -t -i :4000,4001,4002,8080,8000 > ports.txt 2>/dev/null || true
 
 # Commit and push only if changes exist
 git add .
