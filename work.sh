@@ -4,20 +4,13 @@ set -eo pipefail
 # --- Background Services ---
 # Wrapped in subshells (...) so directory changes don't affect the rest of the script.
 
-# Terminal
-# (
-#   cd ~/workspace/terminal
-#   WEBTERM_STATIC_DIR=dist/web nohup ./dist/webterm --port 4000 --base-path /terminal > webterm.log 2>&1 &
-# )
-
-# Nova OS
-# (
-#   cd ~/workspace/nova-os
-#   ./dist/nova-os --port 4001 &
-# )
 
 # --- Git Synchronization & Diagnostics ---
-# podman kill --all
+podman kill --all
+kill $(lsof -t -i :4000) || true
+kill $(lsof -t -i :4001) || true
+kill $(lsof -t -i :8080) || true
+kill $(lsof -t -i :8000) || true
 # Match git push target branch
 git fetch origin
 git reset --hard origin/development
@@ -41,6 +34,12 @@ fi
 (
   cd ~/workspace/terminal
   WEBTERM_STATIC_DIR=dist/web nohup ./dist/webterm --port 4000 --base-path /terminal > webterm.log 2>&1 &
+)
+
+# Nova OS
+(
+  cd ~/workspace/nova-os
+  ./dist/nova-os --port 4001 &
 )
 
 
