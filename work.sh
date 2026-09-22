@@ -44,8 +44,17 @@ fi
 )
 
 
+# LOGS
 podman ps > containers.txt
-lsof -t -i :4000,4001,4002,8080,8000 > ports.txt 2>/dev/null || true
+{
+  printf "%-10s %-10s %-15s\n" "PORT" "PID" "COMMAND"
+  for port in 4000 4001 4002 8080 8000; do
+    for pid in $(lsof -t -i :"$port" 2>/dev/null || true); do
+      cmd=$(ps -p "$pid" -o comm= 2>/dev/null || echo "unknown")
+      printf "%-10s %-10s %-15s\n" "$port" "$pid" "$cmd"
+    done
+  done
+} > ports.txt
 echo "done" >> run.txt
 
 # Commit and push only if changes exist
