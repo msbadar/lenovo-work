@@ -1,2 +1,5 @@
 CONTAINER ID  IMAGE                                    COMMAND               CREATED                 STATUS                 PORTS       NAMES
-ddd2ca6271b3  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  Less than a second ago  Up Less than a second              strange_morse
+ddd2ca6271b3  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  29 minutes ago          Up 29 minutes                      strange_morse
+df36df504dc0  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  20 minutes ago          Up 20 minutes                      interesting_spence
+e1b7decc5a07  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  10 minutes ago          Up 10 minutes                      pensive_perlman
+c51aa951f488  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  Less than a second ago  Up Less than a second              wonderful_hopper
