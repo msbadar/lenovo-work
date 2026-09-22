@@ -15,8 +15,14 @@ set -eo pipefail
 # if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
 #   echo "Cloudflared container is already running. Skipping tunnel."
 # else
-echo "Starting Cloudflare tunnel..."
-cd ~/workspace/tunnel
-# Add '&' at the end if tunnel.sh does not detach on its own
-bash ./tunnel.sh
+# echo "Starting Cloudflare tunnel..."
+# cd ~/workspace/tunnel
+# # Add '&' at the end if tunnel.sh does not detach on its own
+# bash ./tunnel.sh
 # fi
+
+git pull
+echo "test $(date +'%Y-%m-%d %H:%M')" >> test.txt
+git add .
+git commit -m "logs update $(date +'%Y-%m-%d %H:%M')"
+git push origin development
