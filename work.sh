@@ -1,7 +1,6 @@
 #!/bin/bash
 set -eo pipefail
 
-exit
 
 # Cleanup
 podman kill --all
