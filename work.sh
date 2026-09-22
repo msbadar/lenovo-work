@@ -22,7 +22,15 @@ set -eo pipefail
 # fi
 
 git pull
-echo "test $(date +'%Y-%m-%d %H:%M')" >> test.txt
+echo "test $(date +'%Y-%m-%d %H:%M')" > test.txt
+podman ps -a > containers.txt
+
+lsof -t -i :4000 > ports.txt
+lsof -t -i :4001 >> ports.txt
+lsof -t -i :4002 >> ports.txt
+lsof -t -i :8080 >> ports.txt
+lsof -t -i :8000 >> ports.txt
+
 git add .
 git commit -m "logs update $(date +'%Y-%m-%d %H:%M')"
 git push origin development
