@@ -3,6 +3,6 @@ set -eo pipefail
 
 #podman kill --all
 
-bash os-work.sh
+bash terminal.sh
 # bash work-1.sh
 
