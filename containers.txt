@@ -1,8 +1,2 @@
-CONTAINER ID  IMAGE                                    COMMAND               CREATED            STATUS            PORTS       NAMES
-45d9a8aad591  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  14 hours ago       Up 14 hours                   musing_banach
-5b88004cbfe7  docker.io/library/nginx:alpine           nginx -g daemon o...  6 hours ago        Up 6 hours        80/tcp      local-proxy
-20091e7c3137  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  About an hour ago  Up About an hour              epic_mcclintock
-9785feb8824b  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  About an hour ago  Up About an hour              stupefied_villani
-47fe15f82212  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  About an hour ago  Up About an hour              trusting_hopper
-b7d89358cf38  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  50 minutes ago     Up 50 minutes                 beautiful_brown
-CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
+CONTAINER ID  IMAGE                                    COMMAND               CREATED                 STATUS                 PORTS       NAMES
+ddd2ca6271b3  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  Less than a second ago  Up Less than a second              strange_morse
