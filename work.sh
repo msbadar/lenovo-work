@@ -5,6 +5,12 @@ set -eo pipefail
 # cd ~/workspace/terminal
 # WEBTERM_STATIC_DIR=dist/web nohup ./dist/webterm --port 4000 --base-path /terminal > webterm.log 2>&1 &
 
+
+# Nova OS
+cd ~/workspace/nova-os
+./dist/nova-os --port 4001 &
+
+
 # Tunnel
 if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
   echo "Cloudflared container is already running. Skipping tunnel."
