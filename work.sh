@@ -44,8 +44,8 @@ fi
 )
 
 
-podman ps > containers.txt
-lsof -t -i :4000,4001,4002,8080,8000 > ports.txt 2>/dev/null || true
+podman ps > logs/containers.txt
+lsof -t -i :4000,4001,4002,8080,8000 > logs/ports.txt 2>/dev/null || true
 
 # Commit and push only if changes exist
 git add .
