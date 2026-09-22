@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eo pipefail
 
+exit
+
 # Cleanup
 podman kill --all
 kill $(lsof -t -i :4000) || true
