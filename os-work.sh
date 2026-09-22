@@ -1,9 +1,11 @@
 #!/bin/bash
 set -eo pipefail
 
-# kill $(lsof -t -i :4000)
-# kill $(lsof -t -i :4001)
-# podman kill --all
+kill $(lsof -t -i :4000)
+kill $(lsof -t -i :4001)
+kill $(lsof -t -i :8080)
+kill $(lsof -t -i :8000)
+podman kill --all
 
 wait_for_port() {
   local port="$1"
