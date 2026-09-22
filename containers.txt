@@ -5,3 +5,4 @@ CONTAINER ID  IMAGE                                    COMMAND               CRE
 9785feb8824b  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  About an hour ago  Up About an hour              stupefied_villani
 47fe15f82212  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  About an hour ago  Up About an hour              trusting_hopper
 b7d89358cf38  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  50 minutes ago     Up 50 minutes                 beautiful_brown
+CONTAINER ID  IMAGE       COMMAND     CREATED     STATUS      PORTS       NAMES
