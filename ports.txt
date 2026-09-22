@@ -1,3 +1,3 @@
 PORT       PID        COMMAND        
-4000       312837     webterm        
-4001       2153       webterm        
+4000       367464     webterm        
+4001       367466     nova-os        
