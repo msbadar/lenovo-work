@@ -12,11 +12,11 @@ set -eo pipefail
 
 
 # Tunnel
-if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
-  echo "Cloudflared container is already running. Skipping tunnel."
-else
-  echo "Starting Cloudflare tunnel..."
-  cd ~/workspace/tunnel
-  # Add '&' at the end if tunnel.sh does not detach on its own
-  bash ./tunnel.sh
-fi
+# if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
+#   echo "Cloudflared container is already running. Skipping tunnel."
+# else
+echo "Starting Cloudflare tunnel..."
+cd ~/workspace/tunnel
+# Add '&' at the end if tunnel.sh does not detach on its own
+bash ./tunnel.sh
+# fi
