@@ -1,7 +1,9 @@
-run 2026-09-23 23:12
-CONTAINER ID  IMAGE                                    COMMAND               CREATED            STATUS            PORTS       NAMES
-a543be52fea8  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  About an hour ago  Up About an hour              awesome_nightingale
+run 2026-09-23 23:14
+CONTAINER ID  IMAGE                                      COMMAND               CREATED            STATUS            PORTS       NAMES
+a543be52fea8  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  About an hour ago  Up About an hour              awesome_nightingale
+66c8ac3e1070  localhost/sandbox-rn-claude-claude:latest  claude -p some of...  4 seconds ago      Up 4 seconds                  pensive_pike
 PORT       PID        COMMAND        
 4002       3341       webterm        
+4002       3589       pasta.avx2     
 8080       3589       pasta.avx2     
 8080       14393      repo-executor-b
