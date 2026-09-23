@@ -21,14 +21,14 @@ set -eo pipefail
 # git clean -fd  
 
 # # # Write status files
-# echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
+echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
 
 
 # Terminal
-(
-  cd ~/workspace/terminal
- WEBTERM_STATIC_DIR=dist/web  ./dist/webterm --port 4002
-)
+# (
+#   cd ~/workspace/terminal
+#  WEBTERM_STATIC_DIR=dist/web  ./dist/webterm --port 4002
+# )
 
 # # # Nova OS
 # (
@@ -38,18 +38,18 @@ set -eo pipefail
 
 
 # # Tunnel
-if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
-  echo "Cloudflared container is already running. Skipping tunnel."
-else
-  echo "Starting Cloudflare tunnel..."
-  (
-    cd ~/workspace/tunnel
-    bash ./tunnel.sh
-  )
-fi
+# if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
+#   echo "Cloudflared container is already running. Skipping tunnel."
+# else
+#   echo "Starting Cloudflare tunnel..."
+#   (
+#     cd ~/workspace/tunnel
+#     bash ./tunnel.sh
+#   )
+# fi
 
 # # LOGS
-podman ps > run.txt
+podman ps >> run.txt
 {
   printf "%-10s %-10s %-15s\n" "PORT" "PID" "COMMAND"
   for port in 4000 4001 4002 8080 8000; do
@@ -58,7 +58,7 @@ podman ps > run.txt
       printf "%-10s %-10s %-15s\n" "$port" "$pid" "$cmd"
     done
   done
-} > run.txt
+} >> run.txt
 
 # # Commit and push only if changes exist
 git add .
