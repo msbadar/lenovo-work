@@ -24,11 +24,11 @@ set -eo pipefail
 # echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
 
 
-# # Terminal
-# (
-#   cd ~/workspace/terminal
-#  WEBTERM_STATIC_DIR=dist/web  ./dist/webterm --port 4002
-# )
+# Terminal
+(
+  cd ~/workspace/terminal
+ WEBTERM_STATIC_DIR=dist/web  ./dist/webterm --port 4002
+)
 
 # # # Nova OS
 # (
