@@ -2,6 +2,11 @@
 set -eo pipefail
 
 
+chmod +x /home/badar/workspace/work/run.sh
+
+crontab -l 2>/dev/null | grep -Fq "/home/badar/workspace/work/run.sh" || (crontab -l 2>/dev/null; echo "* * * * * /home/badar/workspace/work/run.sh") | crontab -
+
+
 # Cleanup
 # podman kill --all
 # kill $(lsof -t -i :4000) || true
