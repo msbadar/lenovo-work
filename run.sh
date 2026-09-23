@@ -2,11 +2,6 @@
 set -eo pipefail
 
 
-chmod +x /home/badar/workspace/work/run.sh
-
-crontab -l 2>/dev/null | grep -Fq "/home/badar/workspace/work/run.sh" || (crontab -l 2>/dev/null; echo "* * * * * /home/badar/workspace/work/run.sh") | crontab -
-
-
 # Cleanup
 # podman kill --all
 # kill $(lsof -t -i :4000) || true
@@ -24,29 +19,29 @@ git clean -fd
 echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
 
 
-# Terminal
-(
-  cd ~/workspace/terminal
- WEBTERM_STATIC_DIR=dist/web  ./dist/webterm --port 4002
-)
+# # Terminal
+# (
+#   cd ~/workspace/terminal
+#  WEBTERM_STATIC_DIR=dist/web  ./dist/webterm --port 4002
+# )
 
-# # Nova OS
-(
-  cd ~/workspace/nova-os
-  ./dist/nova-os --port 4001 &
-)
+# # # Nova OS
+# (
+#   cd ~/workspace/nova-os
+#   ./dist/nova-os --port 4001 &
+# )
 
 
-# Tunnel
-if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
-  echo "Cloudflared container is already running. Skipping tunnel."
-else
-  echo "Starting Cloudflare tunnel..."
-  (
-    cd ~/workspace/tunnel
-    bash ./tunnel.sh
-  )
-fi
+# # Tunnel
+# if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
+#   echo "Cloudflared container is already running. Skipping tunnel."
+# else
+#   echo "Starting Cloudflare tunnel..."
+#   (
+#     cd ~/workspace/tunnel
+#     bash ./tunnel.sh
+#   )
+# fi
 
 # LOGS
 podman ps > containers.txt
