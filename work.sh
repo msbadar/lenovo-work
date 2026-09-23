@@ -2,9 +2,9 @@
 set -eo pipefail
 
 
-chmod +x /home/badar/workspace/work/run.sh
+# chmod +x /home/badar/workspace/work/run.sh
 
-crontab -l 2>/dev/null | grep -Fq "/home/badar/workspace/work/run.sh" || (crontab -l 2>/dev/null; echo "* * * * * /home/badar/workspace/work/run.sh") | crontab -
+# crontab -l 2>/dev/null | grep -Fq "/home/badar/workspace/work/run.sh" || (crontab -l 2>/dev/null; echo "* * * * * /home/badar/workspace/work/run.sh") | crontab -
 
 
 # # Cleanup
@@ -16,12 +16,12 @@ crontab -l 2>/dev/null | grep -Fq "/home/badar/workspace/work/run.sh" || (cronta
 
 
 # # Match git push target branch
-# git fetch origin
-# git reset --hard origin/development
-# git clean -fd  
+git fetch origin
+git reset --hard origin/development
+git clean -fd  
 
 # # Write status files
-# echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
+echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
 
 
 # # Terminal
@@ -61,10 +61,10 @@ crontab -l 2>/dev/null | grep -Fq "/home/badar/workspace/work/run.sh" || (cronta
 # } > ports.txt
 
 # # Commit and push only if changes exist
-# git add .
-# if ! git diff-index --quiet HEAD --; then
-#   git commit -m "logs update $(date +'%Y-%m-%d %H:%M')"
-#   git push origin development
-# else
-#   echo "No log changes to commit."
-# fi
+git add .
+if ! git diff-index --quiet HEAD --; then
+  git commit -m "logs update $(date +'%Y-%m-%d %H:%M')"
+  git push origin development
+else
+  echo "No log changes to commit."
+fi
