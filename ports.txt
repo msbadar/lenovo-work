@@ -1,3 +1,0 @@
-PORT       PID        COMMAND        
-4000       370153     webterm        
-4001       370155     nova-os        
