@@ -1,7 +1,6 @@
-run 2026-09-23 22:36
-CONTAINER ID  IMAGE                                      COMMAND               CREATED         STATUS         PORTS       NAMES
-a543be52fea8  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  27 minutes ago  Up 27 minutes              awesome_nightingale
-264ff488d2be  localhost/sandbox-rn-claude-claude:latest  claude -p work as...  53 seconds ago  Up 54 seconds              repo-executor-0a50718b
+run 2026-09-23 22:38
+CONTAINER ID  IMAGE                                    COMMAND               CREATED         STATUS         PORTS       NAMES
+a543be52fea8  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  29 minutes ago  Up 29 minutes              awesome_nightingale
 PORT       PID        COMMAND        
 4002       3341       webterm        
 4002       3589       pasta.avx2     
