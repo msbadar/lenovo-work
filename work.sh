@@ -38,27 +38,27 @@ echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
 
 
 # Tunnel
-if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
-  echo "Cloudflared container is already running. Skipping tunnel."
-else
-  echo "Starting Cloudflare tunnel..."
-  (
-    cd ~/workspace/tunnel
-    bash ./tunnel.sh
-  )
-fi
+# if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
+#   echo "Cloudflared container is already running. Skipping tunnel."
+# else
+#   echo "Starting Cloudflare tunnel..."
+#   (
+#     cd ~/workspace/tunnel
+#     bash ./tunnel.sh
+#   )
+# fi
 
 # # LOGS
-podman ps >> run.txt
-{
-  printf "%-10s %-10s %-15s\n" "PORT" "PID" "COMMAND"
-  for port in 4000 4001 4002 8080 8000; do
-    for pid in $(lsof -t -i :"$port" 2>/dev/null || true); do
-      cmd=$(ps -p "$pid" -o comm= 2>/dev/null || echo "unknown")
-      printf "%-10s %-10s %-15s\n" "$port" "$pid" "$cmd"
-    done
-  done
-} >> run.txt
+# podman ps >> run.txt
+# {
+#   printf "%-10s %-10s %-15s\n" "PORT" "PID" "COMMAND"
+#   for port in 4000 4001 4002 8080 8000; do
+#     for pid in $(lsof -t -i :"$port" 2>/dev/null || true); do
+#       cmd=$(ps -p "$pid" -o comm= 2>/dev/null || echo "unknown")
+#       printf "%-10s %-10s %-15s\n" "$port" "$pid" "$cmd"
+#     done
+#   done
+# } >> run.txt
 
 # # Commit and push only if changes exist
 git add .
