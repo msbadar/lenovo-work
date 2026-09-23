@@ -44,7 +44,10 @@ echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
 # fi
 
 # LOGS
-podman ps > containers.txt
+echo "#PODS\\n" >> run.txt
+podman ps >> run.txt
+
+echo "\\n#PORTS\\n" >> run.txt
 {
   printf "%-10s %-10s %-15s\n" "PORT" "PID" "COMMAND"
   for port in 4000 4001 4002 8080 8000; do
@@ -53,7 +56,7 @@ podman ps > containers.txt
       printf "%-10s %-10s %-15s\n" "$port" "$pid" "$cmd"
     done
   done
-} > ports.txt
+} > run.txt
 
 # Commit and push only if changes exist
 git add .
