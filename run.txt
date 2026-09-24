@@ -1,5 +1,6 @@
-run 2026-09-25 00:36
+run 2026-09-25 00:38
 CONTAINER ID  IMAGE                                    COMMAND               CREATED                 STATUS                 PORTS       NAMES
-acbb2ca06dcc  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  2 minutes ago           Up 2 minutes                       thirsty_haibt
-d9b1dca21df8  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  Less than a second ago  Up Less than a second              xenodochial_varahamihira
+acbb2ca06dcc  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  4 minutes ago           Up 4 minutes                       thirsty_haibt
+d9b1dca21df8  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  2 minutes ago           Up 2 minutes                       xenodochial_varahamihira
+bc4a3d4889f9  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  Less than a second ago  Up Less than a second              thirsty_lumiere
 PORT       PID        COMMAND        
