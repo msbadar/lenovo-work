@@ -12,3 +12,4 @@ PORT       PID        COMMAND
 4002       3341       webterm        
 4002       57038      pasta.avx2     
 8080       14393      repo-executor-b
+8080       14393      repo-executor-b
