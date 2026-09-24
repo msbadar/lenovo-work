@@ -25,13 +25,13 @@ echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
 
 
 # Terminal
-# PORT=4002
-# if ! ss -tuln | grep -q ":${PORT}\b"; then
-#   (
-#     cd ~/workspace/terminal || exit 1
-#     WEBTERM_STATIC_DIR=dist/web ./dist/webterm --port "$PORT"
-#   )
-# fi
+PORT=4002
+if ! ss -tuln | grep -q ":${PORT}\b"; then
+  (
+    cd ~/workspace/terminal || exit 1
+    WEBTERM_STATIC_DIR=dist/web ./dist/webterm --port "$PORT"
+  )
+fi
 
 # # # Nova OS
 # (
@@ -41,15 +41,15 @@ echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
 
 
 #Tunnel
-if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
-  echo "Cloudflared container is already running. Skipping tunnel."
-else
-  echo "Starting Cloudflare tunnel..."
-  (
-    cd ~/workspace/tunnel
-    bash ./tunnel.sh
-  )
-fi
+# if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
+#   echo "Cloudflared container is already running. Skipping tunnel."
+# else
+#   echo "Starting Cloudflare tunnel..."
+#   (
+#     cd ~/workspace/tunnel
+#     bash ./tunnel.sh
+#   )
+# fi
 
 
 # LOGS
