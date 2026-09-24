@@ -25,10 +25,13 @@ echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
 
 
 # Terminal
-# (
-#   cd ~/workspace/terminal
-#  WEBTERM_STATIC_DIR=dist/web  ./dist/webterm --port 4002
-# )
+PORT=4002
+if ! ss -tuln | grep -q ":${PORT}\b"; then
+  (
+    cd ~/workspace/terminal || exit 1
+    WEBTERM_STATIC_DIR=dist/web ./dist/webterm --port "$PORT"
+  )
+fi
 
 # # # Nova OS
 # (
