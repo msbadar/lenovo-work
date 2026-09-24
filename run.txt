@@ -1,7 +1,6 @@
-run 2026-09-24 15:12
-CONTAINER ID  IMAGE                                    COMMAND               CREATED        STATUS             PORTS       NAMES
-268fc5106293  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  2 hours ago    Up 2 hours                     reverent_knuth
-0f558fbd3f83  localhost/claude-rn-5-5:latest           claude -p work as...  2 minutes ago  Up About a minute              strange_galois
+run 2026-09-24 15:14
+CONTAINER ID  IMAGE                                    COMMAND               CREATED      STATUS      PORTS       NAMES
+268fc5106293  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  2 hours ago  Up 2 hours              reverent_knuth
 PORT       PID        COMMAND        
 4002       3341       webterm        
 4002       57038      pasta.avx2     
