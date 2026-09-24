@@ -8,7 +8,7 @@ set -eo pipefail
 
 
 # # Cleanup
-# # podman kill --all
+podman kill --all
 # # kill $(lsof -t -i :4000) || true
 # # kill $(lsof -t -i :4001) || true
 # # kill $(lsof -t -i :8080) || true
