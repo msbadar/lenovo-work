@@ -1,19 +1,20 @@
-run 2026-09-26 22:06
-CONTAINER ID  IMAGE                                    COMMAND               CREATED                 STATUS         PORTS       NAMES
-c9391e3c7d2c  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  25 minutes ago          Up 25 minutes              loving_sinoussi
-ca910cc49ae5  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  24 minutes ago          Up 24 minutes              xenodochial_pike
-267d37a93e0d  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  22 minutes ago          Up 22 minutes              condescending_bhabha
-d1896ef8cc95  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  20 minutes ago          Up 20 minutes              ecstatic_sinoussi
-c398a32921f5  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  18 minutes ago          Up 18 minutes              sharp_brown
-1cddd6a60648  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  16 minutes ago          Up 16 minutes              elated_volhard
-191e18ce68a1  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  14 minutes ago          Up 14 minutes              eloquent_meitner
-a7fe61a79965  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  12 minutes ago          Up 12 minutes              blissful_visvesvaraya
-62b6d2c00c18  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  10 minutes ago          Up 10 minutes              bold_gould
-972520527ec8  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  8 minutes ago           Up 8 minutes               ecstatic_carver
-1b3deddeb5d5  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  6 minutes ago           Up 6 minutes               optimistic_mccarthy
-6f087246152d  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  4 minutes ago           Up 4 minutes               upbeat_merkle
-9956bb143f47  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  2 minutes ago           Up 2 minutes               xenodochial_edison
-4878585b03ef  localhost/claude-5-5:latest              claude -p what is...  44 seconds ago          Up 2 seconds               tender_solomon
-c05fa3936814  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  Less than a second ago  Up 1 second                inspiring_goodall
+run 2026-09-26 22:08
+CONTAINER ID  IMAGE                                      COMMAND               CREATED                 STATUS                 PORTS       NAMES
+c9391e3c7d2c  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  27 minutes ago          Up 27 minutes                      loving_sinoussi
+ca910cc49ae5  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  26 minutes ago          Up 26 minutes                      xenodochial_pike
+267d37a93e0d  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  24 minutes ago          Up 24 minutes                      condescending_bhabha
+d1896ef8cc95  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  22 minutes ago          Up 22 minutes                      ecstatic_sinoussi
+c398a32921f5  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  20 minutes ago          Up 20 minutes                      sharp_brown
+1cddd6a60648  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  18 minutes ago          Up 18 minutes                      elated_volhard
+191e18ce68a1  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  16 minutes ago          Up 16 minutes                      eloquent_meitner
+a7fe61a79965  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  14 minutes ago          Up 14 minutes                      blissful_visvesvaraya
+62b6d2c00c18  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  12 minutes ago          Up 12 minutes                      bold_gould
+972520527ec8  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  10 minutes ago          Up 10 minutes                      ecstatic_carver
+1b3deddeb5d5  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  8 minutes ago           Up 8 minutes                       optimistic_mccarthy
+6f087246152d  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  6 minutes ago           Up 6 minutes                       upbeat_merkle
+9956bb143f47  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  3 minutes ago           Up 3 minutes                       xenodochial_edison
+c05fa3936814  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  About a minute ago      Up About a minute                  inspiring_goodall
+129efc26f7e2  localhost/sandbox-rn-claude-claude:latest  claude -p it is h...  23 seconds ago          Up 23 seconds                      eloquent_jackson
+1ef92181e1e3  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  Less than a second ago  Up Less than a second              jolly_tharp
 PORT       PID        COMMAND        
 4002       1364268    webterm        
