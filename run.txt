@@ -1,27 +1,5 @@
-run 2026-09-26 22:22
-CONTAINER ID  IMAGE                                    COMMAND               CREATED                 STATUS                 PORTS       NAMES
-c9391e3c7d2c  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  41 minutes ago          Up 41 minutes                      loving_sinoussi
-ca910cc49ae5  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  39 minutes ago          Up 39 minutes                      xenodochial_pike
-267d37a93e0d  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  37 minutes ago          Up 38 minutes                      condescending_bhabha
-d1896ef8cc95  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  36 minutes ago          Up 36 minutes                      ecstatic_sinoussi
-c398a32921f5  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  34 minutes ago          Up 34 minutes                      sharp_brown
-1cddd6a60648  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  31 minutes ago          Up 32 minutes                      elated_volhard
-191e18ce68a1  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  29 minutes ago          Up 29 minutes                      eloquent_meitner
-a7fe61a79965  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  28 minutes ago          Up 28 minutes                      blissful_visvesvaraya
-62b6d2c00c18  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  26 minutes ago          Up 26 minutes                      bold_gould
-972520527ec8  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  23 minutes ago          Up 24 minutes                      ecstatic_carver
-1b3deddeb5d5  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  21 minutes ago          Up 22 minutes                      optimistic_mccarthy
-6f087246152d  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  19 minutes ago          Up 20 minutes                      upbeat_merkle
-9956bb143f47  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  17 minutes ago          Up 17 minutes                      xenodochial_edison
-c05fa3936814  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  15 minutes ago          Up 15 minutes                      inspiring_goodall
-1ef92181e1e3  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  13 minutes ago          Up 13 minutes                      jolly_tharp
-7196ae18699c  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  11 minutes ago          Up 12 minutes                      practical_brahmagupta
-27ca3aca4c03  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  9 minutes ago           Up 9 minutes                       affectionate_moser
-88a57504cd2b  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  8 minutes ago           Up 8 minutes                       gracious_snyder
-d9836675aabe  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  5 minutes ago           Up 6 minutes                       charming_faraday
-9b735858a142  localhost/claude-5-5:latest              claude -p work on...  5 minutes ago           Up 5 minutes                       exciting_moser
-64b0b3861215  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  3 minutes ago           Up 4 minutes                       practical_napier
-6cfe9c50556b  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  About a minute ago      Up About a minute                  ecstatic_allen
-c2394208d367  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  Less than a second ago  Up Less than a second              nice_goldberg
+run 2026-09-26 22:37
+CONTAINER ID  IMAGE                                    COMMAND               CREATED                 STATUS       PORTS       NAMES
+eb63ff54aca4  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  Less than a second ago  Up 1 second              vigilant_einstein
 PORT       PID        COMMAND        
-4002       1364268    webterm        
+4002       1477162    webterm        
