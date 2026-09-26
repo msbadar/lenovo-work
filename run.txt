@@ -1,7 +1,8 @@
-run 2026-09-26 21:42
-CONTAINER ID  IMAGE                                    COMMAND               CREATED                 STATUS                 PORTS       NAMES
-c9391e3c7d2c  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  About a minute ago      Up About a minute                  loving_sinoussi
-ca910cc49ae5  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  Less than a second ago  Up Less than a second              xenodochial_pike
+run 2026-09-26 21:44
+CONTAINER ID  IMAGE                                    COMMAND               CREATED                 STATUS        PORTS       NAMES
+c9391e3c7d2c  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  3 minutes ago           Up 3 minutes              loving_sinoussi
+ca910cc49ae5  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  2 minutes ago           Up 2 minutes              xenodochial_pike
+267d37a93e0d  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  Less than a second ago  Up 1 second               condescending_bhabha
 PORT       PID        COMMAND        
 4002       1364268    webterm        
 4002       1365980    pasta.avx2     
