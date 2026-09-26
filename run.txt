@@ -1,5 +1,6 @@
-run 2026-09-26 23:52
-CONTAINER ID  IMAGE                                    COMMAND               CREATED         STATUS         PORTS       NAMES
-3ddd7bd0d190  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  56 minutes ago  Up 56 minutes              cloudflared
+run 2026-09-27 00:01
+CONTAINER ID  IMAGE                                    COMMAND               CREATED            STATUS            PORTS       NAMES
+3ddd7bd0d190  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  About an hour ago  Up About an hour              cloudflared
+3f9f193a33e0  localhost/claude-5-5:latest              claude -p work on...  7 minutes ago      Up 7 minutes                  practical_snyder
 PORT       PID        COMMAND        
 4002       1477162    webterm        
