@@ -1,9 +1,9 @@
-run 2026-09-26 21:46
-CONTAINER ID  IMAGE                                      COMMAND               CREATED                 STATUS                 PORTS       NAMES
-c9391e3c7d2c  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  5 minutes ago           Up 5 minutes                       loving_sinoussi
-ca910cc49ae5  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  3 minutes ago           Up 3 minutes                       xenodochial_pike
-267d37a93e0d  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  About a minute ago      Up 2 minutes                       condescending_bhabha
-3ad9b3b9480b  localhost/sandbox-rn-claude-claude:latest  claude -p i dont ...  22 seconds ago          Up 22 seconds                      sweet_euclid
-d1896ef8cc95  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  Less than a second ago  Up Less than a second              ecstatic_sinoussi
+run 2026-09-26 21:48
+CONTAINER ID  IMAGE                                    COMMAND               CREATED                 STATUS                 PORTS       NAMES
+c9391e3c7d2c  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  7 minutes ago           Up 7 minutes                       loving_sinoussi
+ca910cc49ae5  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  5 minutes ago           Up 5 minutes                       xenodochial_pike
+267d37a93e0d  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  3 minutes ago           Up 4 minutes                       condescending_bhabha
+d1896ef8cc95  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  2 minutes ago           Up 2 minutes                       ecstatic_sinoussi
+c398a32921f5  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  Less than a second ago  Up Less than a second              sharp_brown
 PORT       PID        COMMAND        
 4002       1364268    webterm        
