@@ -1,8 +1,9 @@
-run 2026-09-26 21:20
-CONTAINER ID  IMAGE                                    COMMAND               CREATED       STATUS       PORTS       NAMES
-acbb2ca06dcc  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  45 hours ago  Up 45 hours              thirsty_haibt
-d9b1dca21df8  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  45 hours ago  Up 45 hours              xenodochial_varahamihira
-bc4a3d4889f9  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  45 hours ago  Up 45 hours              thirsty_lumiere
-fc65804cec27  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  45 hours ago  Up 45 hours              admiring_rhodes
+run 2026-09-26 21:22
+CONTAINER ID  IMAGE                                      COMMAND               CREATED        STATUS        PORTS       NAMES
+acbb2ca06dcc  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  45 hours ago   Up 45 hours               thirsty_haibt
+d9b1dca21df8  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  45 hours ago   Up 45 hours               xenodochial_varahamihira
+bc4a3d4889f9  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  45 hours ago   Up 45 hours               thirsty_lumiere
+fc65804cec27  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  45 hours ago   Up 45 hours               admiring_rhodes
+9fc1612e76b7  localhost/sandbox-rn-claude-claude:latest  claude -p work on...  5 seconds ago  Up 5 seconds              busy_stonebraker
 PORT       PID        COMMAND        
 4002       8314       webterm        
