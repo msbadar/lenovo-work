@@ -1,5 +1,8 @@
 
 git pull
+
+echo "run $(date +'%Y-%m-%d %H:%M')" > run.txt
+
 # LOGS
 podman ps >> run.txt
 {
