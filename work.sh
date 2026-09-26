@@ -41,15 +41,11 @@ fi
 
 
 #Tunnel
-if podman ps --filter "name=cloudflared" --filter "status=running" -q 2>/dev/null | grep -q .; then
-   echo "Cloudflared container is already running. Skipping tunnel."
-else
-   echo "Starting Cloudflare tunnel..."
-   (
-     cd ~/workspace/tunnel
-     bash ./tunnel.sh
-   )
-fi
+echo "Starting Cloudflare tunnel..."
+(
+  cd ~/workspace/tunnel
+  bash ./tunnel.sh
+)
 
 
 # LOGS
