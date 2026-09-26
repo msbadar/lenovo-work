@@ -41,7 +41,6 @@ fi
 
 
 #Tunnel
-echo "Starting Cloudflare tunnel..."
 (
   cd ~/workspace/tunnel
   bash ./tunnel.sh
