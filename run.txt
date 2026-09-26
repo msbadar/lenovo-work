@@ -1,9 +1,9 @@
-run 2026-09-26 20:00
-CONTAINER ID  IMAGE                                      COMMAND               CREATED         STATUS         PORTS       NAMES
-acbb2ca06dcc  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  43 hours ago    Up 43 hours                thirsty_haibt
-d9b1dca21df8  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  43 hours ago    Up 43 hours                xenodochial_varahamihira
-bc4a3d4889f9  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  43 hours ago    Up 43 hours                thirsty_lumiere
-fc65804cec27  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  43 hours ago    Up 43 hours                admiring_rhodes
-1843486e79ce  localhost/sandbox-rn-claude-claude:latest  claude -p work on...  12 seconds ago  Up 13 seconds              agitated_darwin
+run 2026-09-26 20:02
+CONTAINER ID  IMAGE                                      COMMAND               CREATED        STATUS        PORTS       NAMES
+acbb2ca06dcc  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  43 hours ago   Up 43 hours               thirsty_haibt
+d9b1dca21df8  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  43 hours ago   Up 43 hours               xenodochial_varahamihira
+bc4a3d4889f9  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  43 hours ago   Up 43 hours               thirsty_lumiere
+fc65804cec27  docker.io/cloudflare/cloudflared:latest    tunnel --no-autou...  43 hours ago   Up 43 hours               admiring_rhodes
+1843486e79ce  localhost/sandbox-rn-claude-claude:latest  claude -p work on...  2 minutes ago  Up 2 minutes              agitated_darwin
 PORT       PID        COMMAND        
 4002       8314       webterm        
