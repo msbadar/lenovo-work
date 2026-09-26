@@ -1,27 +1,9 @@
 #!/bin/bash
 # set -eo pipefail
 
-
-# chmod +x /home/badar/workspace/work/run.sh
-
-# crontab -l 2>/dev/null | grep -Fq "/home/badar/workspace/work/run.sh" || (crontab -l 2>/dev/null; echo "* * * * * /home/badar/workspace/work/run.sh") | crontab -
-
-
 # # Cleanup
 # podman kill --all
 # # kill $(lsof -t -i :4000) || true
-# # kill $(lsof -t -i :4001) || true
-# # kill $(lsof -t -i :8080) || true
-# # kill $(lsof -t -i :8000) || true
-
-
-# # Match git push target branch
-# git fetch origin
-# git reset --hard origin/development
-# git clean -fd  
-
-# # # Write status files
-
 
 
 # Terminal
