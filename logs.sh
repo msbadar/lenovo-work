@@ -1,3 +1,4 @@
+echo "\n Adding logs and pushing changes"
 
 git pull
 
