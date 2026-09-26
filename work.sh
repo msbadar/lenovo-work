@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eo pipefail
+# set -eo pipefail
 
 
 # chmod +x /home/badar/workspace/work/run.sh
