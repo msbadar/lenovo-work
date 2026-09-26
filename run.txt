@@ -1,8 +1,5 @@
-run 2026-09-26 22:43
-CONTAINER ID  IMAGE                                    COMMAND               CREATED             STATUS             PORTS       NAMES
-3e230a4ce20f  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  2 minutes ago       Up 2 minutes                   objective_ganguly
-11e21d5d6aa6  docker.io/cloudflare/cloudflared:latest  --name cloudflare...  About a minute ago  Up About a minute              serene_goldberg
-fba6a723fa9b  docker.io/cloudflare/cloudflared:latest  --name cloudflare...  About a minute ago  Up About a minute              unruffled_hofstadter
-4df8ed0f832a  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  12 seconds ago      Up 13 seconds                  cloudflared
+run 2026-09-26 22:55
+CONTAINER ID  IMAGE                                    COMMAND               CREATED         STATUS         PORTS       NAMES
+1b516bb9b57d  docker.io/cloudflare/cloudflared:latest  tunnel --no-autou...  13 seconds ago  Up 13 seconds              cloudflared
 PORT       PID        COMMAND        
 4002       1477162    webterm        
